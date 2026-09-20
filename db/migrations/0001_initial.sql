@@ -121,19 +121,22 @@ CREATE TABLE opportunities (
   UNIQUE (id, workspace_id),
   CONSTRAINT opportunities_offering_workspace_fk
     FOREIGN KEY (offering_id, workspace_id)
-    REFERENCES offerings (id, workspace_id) ON DELETE SET NULL
+    REFERENCES offerings (id, workspace_id) ON DELETE RESTRICT
 );
 
 CREATE INDEX opportunities_workspace_stage_idx
   ON opportunities (workspace_id, stage, expected_close_on);
 
 CREATE TABLE opportunity_parties (
-  opportunity_id UUID NOT NULL REFERENCES opportunities(id) ON DELETE CASCADE,
+  opportunity_id UUID NOT NULL,
   party_id UUID NOT NULL,
   workspace_id UUID NOT NULL,
   role TEXT NOT NULL DEFAULT 'participant',
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   PRIMARY KEY (opportunity_id, party_id),
+  CONSTRAINT opportunity_parties_opportunity_workspace_fk
+    FOREIGN KEY (opportunity_id, workspace_id)
+    REFERENCES opportunities (id, workspace_id) ON DELETE CASCADE,
   CONSTRAINT opportunity_parties_party_workspace_fk
     FOREIGN KEY (party_id, workspace_id)
     REFERENCES parties (id, workspace_id) ON DELETE CASCADE
@@ -154,16 +157,19 @@ CREATE TABLE agreements (
   UNIQUE (id, workspace_id),
   CONSTRAINT agreements_opportunity_workspace_fk
     FOREIGN KEY (opportunity_id, workspace_id)
-    REFERENCES opportunities (id, workspace_id) ON DELETE SET NULL
+    REFERENCES opportunities (id, workspace_id) ON DELETE RESTRICT
 );
 
 CREATE TABLE agreement_parties (
-  agreement_id UUID NOT NULL REFERENCES agreements(id) ON DELETE CASCADE,
+  agreement_id UUID NOT NULL,
   party_id UUID NOT NULL,
   workspace_id UUID NOT NULL,
   role TEXT NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   PRIMARY KEY (agreement_id, party_id),
+  CONSTRAINT agreement_parties_agreement_workspace_fk
+    FOREIGN KEY (agreement_id, workspace_id)
+    REFERENCES agreements (id, workspace_id) ON DELETE CASCADE,
   CONSTRAINT agreement_parties_party_workspace_fk
     FOREIGN KEY (party_id, workspace_id)
     REFERENCES parties (id, workspace_id) ON DELETE CASCADE
@@ -185,14 +191,15 @@ CREATE TABLE activities (
   metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (id, workspace_id),
   CONSTRAINT activities_time_range_valid
     CHECK (ends_at IS NULL OR starts_at IS NULL OR ends_at >= starts_at),
   CONSTRAINT activities_opportunity_workspace_fk
     FOREIGN KEY (opportunity_id, workspace_id)
-    REFERENCES opportunities (id, workspace_id) ON DELETE SET NULL,
+    REFERENCES opportunities (id, workspace_id) ON DELETE RESTRICT,
   CONSTRAINT activities_agreement_workspace_fk
     FOREIGN KEY (agreement_id, workspace_id)
-    REFERENCES agreements (id, workspace_id) ON DELETE SET NULL
+    REFERENCES agreements (id, workspace_id) ON DELETE RESTRICT
 );
 
 CREATE INDEX activities_timeline_idx
@@ -200,12 +207,15 @@ CREATE INDEX activities_timeline_idx
 CREATE INDEX activities_metadata_idx ON activities USING GIN (metadata);
 
 CREATE TABLE activity_parties (
-  activity_id UUID NOT NULL REFERENCES activities(id) ON DELETE CASCADE,
+  activity_id UUID NOT NULL,
   party_id UUID NOT NULL,
   workspace_id UUID NOT NULL,
   role TEXT NOT NULL DEFAULT 'participant',
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   PRIMARY KEY (activity_id, party_id),
+  CONSTRAINT activity_parties_activity_workspace_fk
+    FOREIGN KEY (activity_id, workspace_id)
+    REFERENCES activities (id, workspace_id) ON DELETE CASCADE,
   CONSTRAINT activity_parties_party_workspace_fk
     FOREIGN KEY (party_id, workspace_id)
     REFERENCES parties (id, workspace_id) ON DELETE CASCADE
@@ -226,10 +236,10 @@ CREATE TABLE work_items (
   completed_at TIMESTAMPTZ,
   CONSTRAINT work_items_party_workspace_fk
     FOREIGN KEY (related_party_id, workspace_id)
-    REFERENCES parties (id, workspace_id) ON DELETE SET NULL,
+    REFERENCES parties (id, workspace_id) ON DELETE RESTRICT,
   CONSTRAINT work_items_opportunity_workspace_fk
     FOREIGN KEY (related_opportunity_id, workspace_id)
-    REFERENCES opportunities (id, workspace_id) ON DELETE SET NULL
+    REFERENCES opportunities (id, workspace_id) ON DELETE RESTRICT
 );
 
 CREATE INDEX work_items_open_queue_idx
