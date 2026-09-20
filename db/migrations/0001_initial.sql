@@ -118,6 +118,7 @@ CREATE TABLE opportunities (
   offering_id UUID,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (id, workspace_id),
   CONSTRAINT opportunities_offering_workspace_fk
     FOREIGN KEY (offering_id, workspace_id)
     REFERENCES offerings (id, workspace_id) ON DELETE SET NULL
@@ -150,6 +151,7 @@ CREATE TABLE agreements (
   opportunity_id UUID,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (id, workspace_id),
   CONSTRAINT agreements_opportunity_workspace_fk
     FOREIGN KEY (opportunity_id, workspace_id)
     REFERENCES opportunities (id, workspace_id) ON DELETE SET NULL
