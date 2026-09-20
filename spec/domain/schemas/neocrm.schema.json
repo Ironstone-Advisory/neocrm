@@ -1,0 +1,315 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neocrm.example/spec/domain/schemas/neocrm.schema.json",
+  "title": "NeoCRM normative contracts",
+  "description": "Normative exchanged-data contracts for the CAP-001 reference slice.",
+  "$defs": {
+    "PartyRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partyId", "displayName", "partyType"],
+      "properties": {
+        "partyId": { "type": "string", "minLength": 1 },
+        "displayName": { "type": "string", "minLength": 1 },
+        "partyType": { "enum": ["person", "company", "household"] }
+      }
+    },
+    "Person": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partyId", "partyType", "displayName"],
+      "properties": {
+        "partyId": { "type": "string", "minLength": 1 },
+        "partyType": { "const": "person" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "givenName": { "type": "string" },
+        "familyName": { "type": "string" }
+      }
+    },
+    "Company": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partyId", "partyType", "displayName"],
+      "properties": {
+        "partyId": { "type": "string", "minLength": 1 },
+        "partyType": { "const": "company" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "legalName": { "type": "string" }
+      }
+    },
+    "Household": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partyId", "partyType", "displayName"],
+      "properties": {
+        "partyId": { "type": "string", "minLength": 1 },
+        "partyType": { "const": "household" },
+        "displayName": { "type": "string", "minLength": 1 }
+      }
+    },
+    "Party": {
+      "oneOf": [
+        { "$ref": "#/$defs/Person" },
+        { "$ref": "#/$defs/Company" },
+        { "$ref": "#/$defs/Household" }
+      ]
+    },
+    "Role": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["roleId", "partyId", "roleType", "validFrom"],
+      "properties": {
+        "roleId": { "type": "string", "minLength": 1 },
+        "partyId": { "type": "string", "minLength": 1 },
+        "roleType": {
+          "enum": [
+            "customer",
+            "prospect",
+            "partner",
+            "supplier",
+            "employee",
+            "decision_maker",
+            "contract_party"
+          ]
+        },
+        "contextPartyId": { "type": "string" },
+        "validFrom": { "type": "string", "format": "date-time" },
+        "validTo": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "Relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relationshipId", "relationshipType", "participantPartyIds", "validFrom"],
+      "properties": {
+        "relationshipId": { "type": "string", "minLength": 1 },
+        "relationshipType": { "type": "string", "minLength": 1 },
+        "participantPartyIds": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "direction": { "enum": ["directed", "undirected"] },
+        "validFrom": { "type": "string", "format": "date-time" },
+        "validTo": { "type": ["string", "null"], "format": "date-time" },
+        "evidenceIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "SourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "adapterId", "nativeId", "retrievedAt", "authority"],
+      "properties": {
+        "sourceId": { "type": "string", "minLength": 1 },
+        "adapterId": { "type": "string", "minLength": 1 },
+        "nativeId": { "type": "string", "minLength": 1 },
+        "retrievedAt": { "type": "string", "format": "date-time" },
+        "effectiveAt": { "type": ["string", "null"], "format": "date-time" },
+        "authority": { "enum": ["authoritative", "corroborating", "contextual"] }
+      }
+    },
+    "Evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidenceId", "source", "summary"],
+      "properties": {
+        "evidenceId": { "type": "string", "minLength": 1 },
+        "source": { "$ref": "#/$defs/SourceRef" },
+        "summary": { "type": "string", "minLength": 1 },
+        "untrustedContent": { "type": "boolean", "default": true }
+      }
+    },
+    "Assertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assertionId", "kind", "text", "confidence", "evidenceIds", "derivedFromIds"],
+      "properties": {
+        "assertionId": { "type": "string", "minLength": 1 },
+        "kind": {
+          "enum": ["fact", "observation", "hypothesis", "unknown", "conflict", "recommendation"]
+        },
+        "text": { "type": "string", "minLength": 1 },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "evidenceIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string" }
+        },
+        "derivedFromIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string" }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "enum": ["fact", "observation"] } } },
+          "then": { "properties": { "evidenceIds": { "minItems": 1 } } }
+        }
+      ]
+    },
+    "ContextPlanStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adapterId", "domains", "reason", "status"],
+      "properties": {
+        "adapterId": { "type": "string", "minLength": 1 },
+        "domains": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["party", "commercial", "activity", "knowledge", "time"] }
+        },
+        "reason": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["planned", "queried", "skipped", "failed", "denied"] },
+        "detail": { "type": "string" }
+      }
+    },
+    "ContextPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intent", "subjectPartyId", "steps"],
+      "properties": {
+        "intent": { "const": "relationship_brief" },
+        "subjectPartyId": { "type": "string", "minLength": 1 },
+        "steps": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ContextPlanStep" }
+        }
+      }
+    },
+    "ActionProposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actionId",
+        "actionType",
+        "targetAdapterId",
+        "rationale",
+        "preview",
+        "state",
+        "requiresExplicitApproval",
+        "externalWrite"
+      ],
+      "properties": {
+        "actionId": { "type": "string", "minLength": 1 },
+        "actionType": { "type": "string", "minLength": 1 },
+        "targetAdapterId": { "type": "string", "minLength": 1 },
+        "rationale": { "type": "string", "minLength": 1 },
+        "preview": { "type": "object" },
+        "state": {
+          "enum": ["proposed", "awaiting_approval", "approved", "disabled", "executed", "failed"]
+        },
+        "requiresExplicitApproval": { "const": true },
+        "externalWrite": { "type": "boolean" },
+        "evidenceIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "AdapterCapability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adapterId", "sourceId", "readDomains", "writeActions", "authority", "externalWritesEnabled"],
+      "properties": {
+        "adapterId": { "type": "string", "minLength": 1 },
+        "sourceId": { "type": "string", "minLength": 1 },
+        "readDomains": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["party", "commercial", "activity", "knowledge", "time"] }
+        },
+        "writeActions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string" }
+        },
+        "authority": { "enum": ["authoritative", "corroborating", "contextual"] },
+        "externalWritesEnabled": { "type": "boolean" }
+      }
+    },
+    "ResponseEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "traceId",
+        "intent",
+        "status",
+        "subject",
+        "facts",
+        "observations",
+        "hypotheses",
+        "unknowns",
+        "conflicts",
+        "recommendations",
+        "evidence",
+        "sourcePlan",
+        "actions",
+        "memory",
+        "policy"
+      ],
+      "properties": {
+        "version": { "const": "1.0" },
+        "traceId": { "type": "string", "minLength": 1 },
+        "intent": { "const": "relationship_brief" },
+        "status": { "enum": ["complete", "partial", "needs_disambiguation", "error"] },
+        "subject": {
+          "oneOf": [
+            { "$ref": "#/$defs/PartyRef" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["candidates"],
+              "properties": {
+                "candidates": {
+                  "type": "array",
+                  "minItems": 2,
+                  "items": { "$ref": "#/$defs/PartyRef" }
+                }
+              }
+            }
+          ]
+        },
+        "facts": { "type": "array", "items": { "$ref": "#/$defs/Assertion" } },
+        "observations": { "type": "array", "items": { "$ref": "#/$defs/Assertion" } },
+        "hypotheses": { "type": "array", "items": { "$ref": "#/$defs/Assertion" } },
+        "unknowns": { "type": "array", "items": { "$ref": "#/$defs/Assertion" } },
+        "conflicts": { "type": "array", "items": { "$ref": "#/$defs/Assertion" } },
+        "recommendations": { "type": "array", "items": { "$ref": "#/$defs/Assertion" } },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/Evidence" } },
+        "sourcePlan": {
+          "oneOf": [
+            { "$ref": "#/$defs/ContextPlan" },
+            { "type": "null" }
+          ]
+        },
+        "actions": { "type": "array", "items": { "$ref": "#/$defs/ActionProposal" } },
+        "memory": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sessionContextUsed", "durableMemoryWritten"],
+          "properties": {
+            "sessionContextUsed": { "type": "boolean" },
+            "durableMemoryWritten": { "const": false }
+          }
+        },
+        "policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["externalWrites"],
+          "properties": {
+            "externalWrites": { "const": "disabled" }
+          }
+        }
+      }
+    }
+  }
+}
+

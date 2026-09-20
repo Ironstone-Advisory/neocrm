@@ -1,16 +1,19 @@
 # Experiments
 
-NeoCRM is a laboratory as well as an architecture. An experiment turns a claim into evidence.
+Experiments change one major capability at a time so a better result can be
+attributed to a specific design choice. All use versioned synthetic fixtures
+before any real customer data.
 
-Every experiment should specify:
+| Sequence | Change introduced | Primary question |
+| --- | --- | --- |
+| EXP-001 | CRM-only baseline | What can structured operational data answer alone? |
+| EXP-002 | Chat over CRM | Does conversational access improve usefulness without new sources? |
+| EXP-003 | Knowledge context | What changes when notes, email, and calendar are added? |
+| EXP-004 | Semantic routing | Does capability-aware planning improve relevance and portability? |
+| EXP-005 | Epistemic discipline | Do provenance, conflicts, and unknowns improve trust? |
+| EXP-006 | Unified brief | Does the integrated slice materially improve conversation preparation? |
 
-1. Hypothesis
-2. Context and representative scenario
-3. Question and success criteria
-4. Data sources and permissions
-5. Procedure and variables
-6. Observations and evidence
-7. Result, limitations, and implications
-8. Follow-up experiment or architectural change
+Every experiment follows [`template.md`](template.md). Results are evidence,
+not specifications; a decision changes status only through the lifecycle in
+`spec/README.md`.
 
-An experiment should be considered incomplete if it reports only a successful demonstration and not its limitations or failure modes.

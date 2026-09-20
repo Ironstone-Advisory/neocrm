@@ -3,3 +3,9 @@
 Thumbs.db
 .idea/
 .vscode/
+
+# Generated dependencies and test/build output
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
