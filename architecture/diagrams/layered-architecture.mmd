@@ -1,0 +1,26 @@
+flowchart TB
+    X["Experience layer<br/>ChatGPT • Web • Calendar • Dashboards"]:::experience
+    R["Relationship Intelligence Layer<br/>intent • entity resolution • context assembly<br/>semantic routing • memory • provenance • policy • action orchestration"]:::intelligence
+    S["Canonical Semantic Core<br/>Party • Relationship • Commercial • Activity • Time • Knowledge • Action"]:::semantic
+    A["Replaceable adapters<br/>mapping • authority • retrieval • controlled write-back"]:::adapter
+    C["Operational CRM<br/>Zoho • Google Sheets • Salesforce • HubSpot"]:::operational
+    K["Knowledge<br/>Obsidian • Markdown • Web research"]:::knowledge
+    M["Activity and messaging<br/>Gmail • SMS • WhatsApp • Meetings"]:::activity
+    T["Calendar and capacity<br/>Google Calendar • Outlook"]:::time
+
+    X --> R
+    R <--> S
+    R --> A
+    A --> C
+    A --> K
+    A --> M
+    A --> T
+
+    classDef experience fill:#2563eb,stroke:#1e3a8a,color:#ffffff,stroke-width:2px;
+    classDef intelligence fill:#7c3aed,stroke:#4c1d95,color:#ffffff,stroke-width:3px;
+    classDef semantic fill:#0f766e,stroke:#134e4a,color:#ffffff,stroke-width:3px;
+    classDef adapter fill:#64748b,stroke:#334155,color:#ffffff,stroke-width:2px;
+    classDef operational fill:#16a34a,stroke:#166534,color:#ffffff,stroke-width:2px;
+    classDef knowledge fill:#d97706,stroke:#92400e,color:#ffffff,stroke-width:2px;
+    classDef activity fill:#db2777,stroke:#9d174d,color:#ffffff,stroke-width:2px;
+    classDef time fill:#0891b2,stroke:#155e75,color:#ffffff,stroke-width:2px;

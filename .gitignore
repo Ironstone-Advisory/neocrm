@@ -1,8 +1,5 @@
-node_modules/
-dist/
-coverage/
-.env
-.env.*
-!.env.example
+# Local editor and operating-system files
 .DS_Store
-*.log
+Thumbs.db
+.idea/
+.vscode/
