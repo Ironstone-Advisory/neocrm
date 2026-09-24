@@ -137,7 +137,7 @@ At the local pre-publication checkpoint on September 23, 2026:
 - EVAL-001 executed **12 of 12 cases**, scored **100/100**, and passed **7 of 7 safety gates**; and
 - synthetic fixture Conditions **B and C both ran successfully** through the shared agent, context and adapter contracts.
 
-These numbers are reproducible local pre-publication evidence, not live product results. The exact commands, files, evidence tiers and final commit/CI placeholders are recorded in the [evidence ledger](evidence-ledger.md).
+These numbers are reproducible repository evidence, not live product results. The exact commands, files, evidence tiers, immutable evidence commit and green CI run are recorded in the [evidence ledger](evidence-ledger.md).
 
 The automated suite covers important failure behaviour: ambiguous identity before private retrieval, source failure, unavailable context, hostile instructions embedded in source content, provenance errors and attempted external action. The fixture path also demonstrates bounded Agent, Goal, Plan and Run contracts around the RelationshipBriefAgent.
 

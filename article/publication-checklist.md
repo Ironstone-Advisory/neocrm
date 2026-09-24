@@ -4,12 +4,12 @@ Use this checklist for any venue. A checked item means the published artifact—
 
 ## Evidence lock and remote verification
 
-- [ ] Commit the complete article package and all cited repository artifacts to the intended branch.
-- [ ] Replace `{{FINAL_COMMIT_SHA}}` and `{{FINAL_COMMIT_URL}}` in `evidence-ledger.md` with a permanent GitHub commit permalink.
-- [ ] Confirm the remote commit contains the exact article, specifications, experiment files, tests and evidence cited in the ledger.
-- [ ] Run the full repository gate against that exact commit.
-- [ ] Add the final green CI run URL as `{{CI_RUN_URL}}`.
-- [ ] Confirm CI reports the same specification, test, mutation and EVAL-001 counts used in the article.
+- [x] Commit the complete article package and all cited repository artifacts to the intended branch.
+- [x] Record a permanent GitHub evidence-commit permalink in `evidence-ledger.md`.
+- [x] Confirm the remote evidence commit contains the exact article, specifications, experiment files, tests and evidence cited in the ledger.
+- [x] Run the full repository gate against that exact evidence commit.
+- [x] Record the final green CI run URL.
+- [x] Confirm CI reports the same specification, test, mutation and EVAL-001 counts used in the article.
 - [ ] If any count changed, update both `draft.md` and `evidence-ledger.md`; do not preserve a more attractive older number.
 - [ ] Run the repository relative-link checker after the final article edits.
 - [ ] Search the article package for unresolved placeholders: `{{`.

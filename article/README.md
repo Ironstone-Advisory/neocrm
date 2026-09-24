@@ -1,6 +1,6 @@
 # NeoCRM publication package
 
-**Status:** Publication-ready editorial draft; final remote evidence links, venue details and live/human results are pending.
+**Status:** Publication-ready editorial draft with remote evidence locked; venue details, figure exports and live/human results are pending.
 
 This directory contains a venue-neutral article package about the NeoCRM architecture and its first experiment. It must travel with its evidence boundary: the current verified results are local, synthetic and structural. EXP-001 remains Planned until permissioned live A/B/C cases and the human evaluation are recorded.
 
@@ -9,7 +9,7 @@ This directory contains a venue-neutral article package about the NeoCRM archite
 | File | Purpose |
 | --- | --- |
 | [`draft.md`](draft.md) | Long-form publication draft, SEO metadata, evidence boundary and call to action |
-| [`evidence-ledger.md`](evidence-ledger.md) | Claim-by-claim sources, commands, evidence tiers and final commit/CI placeholders |
+| [`evidence-ledger.md`](evidence-ledger.md) | Claim-by-claim sources, commands, evidence tiers, immutable evidence commit and CI run |
 | [`publication-checklist.md`](publication-checklist.md) | Evidence, privacy, attribution, visual, SEO and release checks |
 | [`figures/architecture.mmd`](figures/architecture.mmd) | Versioned publication source for the seven-layer architecture figure |
 | [`figures/README.md`](figures/README.md) | Figure caption, alt text and export instructions |
@@ -22,14 +22,8 @@ This directory contains a venue-neutral article package about the NeoCRM archite
 3. Run the full repository gate and relative-link check.
 4. Commit the exact source state intended for publication and push it to the feature branch.
 5. Wait for green CI on that exact commit.
-6. Replace all placeholders in the package:
+6. Replace the remaining venue and visual placeholders in the package:
 
-   - `{{FINAL_COMMIT_SHA}}`
-   - `{{FINAL_COMMIT_URL}}`
-   - `{{CI_RUN_URL}}`
-   - `{{FINAL_VERIFICATION_DATE}}`
-   - `{{EVIDENCE_REVIEWER}}`
-   - `{{LIVE_AND_HUMAN_STATUS}}`
    - `{{ARCHITECTURE_FIGURE_URL}}`
    - `{{ARTICLE_URL}}`
 
@@ -62,4 +56,3 @@ When the permissioned pilot is complete:
 6. request an independent evidence review before republishing.
 
 External publication is a separate action. Nothing in this package authorizes publishing, announcing live results, or sharing customer data.
-
