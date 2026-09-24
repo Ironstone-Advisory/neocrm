@@ -1,36 +1,18 @@
-// IMP-002: CAP-001 read-only Relationship Intelligence Layer.
+// IMP-002 - Status: Implemented. Modular, contract-validated, read-only Relationship Intelligence Layer.
 
-const normalizeId = (value) => value.replace(/[^a-zA-Z0-9-]/g, "-");
-
-function assertion(assertionId, kind, text, confidence, evidenceIds = [], derivedFromIds = []) {
-  return { assertionId, kind, text, confidence, evidenceIds, derivedFromIds };
-}
-
-function baseEnvelope(traceId, status, subject) {
-  return {
-    version: "1.0",
-    traceId,
-    intent: "relationship_brief",
-    status,
-    subject,
-    facts: [],
-    observations: [],
-    hypotheses: [],
-    unknowns: [],
-    conflicts: [],
-    recommendations: [],
-    evidence: [],
-    sourcePlan: null,
-    actions: [],
-    memory: {
-      sessionContextUsed: false,
-      durableMemoryWritten: false
-    },
-    policy: {
-      externalWrites: "disabled"
-    }
-  };
-}
+import { createAssertion } from "./assertions.mjs";
+import { deriveEpistemicItems } from "./epistemic.mjs";
+import { resolveIdentity } from "./identity.mjs";
+import { opaqueId } from "./ids.mjs";
+import { normalizeAdapterResult } from "./normalize.mjs";
+import { planMinimumSources } from "./planner.mjs";
+import {
+  proposeDisabledAction,
+  rejectExternalWrite,
+  toModelSafeContext
+} from "./policy.mjs";
+import { reconcileAssertions } from "./reconcile.mjs";
+import { baseEnvelope, finalizeEnvelope, unknownAssertion } from "./response.mjs";
 
 export function createMemoryLogger() {
   const entries = [];
@@ -44,180 +26,169 @@ export function createMemoryLogger() {
 
 export async function buildRelationshipBrief({
   query,
+  selectedPartyId,
   identityResolver,
   adapters,
   now,
   traceId = "trace-cap-001",
-  logger = { log() {} }
+  logger = { log() {} },
+  sessionContextUsed = false
 }) {
-  const retrievedAt = new Date(now).toISOString();
+  const currentTime = new Date(now).toISOString();
   const emit = (event, fields = {}) => logger.log({ event, traceId, ...fields });
   emit("request.started", { intent: "relationship_brief" });
 
-  const candidates = await identityResolver.resolve(query);
-  if (candidates.length > 1) {
-    emit("identity.ambiguous", { candidateCount: candidates.length });
-    const response = baseEnvelope(traceId, "needs_disambiguation", { candidates });
+  const identity = await resolveIdentity({ identityResolver, query, selectedPartyId });
+  if (identity.status === "ambiguous") {
+    emit("identity.ambiguous", { candidateCount: identity.candidates.length });
+    const response = baseEnvelope({
+      traceId,
+      status: "needs_disambiguation",
+      subject: { candidates: identity.candidates },
+      sessionContextUsed
+    });
     response.unknowns.push(
-      assertion(
-        "unknown-identity",
-        "unknown",
-        "More than one Party matches the requested person; select a candidate before private context is retrieved.",
-        1
+      unknownAssertion(
+        "party.identity",
+        "More than one Party matches the requested person; select a candidate before private context is retrieved."
       )
     );
     emit("request.completed", { status: response.status, evidenceCount: 0 });
-    return response;
+    return finalizeEnvelope(response);
   }
 
-  if (candidates.length === 0) {
+  if (identity.status === "not_found") {
     emit("identity.not_found");
-    const response = baseEnvelope(traceId, "error", {
-      partyId: "unresolved",
-      displayName: "Unresolved person",
-      partyType: "person"
+    const response = baseEnvelope({
+      traceId,
+      status: "error",
+      subject: { unresolvedQuery: String(query) },
+      sessionContextUsed
     });
     response.unknowns.push(
-      assertion("unknown-person", "unknown", "No Party matched the requested person.", 1)
+      unknownAssertion("party.identity", "No Party matched the requested person.")
     );
     emit("request.completed", { status: response.status, evidenceCount: 0 });
-    return response;
+    return finalizeEnvelope(response);
   }
 
-  const subject = candidates[0];
+  const subject = identity.candidates.find(
+    (candidate) => candidate.partyId === identity.selectedPartyId
+  );
   emit("identity.resolved", { partyId: subject.partyId, partyType: subject.partyType });
-  const response = baseEnvelope(traceId, "complete", subject);
-  const plan = {
-    intent: "relationship_brief",
-    subjectPartyId: subject.partyId,
-    steps: adapters.map(({ capability }) => ({
-      adapterId: capability.adapterId,
-      domains: capability.readDomains,
-      reason: `CAP-001 needs ${capability.readDomains.join(", ")} context`,
-      status: "planned"
-    }))
-  };
+  const response = baseEnvelope({
+    traceId,
+    status: "complete",
+    subject,
+    sessionContextUsed
+  });
+  const { plan, executions, uncoveredDomains } = planMinimumSources({
+    adapters,
+    subjectPartyId: subject.partyId
+  });
   response.sourcePlan = plan;
 
-  const normalizedClaims = [];
-  for (const [index, adapter] of adapters.entries()) {
-    const step = plan.steps[index];
+  for (const domain of uncoveredDomains) {
+    response.status = "partial";
+    response.unknowns.push(
+      unknownAssertion(
+        `context.${domain}`,
+        `${domain} context is unknown because no authorized adapter supports the required Party filter and domain authority.`
+      )
+    );
+  }
+
+  let marker = 0;
+  const nextMarker = () => `E${++marker}`;
+  const normalizedAssertions = [];
+  let successfulSourceCount = 0;
+  for (const execution of executions) {
+    const { adapter, capability, request, step } = execution;
     try {
-      const records = await adapter.read({ partyId: subject.partyId });
-      step.status = "queried";
-      emit("source.completed", {
-        adapterId: adapter.capability.adapterId,
-        recordCount: records.length
+      const result = await adapter.read(request);
+      const normalized = normalizeAdapterResult({
+        capability,
+        request,
+        result,
+        now: currentTime,
+        nextMarker,
+        subject
       });
-      for (const record of records) {
-        const evidenceId = normalizeId(
-          `ev-${adapter.capability.adapterId}-${record.nativeId}`
+      step.freshness = normalized.freshness;
+
+      if (normalized.result.status !== "ok") {
+        step.status = normalized.result.status === "denied" ? "denied" : "failed";
+        step.detail =
+          normalized.result.status === "denied" ? "Access denied" : "Source unavailable";
+        response.status = "partial";
+        response.unknowns.push(
+          unknownAssertion(
+            `source.${capability.sourceId}`,
+            `${capability.sourceId} context is unknown because the source was ${
+              normalized.result.status === "denied" ? "denied" : "unavailable"
+            }.`
+          )
         );
-        response.evidence.push({
-          evidenceId,
-          source: {
-            sourceId: adapter.capability.sourceId,
-            adapterId: adapter.capability.adapterId,
-            nativeId: record.nativeId,
-            retrievedAt,
-            effectiveAt: record.effectiveAt ?? null,
-            authority: adapter.capability.authority
-          },
-          summary: record.summary,
-          untrustedContent: record.untrustedContent ?? true
+        emit("source.failed", {
+          adapterId: capability.adapterId,
+          code: normalized.result.error?.code ?? "SOURCE_ERROR"
         });
-        for (const [claimIndex, claim] of record.claims.entries()) {
-          const kind =
-            adapter.capability.authority === "authoritative" ? "fact" : "observation";
-          const item = assertion(
-            normalizeId(`a-${adapter.capability.adapterId}-${record.nativeId}-${claimIndex}`),
-            kind,
-            claim.label,
-            kind === "fact" ? 0.95 : 0.8,
-            [evidenceId]
-          );
-          response[kind === "fact" ? "facts" : "observations"].push(item);
-          normalizedClaims.push({ ...claim, evidenceId, assertionId: item.assertionId });
-        }
+        continue;
       }
+
+      if (normalized.freshness !== "fresh") {
+        step.status = "skipped";
+        step.detail = "Source result did not satisfy the declared freshness policy";
+        response.status = "partial";
+        response.unknowns.push(
+          unknownAssertion(
+            `source.${capability.sourceId}.freshness`,
+            `${capability.sourceId} context is unknown because the source result was not fresh.`
+          )
+        );
+        emit("source.skipped", { adapterId: capability.adapterId, reason: "freshness" });
+        continue;
+      }
+
+      step.status = "queried";
+      successfulSourceCount += 1;
+      response.evidence.push(...normalized.evidence);
+      normalizedAssertions.push(...normalized.assertions);
+      emit("source.completed", {
+        adapterId: capability.adapterId,
+        recordCount: normalized.result.records.length
+      });
     } catch (error) {
-      const denied = error.code === "SOURCE_ACCESS_DENIED";
-      step.status = denied ? "denied" : "failed";
-      step.detail = denied ? "Access denied" : "Source unavailable";
+      step.status = error.code === "SOURCE_ACCESS_DENIED" ? "denied" : "failed";
+      step.detail = step.status === "denied" ? "Access denied" : "Source boundary failed";
       response.status = "partial";
-      const unknownId = normalizeId(`unknown-${adapter.capability.adapterId}`);
       response.unknowns.push(
-        assertion(
-          unknownId,
-          "unknown",
-          `${adapter.capability.sourceId} context is unknown because the source was ${denied ? "denied" : "unavailable"}.`,
-          1
+        unknownAssertion(
+          `source.${capability.sourceId}`,
+          `${capability.sourceId} context is unknown because the source boundary failed closed.`
         )
       );
       emit("source.failed", {
-        adapterId: adapter.capability.adapterId,
+        adapterId: capability.adapterId,
         code: error.code ?? "SOURCE_ERROR"
       });
     }
   }
 
-  const claimsByField = Map.groupBy(normalizedClaims, (claim) => claim.field);
-  for (const [field, claims] of claimsByField) {
-    const values = new Set(claims.map((claim) => JSON.stringify(claim.value)));
-    if (values.size < 2) continue;
-    response.conflicts.push(
-      assertion(
-        normalizeId(`conflict-${field}`),
-        "conflict",
-        `Sources disagree about ${field.replaceAll("_", " ")}: ${claims
-          .map((claim) => claim.value)
-          .join(" versus ")}.`,
-        1,
-        [...new Set(claims.map((claim) => claim.evidenceId))],
-        claims.map((claim) => claim.assertionId)
-      )
-    );
-  }
+  // A degraded brief is useful only when at least one planned source crossed
+  // its boundary successfully. If every source is unavailable, denied, stale,
+  // or no authorized source can be planned, fail the brief as a whole.
+  if (successfulSourceCount === 0) response.status = "error";
 
-  const riskClaims = normalizedClaims.filter((claim) => claim.field === "risk_signal");
-  if (riskClaims.length) {
-    response.hypotheses.push(
-      assertion(
-        "hypothesis-timeline-risk",
-        "hypothesis",
-        "The opportunity timeline may be at risk because the security review has not started.",
-        0.65,
-        riskClaims.map((claim) => claim.evidenceId),
-        riskClaims.map((claim) => claim.assertionId)
-      )
-    );
-  }
+  const { assertions, conflicts } = reconcileAssertions(normalizedAssertions);
+  response.facts.push(...assertions.filter((item) => item.kind === "fact"));
+  response.observations.push(...assertions.filter((item) => item.kind === "observation"));
+  response.conflicts.push(...conflicts);
 
-  if (!normalizedClaims.some((claim) => claim.field === "final_signatory")) {
-    response.unknowns.push(
-      assertion(
-        "unknown-final-signatory",
-        "unknown",
-        "The final contract signatory is not established by the available sources.",
-        1
-      )
-    );
-  }
-
-  const recommendationInputs = [
-    ...response.conflicts.map((item) => item.assertionId),
-    ...response.hypotheses.map((item) => item.assertionId)
-  ];
-  response.recommendations.push(
-    assertion(
-      "recommendation-clarify-date-and-security",
-      "recommendation",
-      "Confirm the decision date, final signatory, and security-review owner in the conversation.",
-      0.9,
-      [],
-      recommendationInputs
-    )
-  );
+  const derived = deriveEpistemicItems({ assertions, conflicts });
+  response.hypotheses.push(...derived.hypotheses);
+  response.unknowns.push(...derived.unknowns);
+  response.recommendations.push(...derived.recommendations);
 
   emit("request.completed", {
     status: response.status,
@@ -226,26 +197,28 @@ export async function buildRelationshipBrief({
     observationCount: response.observations.length,
     unknownCount: response.unknowns.length
   });
-  return response;
+  return finalizeEnvelope(response);
 }
 
-export function proposeAction({ actionType, targetAdapterId, rationale, preview, evidenceIds = [] }) {
-  return {
-    actionId: `proposal-${normalizeId(actionType)}`,
+export function proposeAction({
+  actionType,
+  targetAdapterId,
+  rationale,
+  preview,
+  evidenceIds = []
+}) {
+  return proposeDisabledAction({
+    actionId: opaqueId("action", actionType, targetAdapterId, preview),
     actionType,
     targetAdapterId,
     rationale,
     preview,
-    state: "disabled",
-    requiresExplicitApproval: true,
-    externalWrite: true,
     evidenceIds
-  };
+  });
 }
 
 export function executeAction() {
-  const error = new Error("External writes are disabled for CAP-001.");
-  error.code = "EXTERNAL_WRITES_DISABLED";
-  throw error;
+  return rejectExternalWrite();
 }
 
+export { createAssertion, planMinimumSources, toModelSafeContext };

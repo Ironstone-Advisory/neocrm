@@ -1,6 +1,6 @@
 # EXP-NNN: Title
 
-**Status:** Planned | Running | Complete
+**Status:** Planned | Running | Demonstrated | Validated | Inconclusive | Rejected
 
 ## Hypothesis
 ## Independent variable
@@ -14,4 +14,3 @@
 
 Record fixture version, code commit, fixed clock, evaluator version, raw score,
 safety gates, qualitative observations, and the resulting design decision.
-

@@ -1,14 +1,16 @@
-# Transactional CRM v0 prototype
+# Transactional CRM v0 archive
 
-This directory preserves the first Fastify, TypeScript domain, PostgreSQL, and
-documentation scaffold intact for historical comparison.
+**Archive status:** Non-runnable historical documentation only
 
-It is non-authoritative and intentionally excluded from the root workspace,
-build, and tests. Its `person | organization` model, lifecycle-stage
-`prospect`, API metadata, and relational schema do not conform to the current
-NeoCRM specification. Do not import these packages from the reference slice.
+This directory preserves the description of the first Fastify, TypeScript,
+PostgreSQL, and transactional-domain scaffold for historical comparison. The
+source tree and an independent package manifest are not present here, so this
+archive cannot be installed or run.
 
-The prototype may be run only from this directory after installing its own
-dependencies. Promotion of any part requires a specification trace and a
-conformance test.
+It is non-authoritative and excluded from the root workspace, build, and tests.
+Its former `person | organization` model, lifecycle-stage `prospect`, API
+metadata, and relational schema do not conform to the current NeoCRM
+specification. Do not import from or treat this directory as an implementation.
 
+Reintroduction of archived code would require a deliberate recovery change,
+its own runnable boundary, a specification trace, and conformance tests.

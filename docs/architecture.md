@@ -5,3 +5,4 @@ The original v0.1 scaffold described a TypeScript/Fastify modular monolith and P
 NeoCRM v0.1 is an **experimental semantic architecture** centred on the Relationship Intelligence Layer, canonical semantics, provenance, governed action, and replaceable adapters. Read [the repository architecture overview](../architecture/overview.md).
 
 The code and database remain useful probes. They are not a settled runtime architecture and do not define the domain model.
+

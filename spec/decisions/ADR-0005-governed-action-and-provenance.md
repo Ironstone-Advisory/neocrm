@@ -2,7 +2,9 @@
 
 **Status:** Provisional
 
-**Validation:** EXP-005 / EVAL-001
+**Validation plan:** EXP-005 / EVAL-001
+
+**Demonstration evidence:** EXP-006 / EVAL-001
 
 ## Context
 
@@ -26,4 +28,3 @@ chain-of-thought or raw source bodies.
 - User approval is necessary but not sufficient; policy also authorizes.
 - Adapter write capability does not grant permission to the assistant.
 - Failed or denied sources are represented as explicit unknowns.
-

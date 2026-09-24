@@ -16,6 +16,20 @@ test("source failure produces a partial brief, failed plan step, and unknown", a
   assert.ok(structured.evidence.some((item) => item.source.sourceId === "crm"));
 });
 
+test("total source failure returns an error instead of a misleading partial brief", async () => {
+  const { assistant } = await createTestSystem({
+    failAdapterIds: ["mock-crm", "mock-email", "mock-notes", "mock-calendar"]
+  });
+  const { structured } = await assistant.respond(relationshipQuestion);
+
+  assert.equal(structured.status, "error");
+  assert.equal(structured.evidence.length, 0);
+  assert.ok(structured.sourcePlan.steps.length > 0);
+  assert.ok(structured.sourcePlan.steps.every((step) => step.status === "failed"));
+  assert.equal(structured.policy.externalWrites, "disabled");
+  assert.equal(structured.actions.length, 0);
+});
+
 test("observability records lifecycle metadata but not private source bodies", async () => {
   const { assistant, logger } = await createTestSystem();
   await assistant.respond(relationshipQuestion);
@@ -28,4 +42,3 @@ test("observability records lifecycle metadata but not private source bodies", a
   assert.doesNotMatch(serialized, /Ignore all previous instructions/);
   assert.doesNotMatch(serialized, /security pack by September 24/);
 });
-

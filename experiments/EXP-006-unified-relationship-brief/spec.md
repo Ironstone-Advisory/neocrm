@@ -1,6 +1,6 @@
 # EXP-006: Unified relationship brief
 
-**Status:** Implemented
+**Status:** Demonstrated
 
 ## Hypothesis
 
@@ -23,8 +23,10 @@ EXP-001 CRM-only baseline.
 
 ## Procedure
 
-Run `node --test` and EVAL-001; then conduct a blinded human comparison against
-the CRM-only baseline.
+Run the automated structural checks recorded in RES-001. Those checks establish
+that the demonstration is internally traceable; they do not test the hypothesis.
+The experiment remains unvalidated until the planned EVAL-001 run and blinded
+human comparison against the CRM-only baseline are completed and recorded.
 
 ## Measures
 
@@ -44,5 +46,5 @@ keeps CAP-001 Provisional and triggers experience redesign.
 
 ## Results
 
-See [`results.md`](results.md).
-
+See [`results.md`](results.md). The current result is an implemented
+demonstration, not a validated experiment outcome.

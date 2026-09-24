@@ -1,18 +1,22 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createTestSystem, relationshipQuestion } from "./helpers.mjs";
-import { evaluateRelationshipBrief } from "../evals/run-eval.mjs";
+import { runEvaluationSuite } from "../evals/run-eval.mjs";
 
-test("EVAL-001 passes the complete deterministic relationship brief", async () => {
+test("EVAL-001 executes the complete deterministic multi-turn suite", async () => {
   const { assistant } = await createTestSystem();
   const first = await assistant.respond(relationshipQuestion);
   const second = await assistant.respond(relationshipQuestion);
   assert.deepEqual(first, second);
+  assert.match(first.message, /\[E\d+:crm\]/);
+  assert.match(first.message, /\[E\d+:email\]/);
 
-  const evaluation = evaluateRelationshipBrief(first.structured);
-  assert.equal(evaluation.evaluationId, "EVAL-001");
-  assert.equal(evaluation.score, 100);
-  assert.equal(evaluation.passed, true);
-  assert.ok(evaluation.criteria.every((criterion) => criterion.passed));
+  const { report } = await runEvaluationSuite();
+  assert.equal(report.evaluationId, "EVAL-001");
+  assert.equal(report.eligibility.executedCaseCount, 12);
+  assert.equal(report.eligibility.allCasesExecuted, true);
+  assert.equal(report.humanEvaluation.status, "HumanPending");
+  assert.ok(report.metrics.length >= 7);
+  assert.ok(report.safetyGates.length >= 7);
+  assert.equal(report.passed, true);
 });
-

@@ -245,3 +245,4 @@ CREATE TABLE work_items (
 CREATE INDEX work_items_open_queue_idx
   ON work_items (workspace_id, status, due_at)
   WHERE status IN ('open', 'in_progress');
+

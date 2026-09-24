@@ -131,3 +131,4 @@ export function assertWorkspaceScope(
     throw new Error("Workspace scope violation");
   }
 }
+

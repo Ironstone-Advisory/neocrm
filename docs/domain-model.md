@@ -11,3 +11,4 @@ In particular, the prototype must not override these rules:
 - Roles, relationships, and types are distinct.
 - Time, knowledge/provenance, and action policy are first-class domains.
 - Adapters map implementations to canonical meaning; they do not define it.
+

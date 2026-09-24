@@ -11,14 +11,21 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "generate:contracts": "node scripts/generate-contracts.mjs",
+    "check:contracts": "node scripts/generate-contracts.mjs --check",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "validate:spec": "node scripts/validate-spec.mjs",
     "test": "node --test",
-    "check": "pnpm validate:spec && pnpm typecheck && pnpm test",
+    "eval": "node evals/run-eval.mjs",
+    "check": "pnpm validate:spec && pnpm check:contracts && pnpm typecheck && pnpm test && pnpm eval",
     "demo": "node apps/assistant/src/cli.mjs"
   },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  },
   "devDependencies": {
+    "json-schema-to-typescript": "^15.0.4",
     "typescript": "^5.7.3"
   }
 }
-

@@ -2,7 +2,9 @@
 
 **Status:** Provisional
 
-**Validation:** EXP-004 / EVAL-001
+**Validation plan:** EXP-004 / EVAL-001
+
+**Demonstration evidence:** EXP-006 / EVAL-001
 
 ## Decision
 

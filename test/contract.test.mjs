@@ -18,7 +18,9 @@ test("normative schema defines every core contract and all Party types", async (
     "ContextPlan",
     "ResponseEnvelope",
     "ActionProposal",
-    "AdapterCapability"
+    "AdapterCapability",
+    "AdapterRequest",
+    "AdapterResult"
   ]) {
     assert.ok(schema.$defs[name], `missing schema definition ${name}`);
   }
@@ -46,4 +48,3 @@ test("CAP-001 output carries the required response-envelope fields", async () =>
     assert.ok(item.evidenceIds.every((id) => knownEvidence.has(id)));
   }
 });
-

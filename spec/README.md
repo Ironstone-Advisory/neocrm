@@ -35,10 +35,13 @@ Normative artifacts have one status:
 - **Accepted** — supported by linked experiment/evaluation evidence.
 - **Superseded** or **Rejected** — retained for decision history.
 
-A Provisional artifact becomes Accepted only when its traceability chain reaches
-an experiment, evaluation, implementation, and recorded result that meet its
-acceptance rule. A change to semantics, safety, or externally visible contracts
-requires a new or amended ADR and traceability update in the same change.
+A Provisional artifact becomes Accepted only when each required trace follows
+typed lifecycle links to a validated experiment, passed evaluation, verified
+implementation, and validated result that meet its acceptance rule. A
+demonstration result may support continued Provisional development, but it is
+not validation evidence. A change to semantics, safety, or externally visible
+contracts requires a new or amended ADR and traceability update in the same
+change.
 
 ## Required trace
 
@@ -46,7 +49,9 @@ requires a new or amended ADR and traceability update in the same change.
 Capability -> FR/NFR/SAFE -> ADR -> EXP -> EVAL -> implementation -> result
 ```
 
-`pnpm validate:spec` rejects duplicate or malformed IDs, missing files,
-unresolvable links, unparseable schemas, and capabilities without a complete
-trace. CI runs that command on every change.
-
+`pnpm validate:spec` validates `traceability.json` against
+`traceability.schema.json`; rejects invalid node kinds, lifecycle statuses, and
+edge direction; reconciles artifact status and ADR validation declarations;
+and requires every capability requirement to end in result evidence scoped to
+the same experiment, evaluation, and implementation. Sequencing links such as
+`precedes` never count as evidence. CI runs that command on every change.

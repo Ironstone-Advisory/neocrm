@@ -11,9 +11,8 @@ before any real customer data.
 | EXP-003 | Knowledge context | What changes when notes, email, and calendar are added? |
 | EXP-004 | Semantic routing | Does capability-aware planning improve relevance and portability? |
 | EXP-005 | Epistemic discipline | Do provenance, conflicts, and unknowns improve trust? |
-| EXP-006 | Unified brief | Does the integrated slice materially improve conversation preparation? |
+| EXP-006 | Unified brief demonstration | Does the integrated slice materially improve conversation preparation? (Demonstrated structurally; experimental validation pending.) |
 
 Every experiment follows [`template.md`](template.md). Results are evidence,
 not specifications; a decision changes status only through the lifecycle in
 `spec/README.md`.
-

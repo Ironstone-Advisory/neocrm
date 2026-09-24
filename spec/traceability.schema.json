@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neocrm.example/spec/traceability.schema.json",
+  "title": "NeoCRM traceability manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "version", "nodes", "links"],
+  "properties": {
+    "$schema": { "const": "./traceability.schema.json" },
+    "version": { "const": 2 },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "links": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/link" }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^(CAP|EXP|EVAL|IMP|RES)-[0-9]{3}$|^ADR-[0-9]{4}$|^(FR|NFR|SAFE)-[A-Z]+-[0-9]{3}$"
+    },
+    "relativeFile": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:)(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "automatedCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "command", "outcome", "observedAt"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^CHECK-[A-Z0-9-]+$" },
+        "command": { "type": "string", "minLength": 1 },
+        "outcome": { "const": "Passed" },
+        "observedAt": { "type": "string", "format": "date" }
+      }
+    },
+    "resultEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["experiment", "evaluations", "implementations", "automatedChecks", "humanEvaluation"],
+      "properties": {
+        "experiment": { "type": "string", "pattern": "^EXP-[0-9]{3}$" },
+        "evaluations": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^EVAL-[0-9]{3}$" }
+        },
+        "implementations": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^IMP-[0-9]{3}$" }
+        },
+        "automatedChecks": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/automatedCheck" }
+        },
+        "humanEvaluation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status"],
+          "properties": {
+            "status": { "enum": ["Pending", "Passed", "Failed"] }
+          }
+        }
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "status", "file"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": {
+          "enum": [
+            "capability",
+            "requirement",
+            "quality",
+            "safety",
+            "decision",
+            "experiment",
+            "evaluation",
+            "implementation",
+            "result"
+          ]
+        },
+        "status": { "type": "string" },
+        "file": { "$ref": "#/$defs/relativeFile" },
+        "evidence": { "$ref": "#/$defs/resultEvidence" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "enum": ["capability", "requirement", "quality", "safety", "decision"] } } },
+          "then": {
+            "properties": {
+              "status": { "enum": ["Draft", "Proposed", "Provisional", "Accepted", "Superseded", "Rejected"] }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "capability" } }, "required": ["kind"] },
+          "then": { "properties": { "id": { "type": "string", "pattern": "^CAP-[0-9]{3}$" } } }
+        },
+        {
+          "if": { "properties": { "kind": { "enum": ["requirement", "quality", "safety"] } }, "required": ["kind"] },
+          "then": { "properties": { "id": { "type": "string", "pattern": "^(FR|NFR|SAFE)-[A-Z]+-[0-9]{3}$" } } }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "decision" } }, "required": ["kind"] },
+          "then": { "properties": { "id": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } } }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "experiment" } }, "required": ["kind"] },
+          "then": {
+            "properties": {
+              "id": { "type": "string", "pattern": "^EXP-[0-9]{3}$" },
+              "status": { "enum": ["Planned", "Running", "Demonstrated", "Validated", "Inconclusive", "Rejected"] }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "evaluation" } }, "required": ["kind"] },
+          "then": {
+            "properties": {
+              "id": { "type": "string", "pattern": "^EVAL-[0-9]{3}$" },
+              "status": { "enum": ["Defined", "Implemented", "Passed", "Failed"] }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "implementation" } }, "required": ["kind"] },
+          "then": {
+            "properties": {
+              "id": { "type": "string", "pattern": "^IMP-[0-9]{3}$" },
+              "status": { "enum": ["Planned", "Implemented", "Verified", "Retired"] }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "result" } }, "required": ["kind"] },
+          "then": {
+            "required": ["evidence"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^RES-[0-9]{3}$" },
+              "status": { "enum": ["Recorded", "AutomatedPassHumanPending", "Validated", "Failed", "Inconclusive"] },
+              "evidence": { "$ref": "#/$defs/resultEvidence" }
+            }
+          },
+          "else": { "not": { "required": ["evidence"] } }
+        }
+      ]
+    },
+    "link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to", "relation"],
+      "properties": {
+        "from": { "$ref": "#/$defs/id" },
+        "to": { "$ref": "#/$defs/id" },
+        "relation": {
+          "enum": ["requires", "governed-by", "tested-by", "precedes", "evaluated-by", "exercises", "reported-in"]
+        },
+        "evidenceStage": { "enum": ["planned", "demonstration", "validation"] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "relation": { "const": "tested-by" } }, "required": ["relation"] },
+          "then": {
+            "required": ["evidenceStage"],
+            "properties": { "evidenceStage": { "enum": ["planned", "demonstration", "validation"] } }
+          },
+          "else": { "not": { "required": ["evidenceStage"] } }
+        }
+      ]
+    }
+  }
+}

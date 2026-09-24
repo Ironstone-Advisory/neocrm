@@ -27,3 +27,4 @@ start().catch((error: unknown) => {
   server.log.error(error);
   process.exitCode = 1;
 });
+
