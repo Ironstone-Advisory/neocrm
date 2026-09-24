@@ -132,7 +132,7 @@ The [EXP-001 specification](../experiments/EXP-001-zoho-obsidian-relationship-br
 
 At the local pre-publication checkpoint on September 23, 2026:
 
-- specification validation reported **240 typed nodes and 313 typed links**;
+- specification validation reported **355 typed nodes and 474 typed links**;
 - the evaluator mutation suite passed **6 of 6 negative tests**, meaning the evaluator detected six deliberately introduced regressions;
 - EVAL-001 executed **12 of 12 cases**, scored **100/100**, and passed **7 of 7 safety gates**; and
 - synthetic fixture Conditions **B and C both ran successfully** through the shared agent, context and adapter contracts.

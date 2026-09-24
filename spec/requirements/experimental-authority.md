@@ -1,0 +1,10 @@
+# Experimental authority requirements
+
+**Status:** Accepted
+
+- **FR-GRANT-001** — An experiment MAY operate within an authenticated user's existing read authority, but each protocol MUST still bind purpose, sources, subjects, fields, classification, time window, and minimum-necessary retrieval. Any write requires a separate explicit, scoped, revocable WriteGrant naming versioned registered workflows and defining effective/expiry time, allowed non-delete operations, systems, object/record-set/field scope, risk ceiling, limits, approval mode, verification, receipt, and correction/compensation rules.
+- **FR-DELETE-001** — Every deletion effect MUST require a fresh DeletionAuthorization from an authorized human, bound to the exact immutable single target or fully enumerated batch, target version where available, preview, purpose, expiry, and single use. A WriteGrant MUST NOT contain or imply delete authority. Classification follows material effect rather than API verb: destruction, purge, erasure, destructive field clearing, or equivalent irreversible removal cannot be disguised as update, transition, unlink, overwrite, redaction, retention, or disposition.
+- **SAFE-GRANT-001** — A grant MUST NOT exceed the principal's authority; an Agent MUST NOT create, broaden, renew, transfer, or approve its own grant. Expired, revoked, ambiguous, out-of-scope, over-budget, or unverifiable work MUST fail closed.
+- **SAFE-DELETE-001** — General approval, role membership, workflow enrollment, standing instruction, timed WriteGrant, or approval of a similar deletion MUST NOT satisfy deletion authorization. A changed target list invalidates authorization; each retry after an uncertain outcome requires verification and, unless confirmed not executed, human resolution before another delete attempt.
+
+The normative machine-readable scaffold is [`../contracts/governed-action.schema.json`](../contracts/governed-action.schema.json). CAP-001 and EXP-001 remain read-only; these requirements authorize only explicitly registered later experiments.

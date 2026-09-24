@@ -10,6 +10,8 @@ Confine reads to one configured vault root and approved subfolders/tags. Exclude
 
 ## Common rules
 
+EXP-001 may operate within the authenticated user's existing read authority, but its protocol, conditions, allowlists, purpose, and minimum-necessary plan narrow what it actually retrieves. User access never means indiscriminate collection.
+
 - Read-only credentials and operations; no mutation endpoint/action handle is exposed.
 - Identity is resolved before private reads; ambiguous cases stop.
 - Retrieve only records/notes needed for the chosen Party and brief.
@@ -19,3 +21,5 @@ Confine reads to one configured vault root and approved subfolders/tags. Exclude
 - Define run-artifact retention before collection; delete temporary extracts after the agreed window.
 - Commit only synthetic, aggregate, or de-identified evidence—never credentials, absolute vault paths, or customer bodies.
 - Withdrawal, complaint, or unexpected sensitivity stops use and initiates deletion/redress review.
+
+The later time-bounded WriteGrant model does not apply to EXP-001. Any future source-data deletion identified during redress would be a separate governed action requiring fresh exact human authorization; it is not performed by this experiment.

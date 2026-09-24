@@ -2,13 +2,13 @@
 
 **Version:** 2026-09-24-v1  
 **Research cutoff:** 2026-09-24  
-**Decision status:** Proposal for Rob's review; not adopted into the canonical NeoCRM specification  
+**Decision status:** Forty-eight recommendations approved 2026-09-24; implementation and evidence remain Planned  
 **Audience:** Product, business architecture, technical architecture, and experiment design  
 **Market:** General SMB and mid-market B2B, with a North American and Canadian governance lens
 
 ## Decision notice
 
-This package is deliberately separate from the canonical specification. It identifies market capabilities, maps them to the current NeoCRM model, and recommends what to clarify, add, test, monitor, or reject. It does **not** amend canonical objects, requirements, ADRs, experiments, or the roadmap. Any such change requires Rob's review and a separate, traceable specification decision.
+This package remains the dated research evidence and does not silently redefine NeoCRM. Rob subsequently approved all forty-eight recommendations, including modified read/write authority, a broad registered Zoho workflow experiment, and fresh exact human authorization for every deletion. The resulting canonical changes are traceable separately; research scores and vendor claims remain dated evidence rather than requirements.
 
 Feature value is scored independently of release maturity. Beta, preview, announced, and unclear-current capabilities keep their full value score; lifecycle status and evidence confidence are recorded separately.
 
@@ -28,6 +28,8 @@ The immediate product boundary is the first usable experiment with **Zoho as the
 - [`article-brief.md`](article-brief.md) — claim-safe article thesis and outline derived from the research.
 
 ## Executive conclusion
+
+The approval and its limits are recorded in [`decision-outcome.md`](decision-outcome.md).
 
 NeoCRM does not need to become a feature-for-feature copy of an incumbent suite. The current specification already contains the right architectural primitives—Party, Role, Relationship, evidence and epistemic states, Goal, Plan, Action, Policy, Consent, Outcome, Journey, Campaign, Signal, Insight, AgentRun, and AuditEvent. The principal gaps are the **operational semantic contracts between those primitives**:
 
@@ -84,7 +86,9 @@ Effort is not desirability: five stars means hardest, not best. There is no blen
 - **Missing** — no adequate canonical representation or requirement exists.
 - **Conflicts with current principles** — the market pattern would violate evidence, consent, human-control, semantic-ownership, or learning boundaries if copied as-is.
 
-## Recommendation vocabulary
+## Research-time recommendation vocabulary
+
+The labels below record the recommendation state when this dated research was produced. The later authorization decision is recorded in [`decision-outcome.md`](decision-outcome.md) and the canonical decision register; it does not retroactively turn vendor evidence or research scores into requirements.
 
 - **Clarify current spec** — preserve the model; make an existing obligation explicit.
 - **Add semantic object/contracts after Rob approval** — propose a canonical extension through a separate specification change.
@@ -92,11 +96,11 @@ Effort is not desirability: five stars means hardest, not best. There is no blen
 - **Monitor** — retain evidence and revisit when the product boundary expands.
 - **Reject/guardrail** — prohibit or reshape the market pattern.
 
-## Experiment-sequence decision gate
+## Approved experiment-sequence disposition
 
 The current repository boundary remains unchanged: CAP-001 is a synthetic, deterministic, read-only context probe, and EXP-001 is a planned human A/B/C relationship-brief experiment. Both keep external writes and durable memory disabled.
 
-For the first permissioned Zoho-plus-Obsidian EXP-001 run, approve only:
+The approved scope of the first permissioned Zoho-plus-Obsidian EXP-001 run remains:
 
 - the evidence-bound relationship brief and a "what changed" explanation;
 - reviewable Facts, Observations, Interpretations, Hypotheses, Unknowns, Conflicts, Commitments, and source gaps;
@@ -104,12 +108,12 @@ For the first permissioned Zoho-plus-Obsidian EXP-001 run, approve only:
 - read-only use of explicitly approved Obsidian notes under the experiment's source boundary; and
 - protocol-owned user feedback, intended/observed Outcome, quality, effort, and correction measures, without admitting conversational residue as durable CRM memory.
 
-Only later, separately approved gates may test:
+The approved later experiment specifications may test the following, but they remain Planned and each still requires its own execution readiness, source boundary, and applicable authority:
 
 - interaction/meeting capture into reviewable claim and commitment proposals;
 - a consent-aware follow-up draft that is not sent;
-- one exact, approval-bound, reversible Zoho write with read-back verification and a human-readable receipt;
+- a broad portfolio of registered Zoho workflows under scoped, revocable, time-bounded WriteGrants, with read-back verification and human-readable receipts;
 - a generated Obsidian brief or decision record with an explicit write preview, correction/deletion behavior, and source links; and
 - persistent run, cost, acceptance, rejection, correction, and observed-outcome history.
 
-Sequences, automated marketing sends, autonomous qualification, forecast, advertising, CPQ, billing, and production Level-3 execution remain outside EXP-001 and require their own approved experiment or specification change.
+Sequences, automated marketing sends, autonomous qualification, forecast, advertising, CPQ, billing, and production Level-3 execution remain outside EXP-001. They may proceed only through their separately specified experiment, authority, implementation, and evidence gates.

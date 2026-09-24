@@ -60,7 +60,7 @@ node apps/experiment-cli/src/cli.mjs --mode fixture --condition C --query "What 
 
 | Quantitative claim | Tier | Exact command | Local result on 2026-09-23 | Source artifacts | Final evidence link |
 | --- | --- | --- | --- | --- | --- |
-| **240 typed specification nodes / 313 typed links** | Automated Evaluation | `node scripts/validate-spec.mjs` | PASS: `spec validation passed: 240 typed nodes, 313 typed links` | `spec/traceability.json`; `spec/traceability.schema.json`; `scripts/validate-spec.mjs` | [green CI](https://github.com/Ironstone-Advisory/neocrm/actions/runs/35950651549) |
+| **355 typed specification nodes / 474 typed links** | Automated Evaluation | `node scripts/validate-spec.mjs` | PASS: `spec validation passed: 355 typed nodes, 474 typed links` | `spec/traceability.json`; `spec/traceability.schema.json`; `scripts/validate-spec.mjs` | Local architecture-review check 2026-09-24; remote CI pending publication. |
 | **6/6 mutation tests passed** | Automated Evaluation | `node --test test/eval-mutations.test.mjs` | PASS: 6 tests, 6 passed, 0 failed | `test/eval-mutations.test.mjs` | [green CI](https://github.com/Ironstone-Advisory/neocrm/actions/runs/35950651549) |
 | **EVAL-001 executed 12/12 cases** | Automated Evaluation | `node evals/run-eval.mjs` | PASS: 12 required, 12 executed | `evals/run-eval.mjs`; `evals/questions.json`; `evals/rubric.json` | [green CI](https://github.com/Ironstone-Advisory/neocrm/actions/runs/35950651549) |
 | **EVAL-001 scored 100/100** | Automated Evaluation | `node evals/run-eval.mjs` | PASS: weighted score 100, maximum 100, passing score 85 | Same as above | [green CI](https://github.com/Ironstone-Advisory/neocrm/actions/runs/35950651549) |

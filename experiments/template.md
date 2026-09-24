@@ -13,6 +13,8 @@
 - Human, customer/Party, Agent, evaluator, and accountable owner roles
 - Data classification, consent, purpose, retention, and deletion
 - Autonomy level, permitted tools/effects, stop conditions, and ethical/customer risks
+- Read authority narrowed by purpose/source/subject and minimum necessity; if writes are tested, exact WriteGrant scope, start/expiry, revocation, limits, approval mode, verification, receipt, and compensation
+- Any deletion target list and fresh exact single-use human DeletionAuthorization; never infer deletion from a WriteGrant
 
 ## Design
 
@@ -25,6 +27,7 @@
 - User, customer, operational, business, ethical/safety, and cost measures
 - Success, failure, inconclusive, and hard-stop thresholds
 - Attribution and generalizability limits
+- Write/deletion hard stops, uncertain-execution handling, verification/receipt completeness, correction/reversal, and incident measures where applicable
 
 ## Results record
 

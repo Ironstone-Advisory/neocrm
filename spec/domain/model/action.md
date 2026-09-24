@@ -12,4 +12,6 @@ propose -> preview -> policy decision -> approval if required
 
 Every Action records initiator, accountable Actor, related Goal/Plan/WorkItem, target integration and operation, payload reference, exact human-readable preview/version, evidence/rationale, risk, PolicyDecision, required Approval, idempotency key, execution attempt/result, target source reference, verification, failure/cancellation, compensation, timestamps, cost, and Outcome.
 
-An Approval binds to one action preview, scope, approver authority, and expiry. An Agent/model never holds native execute handles or credentials. CAP-001 permits recommendations and inert proposals only; all external execution is disabled.
+An Approval binds to one action preview, scope, approver authority, and expiry. A **WriteGrant** may instead authorize repeated non-delete actions through named, versioned workflow definitions for a bounded purpose/duration, object/record-set/field scope, risk ceiling, and explicit limits. `delete` is not a WriteGrant operation. Every deletion requires a fresh **DeletionAuthorization** from an authorized human for an exact immutable single target or fully enumerated batch; it is short-lived and single-use.
+
+An Agent/model never holds native execute handles or credentials. CAP-001 and EXP-001 permit recommendations and inert proposals only; all external execution remains disabled in the current implementation.

@@ -1,6 +1,6 @@
 # Value models and pricing implications
 
-**Status:** Product hypothesis; not an approved package or price list  
+**Status:** Accepted product-value architecture; packages and prices remain unvalidated hypotheses  
 **Currency:** Public competitor anchors are USD unless noted
 
 ## Principle
@@ -9,7 +9,7 @@ NeoCRM should charge for useful, understandable work without monetizing trust as
 
 Identity controls, provenance, consent, policy evaluation, plain-language action history, user correction, basic export/deletion, spend visibility, and safe approval behavior are product-integrity requirements. They belong in the core. Advanced regulated retention, legal hold, supervisory reporting, specialized data, high-volume execution, and sophisticated analytics can be value-add capabilities.
 
-This is a packaging hypothesis for a future product, not a statement that CAP-001 implements these capabilities or that the canonical roadmap has adopted them. Any semantic extension or delivery commitment requires Rob's review and a separate traceable decision.
+Rob approved the core-versus-module architecture, transparent hybrid commercial structure, and bounded outcome-pricing rules as product direction. This is not a statement that CAP-001 implements these capabilities, that a package or price has been selected, or that buyers value them. EXP-025 must evaluate those hypotheses.
 
 ## Market packaging patterns
 
@@ -184,6 +184,8 @@ Each metered action should expose:
 - whether work completed, failed, was rejected, or was reversed;
 - linked Outcome and attribution limitations;
 - budget threshold, alert, pause, and hard-stop controls.
+
+Deletion is never a metered general action: every deletion requires fresh exact human authorization for its immutable target list, independent of subscription, module, credit balance, or time-bounded WriteGrant.
 
 ## Outcome pricing rule
 

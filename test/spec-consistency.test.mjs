@@ -63,11 +63,11 @@ test("keeps complete canonical registries unique and contiguous", async () => {
   const idsOfKind = (kind) => manifest.nodes.filter((node) => node.kind === kind).map((node) => node.id).sort();
   assert.deepEqual(idsOfKind("architecture-layer"), expected("LAYER", 7, 2));
   assert.deepEqual(idsOfKind("cross-cutting-plane"), expected("PLANE", 2, 2));
-  assert.deepEqual(idsOfKind("view"), expected("VIEW", 17, 3));
-  assert.deepEqual(idsOfKind("canonical-object"), expected("OBJ", 76, 3));
+  assert.deepEqual(idsOfKind("view"), expected("VIEW", 28, 3));
+  assert.deepEqual(idsOfKind("canonical-object"), expected("OBJ", 129, 3));
   assert.deepEqual(idsOfKind("canonical-test"), expected("CTS", 25, 2));
-  assert.deepEqual(idsOfKind("decision"), expected("ADR", 15, 4));
-  assert.deepEqual(idsOfKind("experiment"), expected("EXP", 12, 3));
+  assert.deepEqual(idsOfKind("decision"), expected("ADR", 19, 4));
+  assert.deepEqual(idsOfKind("experiment"), expected("EXP", 25, 3));
 });
 
 test("keeps CAP conformance, fixture preflight, and product-experiment evaluation scopes separate", async () => {
@@ -85,7 +85,12 @@ test("keeps CAP conformance, fixture preflight, and product-experiment evaluatio
     evaluatedBy.filter((link) => link.to === "EVAL-003").map((link) => link.from).sort(),
     ["EXP-002", "EXP-003", "EXP-004", "EXP-005", "EXP-007", "EXP-008", "EXP-009", "EXP-010", "EXP-011", "EXP-012"]
   );
+  assert.deepEqual(
+    evaluatedBy.filter((link) => link.to === "EVAL-004").map((link) => link.from).sort(),
+    ["EXP-013", "EXP-014", "EXP-015", "EXP-016", "EXP-017", "EXP-018", "EXP-019", "EXP-020", "EXP-021", "EXP-022", "EXP-023", "EXP-024", "EXP-025"]
+  );
   assert.match(await read("evals/canonical-experiment-plan.json"), /defined plan, not an implemented evaluator/i);
+  assert.match(await read("evals/approved-portfolio-experiment-plan.json"), /defined plan, not an implemented evaluator/i);
 });
 
 test("keeps both cross-cutting planes visible across all seven layers in canonical diagrams", async () => {

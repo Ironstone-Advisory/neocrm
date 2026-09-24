@@ -4,6 +4,8 @@
 
 These requirements define NeoCRM as a product. [CAP-001 requirements](../capabilities/CAP-001-relationship-brief/requirements.md) define the narrower current implementation.
 
+The Accepted portfolio extensions are defined separately in [experimental authority](experimental-authority.md), [approved portfolio](approved-portfolio.md), and [product value](product-value.md). Their Accepted specification status does not imply implementation or evidence.
+
 ## P0 architecture and operating model
 
 - **FR-AGT-001** — NeoCRM MUST represent AgentDefinition, Agent, AgentRun, AgentStep, AgentCapability, ToolGrant, and version information separately from Party.
@@ -30,4 +32,4 @@ These requirements define NeoCRM as a product. [CAP-001 requirements](../capabil
 
 ## Current implementation boundary
 
-The current CAP-001 reference slice MUST keep all external writes and durable memory disabled. None of the P1 requirements is claimed as implemented merely because it is specified.
+The current CAP-001 and EXP-001 reference slice MUST keep all external writes and durable memory disabled. Later registered experiments may use the authority model in FR-GRANT-001; that never broadens this slice. None of the P1 or portfolio requirements is claimed as implemented merely because it is specified.

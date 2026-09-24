@@ -2,6 +2,8 @@
 
 **Status:** Proposed
 
+Accepted portfolio safety requirements SAFE-GRANT-001, SAFE-DELETE-001, SAFE-SCORE-001, SAFE-ATTRIB-001, SAFE-SURVEIL-001, and SAFE-CONTACT-001 are specified in [experimental authority](experimental-authority.md) and [approved portfolio](approved-portfolio.md). A timed WriteGrant never authorizes deletion; every delete needs fresh exact human authorization for its immutable target list.
+
 - **SAFE-IDENT-001** — Ambiguous identity MUST halt private context retrieval until safely resolved; candidate summaries MUST expose only authorized disambiguation data.
 - **SAFE-DATA-001** — Retrieval and Handoff MUST use minimum-necessary authorized data for a declared purpose. A denial MUST NOT disclose whether protected data exists.
 - **SAFE-CONSENT-001** — Consent, Preference, suppression, purpose, classification, retention, and deletion constraints MUST be evaluated for retrieval, memory, communication, Campaigns, and learning use.

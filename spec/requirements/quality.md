@@ -2,6 +2,8 @@
 
 **Status:** Proposed
 
+Accepted portfolio quality requirements NFR-RECEIPT-001, NFR-VALUE-001, and NFR-METER-001 are specified in [product-value requirements](product-value.md). They require readable receipts, explicit value evidence, and pre-estimated/post-reconciled metering without weakening core safety.
+
 - **NFR-USE-001 Usefulness** — Evaluations MUST measure task completion, usefulness, cognitive/source-switching effort, correction/override, and time against a declared baseline; synthetic conformance MUST NOT stand in for human usefulness.
 - **NFR-TIME-001 Timeliness** — Answers, Plans, and Actions MUST expose evidence freshness and meet capability-specific latency/age thresholds or declare degradation.
 - **NFR-REL-001 Reliability** — Partial, failed, denied, stale, or incomplete sources MUST remain explicit and MUST NOT be interpreted as absence.

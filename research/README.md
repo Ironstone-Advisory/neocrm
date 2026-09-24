@@ -16,4 +16,4 @@ Maintain a claim ledger for any article or product assertion: claim, source/evid
 
 ## Dated research proposals
 
-- [`competitive-intelligence/ai-crm-feature-gap/2026-09-24-v1/`](competitive-intelligence/ai-crm-feature-gap/2026-09-24-v1/) — versioned AI CRM competitor research, normalized feature inventory, NeoCRM coverage assessment, ranked top-20 proposal, value-add packaging analysis, first-party source register, and article brief. **Status: proposal for review; not adopted into the canonical specification.**
+- [`competitive-intelligence/ai-crm-feature-gap/2026-09-24-v1/`](competitive-intelligence/ai-crm-feature-gap/2026-09-24-v1/) — versioned AI CRM competitor research, normalized feature inventory, NeoCRM coverage assessment, ranked top-20 proposal, value-add packaging analysis, first-party source register, article brief, and [decision outcome](competitive-intelligence/ai-crm-feature-gap/2026-09-24-v1/decision-outcome.md). **Status: research remains dated evidence; its forty-eight product decisions are now Accepted and traceable in the specification, while implementation/evidence remain Planned.**

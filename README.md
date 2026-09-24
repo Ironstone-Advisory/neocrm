@@ -24,6 +24,8 @@ The executable code is **CAP-001** plus a thin, deterministic, read-only **EXP-0
 
 The repository now includes configurable read-only Zoho and Obsidian adapters and a fixture-backed RelationshipBriefAgent. This is not the complete NeoCRM product, Agent layer, or RIL. It has no production LLM, completed live pilot, multi-Agent collaboration, hybrid persistence implementation, external execution, or adaptive production outcome-learning loop. External writes remain impossible in this slice.
 
+CAP-001 and EXP-001 remain read-only. The product owner has accepted a broader [forty-eight-decision product direction](spec/product/decision-register.md), including time-bounded experimental write authority, a multi-workflow Zoho experiment, and a binding rule that every deletion requires fresh exact human authorization. Those additions are specifications and Planned experiments—not deployed write capability or validated product evidence.
+
 The first product experiment, [EXP-001](experiments/EXP-001-zoho-obsidian-relationship-brief/spec.md), compares a Zoho baseline with NeoCRM over Zoho and then Zoho plus permissioned Obsidian context. Its live and human evidence is still pending.
 
 ## Repository map
@@ -31,10 +33,10 @@ The first product experiment, [EXP-001](experiments/EXP-001-zoho-obsidian-relati
 | Path | Responsibility |
 | --- | --- |
 | [`spec/`](spec/README.md) | Product authority: origin, canonical design, domain, architecture, experience, requirements, decisions, and capability scopes |
-| [`experiments/`](experiments/README.md) | Unique EXP-001 through EXP-012 hypotheses, protocols, and evidence records |
+| [`experiments/`](experiments/README.md) | Unique EXP-001 through EXP-025 hypotheses, protocols, and evidence records |
 | [`evals/`](evals/README.md) | Bounded repeatable evaluations; EVAL-001 covers only CAP-001 |
 | [`apps/assistant/`](apps/assistant/README.md) | Deterministic conversational reference shell for CAP-001 |
-| [`packages/contracts/`](packages/contracts/README.md) | Generated projection of the CAP-001 exchange schema |
+| [`packages/contracts/`](packages/contracts/README.md) | Generated projections of bounded exchange and planned governed-action schemas |
 | [`packages/relationship-intelligence/`](packages/relationship-intelligence/README.md) | Deterministic CAP-001 context engine; not the complete RIL |
 | [`adapters/mock/`](adapters/mock/README.md) | Synthetic source adapters |
 | [`packages/agent-runtime/`](packages/agent-runtime/README.md) | Bounded RelationshipBriefAgent run, policy, audit, and feedback contracts |

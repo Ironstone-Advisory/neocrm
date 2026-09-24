@@ -1,6 +1,6 @@
 # Business capabilities
 
-**Status:** Proposed canonical capability map
+**Status:** Accepted canonical capability map
 
 ## BC-01 Understand the relationship
 
@@ -30,4 +30,8 @@ Capture intended and observed Outcomes, human/customer feedback, action results,
 
 Enforce identity, access, delegation, consent, purpose, provenance, autonomy, approval, audit, retention, fairness, anti-manipulation, customer-harm monitoring, complaint/redress, and balanced customer/service/revenue measures.
 
-The capabilities are technology-independent. Current CAP-001 supplies partial implementation evidence only for a narrow part of BC-01 and BC-07.
+## BCAP-007 Operate transparent product value
+
+Operate Trust Archive, data quality, conversation intelligence, sales and marketing workflows, customer lifecycle, learning, agent operations, usage, cost, and value as one governed portfolio. Keep relationship-control integrity core; make product modules and metered work understandable, budgetable, outcome-linked, correctable, portable, and independently evaluable.
+
+The capabilities are technology-independent. Current CAP-001 supplies partial implementation evidence only for a narrow part of BC-01 and BC-07. BCAP-007 and its supporting objects/views are Accepted design with Planned implementation and evidence.
