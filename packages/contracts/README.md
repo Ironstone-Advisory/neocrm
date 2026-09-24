@@ -1,7 +1,7 @@
 # Executable contracts
 
-Generated TypeScript projections of [`spec/contracts/capabilities/cap-001.schema.json`](../../spec/contracts/capabilities/cap-001.schema.json) and the bounded [`spec/contracts/agent-runtime.schema.json`](../../spec/contracts/agent-runtime.schema.json).
+Generated TypeScript projections of [`spec/contracts/capabilities/cap-001.schema.json`](../../spec/contracts/capabilities/cap-001.schema.json), the bounded [`spec/contracts/agent-runtime.schema.json`](../../spec/contracts/agent-runtime.schema.json), and the planned [`spec/contracts/governed-action.schema.json`](../../spec/contracts/governed-action.schema.json) experimental authority scaffold.
 
-The CAP-001 schema is normative only for relationship-brief exchanges. The agent-runtime schema validates the thin EXP-001 reference path, including AgentDefinition, AuthorityGrant, Trigger, Goal, Plan/PlanStep, AgentRun, Handoff, PolicyDecision, ContextSnapshot, Outcome, LearningSignal, and AuditEvent. Neither schema is the complete NeoCRM ontology or full production Agent layer.
+The CAP-001 schema is normative only for relationship-brief exchanges. The agent-runtime schema validates the thin EXP-001 reference path, including AgentDefinition, AuthorityGrant, Trigger, Goal, Plan/PlanStep, AgentRun, Handoff, PolicyDecision, ContextSnapshot, Outcome, LearningSignal, and AuditEvent. The governed-action schema makes non-delete WriteGrant and separate exact DeletionAuthorization shapes testable, but no action gateway implements them yet. None of these schemas is the complete NeoCRM ontology or full production Agent layer.
 
 Run `pnpm generate:contracts` after changing the schema; do not hand-edit the generated TypeScript.

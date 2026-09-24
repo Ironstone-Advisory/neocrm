@@ -17,6 +17,8 @@ Every material retrieval, handoff, memory admission, recommendation, approval, a
 - prompt-injection and hostile-content isolation across source and Agent content;
 - no credentials, native execute handles, or policy mutation capability in model context;
 - approval bound to exact preview, version, scope, approver authority, and expiry;
+- time-bounded non-delete WriteGrants naming versioned workflows with explicit purpose, system/record-set/field/action scope, risk ceiling, limits, revocation, verification, receipt, and compensation;
+- fresh exact single-use human DeletionAuthorization for every immutable deletion target list, never inferred from a WriteGrant;
 - verifiable, idempotent action execution and immutable audit;
 - monitoring for manipulation, unfair treatment, unwanted contact, privacy/service/customer harm, complaints, and redress;
 - explicit retention, correction, export, deletion, legal-hold, and incident paths; and
@@ -24,4 +26,4 @@ Every material retrieval, handoff, memory admission, recommendation, approval, a
 
 ## Autonomy posture
 
-v0.1 supports Level 0 record/report, Level 1 summarize/recommend, and Level 2 draft/plan. Level 3 bounded reversible execution is experiment-only. Levels 4-5 are deferred. CAP-001 allows reads and recommendations only; every external write is disabled.
+v0.1 supports Level 0 record/report, Level 1 summarize/recommend, and Level 2 draft/plan. Level 3 bounded reversible execution is experiment-only under ADR-0016. Levels 4-5 are deferred. CAP-001 and EXP-001 allow reads and recommendations only; every external write is disabled in the current slice.

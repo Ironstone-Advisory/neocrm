@@ -1,6 +1,6 @@
 # NeoCRM gap analysis and ranked top 20
 
-**Decision status:** Proposal only; no canonical specification changes are made here.  
+**Decision status:** Dated research proposal; all forty-eight product decisions were subsequently Accepted, while implementation and evidence remain Planned. This file remains the research record and does not itself define canonical authority.  
 **Product boundary:** General SMB and mid-market B2B; Zoho + Obsidian first experiment.  
 **Scoring:** Value and effort use separate one-to-five-star scales. Release status never reduces capability value.
 
@@ -16,7 +16,7 @@ The first product proof should therefore remain narrow:
 
 ## Ranked recommendation
 
-| Rank | Inventory IDs | Capability gap | Coverage and current anchor | v0.1 value | Long-term value | Effort | Product status | Evidence confidence | Recommendation | Why it matters |
+| Rank | Inventory IDs | Capability gap | Coverage and current anchor | v0.1 value | Long-term value | Effort | Product status | Evidence confidence | Research-time recommendation | Why it matters |
 |---:|---|---|---|:---:|:---:|:---:|---|---|---|---|
 | 1 | F-055–F-057 | **Trust Archive and human-readable history** | **Partially covered:** AuditEvent, action lifecycle, Agent Audit Console, retention controls | ★★★★★ | ★★★★★ | ★★★★☆ | GA/current | High | Add semantic object/contracts after Rob approval | A person needs one exportable account of what was known, inferred, recommended, approved, changed, verified, observed, and corrected. Immutable machine events and readable summaries must remain linked. |
 | 2 | F-005, F-006, F-013 | **Identity, enrichment, and data-quality lifecycle** | **Partially covered:** BC-01, FR-CTX-001, SAFE-IDENT-001, Party source identities | ★★★★★ | ★★★★★ | ★★★★☆ | GA/current | High | Add semantic object/contracts after Rob approval | The Zoho/Obsidian experiment depends on conflict, staleness, duplicate, merge, and reversal handling. Enriched or inferred data must never silently become fact. |
@@ -56,7 +56,7 @@ The ranked capabilities are deliberate composites of the linked inventory rows. 
 - The action lifecycle remains propose → preview → policy → approval when required → execute → verify → audit → Outcome → compensation where applicable.
 - v0.1 remains Levels 0–2; Level 3 is experiment-only and reversible; Levels 4–5 remain deferred.
 
-### Clarify after review
+### Clarifications adopted as product direction
 
 - A relationship brief must answer “what changed?” and “what evidence would change this assessment?”
 - Conversation-derived claims and commitments have source spans, epistemic state, reviewer/disposition, and temporal validity.
@@ -67,7 +67,7 @@ The ranked capabilities are deliberate composites of the linked inventory rows. 
 
 ### Candidate semantic extensions
 
-Names below are working proposals, not adopted object names.
+Names below are the research-time working proposals. The decision review adopted their lifecycle direction; canonical names and current status are now governed by the specification and decision register.
 
 | Family | Candidate objects/contracts | Why existing primitives are insufficient |
 |---|---|---|
@@ -85,7 +85,7 @@ Names below are working proposals, not adopted object names.
 
 ## Experiment program: usable, bounded slices
 
-The current slice is EXP-001 as already specified. The later jobs below are a sequence of separate experiment proposals, not additions to EXP-001 or claims about the current implementation.
+The current slice is EXP-001 as already specified. The later jobs below now have separate Accepted experiment specifications with Planned implementation and evidence; they are not additions to EXP-001 or claims about the current implementation.
 
 ### User
 
@@ -93,7 +93,7 @@ A founder-seller or small B2B account team preparing for and following up on rea
 
 ### Systems
 
-- **Zoho CRM** — operational records and, only after a later approval-gated phase, a target for exact field updates.
+- **Zoho CRM** — operational records and, only in later governed experiments, a target for a broad portfolio of registered workflows under scoped, revocable, time-bounded authority.
 - **Obsidian** — permissioned, human-owned notes, briefs, decisions, and knowledge artifacts under vault-root confinement; read-only for EXP-001.
 - **NeoCRM** — semantic reconciliation, evidence, policy, conversational reasoning, recommendation, approval, and experiment measurement.
 
@@ -106,7 +106,7 @@ A founder-seller or small B2B account team preparing for and following up on rea
 5. “What commitments exist, who owns them, and what is due?”
 6. “What should I ask or discuss next, why, and what are the alternatives?”
 
-### Later, separately approved assistant jobs
+### Approved later experiment jobs — all still Planned
 
 7. “Draft the follow-up, but do not send it.”
 8. “Preview exactly what would change in Zoho and what note could be written to Obsidian.”
@@ -117,7 +117,7 @@ A founder-seller or small B2B account team preparing for and following up on rea
 - identity ambiguity stops private retrieval;
 - every material claim has provenance, authority, freshness, confidence, completeness, and epistemic treatment;
 - partial/denied sources remain visible;
-- only explicitly approved Zoho and Obsidian context is read;
+- the authenticated user's read authority is narrowed by the EXP-001 conditions, allowlists, purpose, and minimum-necessary context plan;
 - no external write or durable memory occurs in the current CAP-001 boundary;
 - experiment-owned feedback and Outcome records remain distinct from CRM facts and durable conversational memory;
 - no transcript, email, note, or retrieved page can change tools, policy, authority, or plan state through embedded instructions.
@@ -125,6 +125,8 @@ A founder-seller or small B2B account team preparing for and following up on rea
 ### Later-gate acceptance evidence
 
 - a write preview binds exact target, before/after value, source evidence, policy decision, approver, expiry, and idempotency key;
+- a scoped, revocable, time-bounded WriteGrant names systems, records/fields, non-delete actions, purpose, limits, approval mode, verification, receipts, and compensation;
+- every deletion requires a fresh exact human DeletionAuthorization for an immutable target list; a general WriteGrant never includes deletion;
 - an Obsidian artifact is human-readable, source-linked, correction/deletion-aware, and clearly marked as generated, proposed, or accepted;
 - machine events remain linked to human-readable run and action receipts; and
 - persistent history records usage/cost, failures, user corrections, accepted/rejected recommendations, and observed Outcomes.
@@ -139,19 +141,19 @@ A founder-seller or small B2B account team preparing for and following up on rea
 
 ### Gate B — conversation and follow-up preview
 
-- Run EXP-009 or a linked experiment for transcript/message ingestion, claim and commitment extraction, and reviewer disposition.
+- Run EXP-013 for transcript/message ingestion, claim and commitment extraction, and reviewer disposition; run EXP-014 for the draft-only follow-up condition.
 - Test next-best-action explanation and a consent-aware draft.
 - Measure evidence accuracy, unsupported-claim rate, correction burden, draft acceptance, and unwanted-contact policy failures.
 
 ### Gate C — isolated reversible write
 
-- Add one allowlisted Zoho action through the governed action gateway.
-- Bind approval to an exact preview; execute idempotently; read back and verify; generate both machine event and human-readable receipt.
-- No autonomous send, enrolment, pricing, contract, campaign, or multi-step action.
+- Test multiple registered Zoho workflows through the governed action gateway under time-bounded grants, each with declared objects, fields, operations, purpose, risk, limits, approval mode, and stop rules.
+- Bind each effect to authority and an exact preview where required; execute idempotently; read back and verify; generate both machine event and human-readable receipt.
+- Keep deletion outside the general grant and require fresh exact human authorization for its immutable target list. Pricing, contracts, payments, bulk outbound communication, and materially different effects remain separately gated.
 
 ### Gate D — reusable sales and analytics contracts
 
-- Decide sequence/playbook, qualification, MetricDefinition, and Trust Archive object proposals through ADRs and tests.
+- Implement and test the Accepted sequence/playbook, qualification, MetricDefinition, and Trust Archive contracts without treating specification acceptance as product evidence.
 - Test relationship-aware scoring and signal decay without treating results as fact.
 - Compare value and cost per completed user job.
 
@@ -188,10 +190,6 @@ A founder-seller or small B2B account team preparing for and following up on rea
 | Third-party company intent attributed to a named person | **Reject.** Preserve subject scope, collection window, source, decay, and uncertainty. |
 | Engagement or revenue optimization that ignores customer/service Outcomes | **Reject.** Balanced Outcomes and harm constraints are mandatory. |
 
-## Review decisions requested from Rob
+## Decision outcome
 
-1. Approve, revise, or reject the ranked top 20.
-2. Confirm whether Trust Archive and identity/data-quality objects should enter a specification-change proposal immediately or wait for EXP-001 evidence.
-3. Confirm whether buying group should remain a projection initially.
-4. Confirm that the first follow-up experiment is draft-only and that the first write experiment is a single allowlisted Zoho update.
-5. Select which value-add packages deserve formal product hypotheses after the first experiment.
+Rob approved all forty-eight decisions, including the ranked portfolio and value hypotheses, with the modified experimental authority and multi-workflow write model. Every deletion requires fresh exact human authorization. See [`decision-outcome.md`](decision-outcome.md) and the canonical decision register. Approval adopts the specification direction; it does not claim implementation, experimental results, or validated pricing.

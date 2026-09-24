@@ -6,4 +6,6 @@ A **PolicyDecision** records policy/version, subject, principal/Agent, context r
 
 An **Approval** records the authorized human/service decision over an exact preview and version; it cannot be reused after material change or expiry.
 
-An **AuditEvent** records material retrieval, handoff, policy, approval, action, verification, correction, outcome, and learning-release events with identity, purpose, correlation/causation, time, versions, classification, and protected payload references.
+A **WriteGrant** records explicit time-bounded non-delete authority for a registered workflow portfolio. A **DeletionAuthorization** is a fresh, exact, human, single-use decision for an immutable target list. Neither natural-language instruction nor a general role/grant substitutes for these artifacts.
+
+An **AuditEvent** records material retrieval, handoff, policy, grant, approval, deletion authorization, action, verification, receipt, correction, outcome, and learning-release events with identity, purpose, correlation/causation, time, versions, classification, and protected payload references.

@@ -472,7 +472,8 @@ The preferred pattern is **selective, eventual synchronization with ownership ru
 Authoritative CRM change -> normalize and reflect approved metadata in knowledge context
 Knowledge-note change -> retain as contextual knowledge
 Potential operational fact found in knowledge -> propose CRM update
-Human approval -> write to CRM through adapter -> record provenance
+Exact per-action approval or effective non-delete WriteGrant
+  -> write to CRM through adapter -> verify -> record provenance and receipt
 ```
 
 For example, a CRM may authoritatively own a person's email address, official title, deal stage, or task status. A knowledge repository may own relationship narratives, attributed observations, research, and hypotheses. The RIL may reconcile these in context, but must expose conflicts rather than silently choose a winner.
@@ -820,8 +821,8 @@ v0.1 establishes:
 - normative agency, work, policy, consent, action-lifecycle, outcome, and learning objects;
 - adapter boundaries, ownership rules, and portability requirements;
 - first-class activity, knowledge, provenance, time/load, and action semantics;
-- the Canonical CRM Test Suite, twelve experiments, measurement framework, and governance guardrails; and
-- an initial ADR and repository structure.
+- the Canonical CRM Test Suite, twenty-five experiments, measurement framework, and governance guardrails; and
+- nineteen Accepted ADRs and the repository structure.
 
 ### 13.2 Explicit non-goals
 
@@ -922,10 +923,40 @@ Human + AI experience
 
 That is the v0.1 proposition. The next step is not to add objects indefinitely. It is to freeze this vocabulary long enough to test whether it helps real people understand relationships, allocate attention, and act with better judgment.
 
+## 15. Approved operational portfolio addendum (2026-09-24)
+
+The product owner accepted a forty-eight-decision extension after competitor and product-value research. This addendum extends operational coverage without superseding the originating architecture or changing these axioms:
+
+> NeoCRM owns the semantic model, not the storage model.
+>
+> Persistence is replaceable. Intelligence is not.
+>
+> Calendar = View; Time = Domain.
+>
+> NeoCRM doesn't own the world's data. It creates a coherent model of the relationships represented by that data.
+
+### 15.1 Authority and deletion
+
+Experiments may operate inside the authenticated user's existing read authority, but actual retrieval remains purpose-bound, protocol/source-bound, and minimum-necessary. Later write experiments may use explicit, scoped, revocable, time-bounded WriteGrants with systems, records/fields, non-delete operations, purpose, start/expiry, volume/frequency/financial/risk limits, approval mode, verification, readable receipts, and correction/compensation.
+
+Every deletion requires fresh exact human authorization for the complete immutable target list. A general or time-bounded WriteGrant never includes or implies delete. CAP-001 and EXP-001 remain read-only.
+
+### 15.2 Operational semantics and views
+
+OBJ-077 through OBJ-129 add Trust Archive, identity/data-quality, conversation intelligence, qualification/scoring, metrics/cohorts, playbook/sequence, forecasting, marketing treatment, customer lifecycle, content/brand, and education lifecycles. Existing meaning is reused where it is already sufficient: buying groups are Party/Role/Relationship projections; qualification and health are expiring Insights; account plans are Plans; mutual plans use Commitments; digital rooms are views; agent usage/cost/value begins as a projection.
+
+VIEW-018 through VIEW-028 present these capabilities without creating another ontology. BCAP-007 governs transparent product value across them.
+
+### 15.3 Evidence and product value
+
+EXP-013 through EXP-025 and EVAL-004 define an A-E evidence sequence: read understanding; proposal/draft; bounded reversible write; cross-functional workflow; then bounded active management. Specification acceptance is not implementation, an automated contract pass is not human/customer value, and a planned experiment is not evidence.
+
+The Relationship Control Plane remains core in every product plan. Outcome-oriented modules and variable metering are hypotheses. Metering must be understandable, estimated before work, reconciled afterward, budgeted, and linked to success, partial work, failure, cancellation, reversal, compensation, cost, and Outcome. Outcome pricing is permissible only for predefined, inspectable, disputable, safely incentivized, attributable outcomes with visible limitations.
+
 ---
 
 ## Definition of done for v0.1
 
-v0.1's specification foundation is complete when this specification, the contiguous ADR set, the 25-item Canonical CRM Test Suite, the unique EXP-001 through EXP-012 registry and templates, the normative agency/control objects, and the seven-layer boundaries are internally consistent and traceable; the Party/Role/Relationship and Time/Calendar rules are unambiguous; and initial experiments are ready to run against permissioned or synthetic data.
+v0.1's specification foundation is complete when this specification, the contiguous ADR set, the 25-item Canonical CRM Test Suite, the unique EXP-001 through EXP-025 registry and templates, the normative agency/control and operational-portfolio objects, and the seven-layer boundaries are internally consistent and traceable; the Party/Role/Relationship and Time/Calendar rules are unambiguous; and initial experiments are ready to run against permissioned or synthetic data.
 
-It is **not** a production product because every integration, feature, agent, view, store, or automation has been built. The current executable proof is a synthetic, deterministic, read-only CAP-001 context probe. It validates a bounded subset of identity, context planning, provenance, epistemic response, failure, and no-write contracts; it does not validate a production Agent layer, proactive operation, live Zoho/Obsidian behavior, multi-Agent collaboration, hybrid persistence, governed learning, or business outcomes. The purpose of v0.1 is to make NeoCRM clear enough to challenge, implement in thin slices, and falsify responsibly.
+It is **not** a production product, and it does not claim that every integration, feature, agent, view, store, or automation has been built. The current executable proof is a synthetic, deterministic, read-only CAP-001 context probe. It validates a bounded subset of identity, context planning, provenance, epistemic response, failure, and no-write contracts; it does not validate a production Agent layer, proactive operation, live Zoho/Obsidian behavior, multi-Agent collaboration, hybrid persistence, governed learning, or business outcomes. The purpose of v0.1 is to make NeoCRM clear enough to challenge, implement in thin slices, and falsify responsibly.

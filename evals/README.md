@@ -21,4 +21,6 @@ Run the suite with `pnpm eval` and the mutation checks with
 not replace the 1-5 human usefulness evaluation defined for canonical EXP-001;
 human usefulness and live Zoho/Obsidian behavior remain pending. Its selected identity/planning cases provide structural demonstration evidence for part of EXP-006, not full experimental validation.
 
-EVAL-002 is the implemented fixture preflight for the thin EXP-001 reference path; it does not evaluate the live/human product hypothesis. EVAL-003 is a defined, non-executable evaluation plan for the remaining canonical product experiments. Linking a planned experiment to EVAL-003 records an evaluation design obligation, not evidence that the experiment or evaluator ran.
+EVAL-002 is the implemented fixture preflight for the thin EXP-001 reference path; it does not evaluate the live/human product hypothesis. EVAL-003 is a defined, non-executable evaluation plan for EXP-002 through EXP-012 other than the separately evaluated EXP-006 demonstration.
+
+EVAL-004 is the defined, non-executable portfolio plan for EXP-013 through EXP-025. It adds evidence gates for read understanding, proposals/drafts, bounded reversible writes, cross-functional workflows, and only then bounded active management. It also requires grant/deletion safety, readable receipts, outcome/value evidence, and transparent economics. Linking a planned experiment to EVAL-003 or EVAL-004 records an evaluation design obligation, not evidence that the experiment or evaluator ran.
