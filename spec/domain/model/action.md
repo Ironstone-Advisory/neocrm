@@ -1,13 +1,15 @@
-# Action
+# Recommendation, approval, and action
 
-An **Action** is a proposed or executed intentional change. Examples include drafting an email, sending a message, creating a task, updating a CRM record, or scheduling a meeting.
+An **OBJ-062 Recommendation** is a decision-oriented suggestion containing Goal, options, rationale, evidence, uncertainty, constraints, expected Outcomes, and responsible Actor. It is neither Fact nor execution.
 
-Every consequential action should record:
+An **OBJ-063 Action** is a proposed durable or external effect. Its lifecycle is:
 
-- intent and rationale;
-- target adapter and operation;
-- proposed payload or human-readable preview;
-- required approval and approving actor;
-- execution result, timestamp, and resulting source identifier.
+```text
+propose -> preview -> policy decision -> approval if required
+        -> execute -> verify -> audit -> outcome
+        -> compensate where applicable
+```
 
-Recommendation is not execution. The model may propose an action, but authority remains with the human unless an explicit policy delegates it.
+Every Action records initiator, accountable Actor, related Goal/Plan/WorkItem, target integration and operation, payload reference, exact human-readable preview/version, evidence/rationale, risk, PolicyDecision, required Approval, idempotency key, execution attempt/result, target source reference, verification, failure/cancellation, compensation, timestamps, cost, and Outcome.
+
+An Approval binds to one action preview, scope, approver authority, and expiry. An Agent/model never holds native execute handles or credentials. CAP-001 permits recommendations and inert proposals only; all external execution is disabled.

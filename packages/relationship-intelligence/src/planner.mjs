@@ -1,6 +1,6 @@
 import { assertContract } from "../../contracts/src/runtime.mjs";
 
-export const RELATIONSHIP_BRIEF_DOMAINS = Object.freeze([
+export const CAP001_RELATIONSHIP_BRIEF_DOMAINS = Object.freeze([
   "party",
   "relationship",
   "commercial",
@@ -39,7 +39,16 @@ function quality(selection) {
   );
 }
 
-export function planMinimumSources({ adapters, subjectPartyId }) {
+export function planMinimumSources({
+  adapters,
+  subjectPartyId,
+  intent,
+  requiredDomains
+}) {
+  if (!intent || !Array.isArray(requiredDomains) || requiredDomains.length === 0) {
+    throw new TypeError("Context planning requires an explicit intent and requiredDomains.");
+  }
+  const distinctRequiredDomains = [...new Set(requiredDomains)];
   const candidates = adapters.map((adapter) => {
     if (!adapter || typeof adapter.read !== "function") {
       throw new TypeError("Every adapter must expose read().");
@@ -51,10 +60,11 @@ export function planMinimumSources({ adapters, subjectPartyId }) {
   const eligible = candidates.filter(
     ({ capability }) =>
       capability.authorization.status === "granted" &&
-      capability.supportedFilters.includes("partyId")
+      capability.supportedFilters.includes("partyId") &&
+      capability.externalWritesEnabled === false
   );
   const coverable = new Set(eligible.flatMap(({ domains }) => domains));
-  const target = RELATIONSHIP_BRIEF_DOMAINS.filter((domain) => coverable.has(domain));
+  const target = distinctRequiredDomains.filter((domain) => coverable.has(domain));
 
   let selected = [];
   for (let size = 1; size <= eligible.length; size += 1) {
@@ -112,12 +122,12 @@ export function planMinimumSources({ adapters, subjectPartyId }) {
 
   return {
     plan: {
-      intent: "relationship_brief",
+      intent,
       subjectPartyId,
       steps: executions.map(({ step }) => step)
     },
     executions,
-    uncoveredDomains: RELATIONSHIP_BRIEF_DOMAINS.filter(
+    uncoveredDomains: distinctRequiredDomains.filter(
       (domain) => !selectedCoverage.has(domain)
     )
   };

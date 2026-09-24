@@ -6,7 +6,7 @@ import { createTestSystem, relationshipQuestion } from "./helpers.mjs";
 test("normative schema defines every core contract and all Party types", async () => {
   const schema = JSON.parse(
     await readFile(
-      new URL("../spec/domain/schemas/neocrm.schema.json", import.meta.url),
+      new URL("../spec/contracts/capabilities/cap-001.schema.json", import.meta.url),
       "utf8"
     )
   );
@@ -33,7 +33,7 @@ test("normative schema defines every core contract and all Party types", async (
 test("CAP-001 output carries the required response-envelope fields", async () => {
   const schema = JSON.parse(
     await readFile(
-      new URL("../spec/domain/schemas/neocrm.schema.json", import.meta.url),
+      new URL("../spec/contracts/capabilities/cap-001.schema.json", import.meta.url),
       "utf8"
     )
   );

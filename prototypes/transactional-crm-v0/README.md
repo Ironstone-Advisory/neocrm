@@ -1,16 +1,9 @@
 # Transactional CRM v0 archive
 
-**Archive status:** Non-runnable historical documentation only
+**Archive status:** Preserved, non-authoritative, excluded from the active workspace
 
-This directory preserves the description of the first Fastify, TypeScript,
-PostgreSQL, and transactional-domain scaffold for historical comparison. The
-source tree and an independent package manifest are not present here, so this
-archive cannot be installed or run.
+This directory now contains the original Fastify API, TypeScript domain package, PostgreSQL migration, and historical product/architecture/API/ADR documents. The files remain available for comparison; they are not imported, built, tested, or presented as current NeoCRM.
 
-It is non-authoritative and excluded from the root workspace, build, and tests.
-Its former `person | organization` model, lifecycle-stage `prospect`, API
-metadata, and relational schema do not conform to the current NeoCRM
-specification. Do not import from or treat this directory as an implementation.
+The prototype is intentionally incompatible with the active model in important ways: it uses `person | organization`, treats prospect as a lifecycle stage, omits Household and contextual multi-role semantics, and lacks the Agent, Goal, Plan, Delegation, ContextSnapshot, PolicyDecision, Consent, full Action lifecycle, Outcome, and LearningSignal model.
 
-Reintroduction of archived code would require a deliberate recovery change,
-its own runnable boundary, a specification trace, and conformance tests.
+Do not deploy the migration or use prototype packages with client data. Reviving any part requires an explicit ADR, mapping to current semantics, safety review, workspace boundary, tests, and evidence.

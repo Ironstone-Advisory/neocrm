@@ -5,7 +5,10 @@ import { deriveEpistemicItems } from "./epistemic.mjs";
 import { resolveIdentity } from "./identity.mjs";
 import { opaqueId } from "./ids.mjs";
 import { normalizeAdapterResult } from "./normalize.mjs";
-import { planMinimumSources } from "./planner.mjs";
+import {
+  CAP001_RELATIONSHIP_BRIEF_DOMAINS,
+  planMinimumSources
+} from "./planner.mjs";
 import {
   proposeDisabledAction,
   rejectExternalWrite,
@@ -24,6 +27,10 @@ export function createMemoryLogger() {
   };
 }
 
+function safeSourceFailureCode(status) {
+  return status === "denied" ? "SOURCE_ACCESS_DENIED" : "SOURCE_UNAVAILABLE";
+}
+
 export async function buildRelationshipBrief({
   query,
   selectedPartyId,
@@ -38,7 +45,26 @@ export async function buildRelationshipBrief({
   const emit = (event, fields = {}) => logger.log({ event, traceId, ...fields });
   emit("request.started", { intent: "relationship_brief" });
 
-  const identity = await resolveIdentity({ identityResolver, query, selectedPartyId });
+  let identity;
+  try {
+    identity = await resolveIdentity({ identityResolver, query, selectedPartyId });
+  } catch {
+    emit("identity.failed", { code: "IDENTITY_BOUNDARY_FAILED" });
+    const response = baseEnvelope({
+      traceId,
+      status: "error",
+      subject: { unresolvedQuery: String(query) },
+      sessionContextUsed
+    });
+    response.unknowns.push(
+      unknownAssertion(
+        "party.identity",
+        "Party identity could not be resolved because the identity boundary was unavailable."
+      )
+    );
+    emit("request.completed", { status: response.status, evidenceCount: 0 });
+    return finalizeEnvelope(response);
+  }
   if (identity.status === "ambiguous") {
     emit("identity.ambiguous", { candidateCount: identity.candidates.length });
     const response = baseEnvelope({
@@ -84,7 +110,9 @@ export async function buildRelationshipBrief({
   });
   const { plan, executions, uncoveredDomains } = planMinimumSources({
     adapters,
-    subjectPartyId: subject.partyId
+    subjectPartyId: subject.partyId,
+    intent: "relationship_brief",
+    requiredDomains: CAP001_RELATIONSHIP_BRIEF_DOMAINS
   });
   response.sourcePlan = plan;
 
@@ -121,17 +149,26 @@ export async function buildRelationshipBrief({
         step.detail =
           normalized.result.status === "denied" ? "Access denied" : "Source unavailable";
         response.status = "partial";
-        response.unknowns.push(
-          unknownAssertion(
-            `source.${capability.sourceId}`,
-            `${capability.sourceId} context is unknown because the source was ${
-              normalized.result.status === "denied" ? "denied" : "unavailable"
-            }.`
-          )
-        );
+        if (normalized.result.status === "denied") {
+          for (const domain of request.domains) {
+            response.unknowns.push(
+              unknownAssertion(
+                `context.${domain}`,
+                `${domain} context is unavailable due to access policy.`
+              )
+            );
+          }
+        } else {
+          response.unknowns.push(
+            unknownAssertion(
+              `source.${capability.sourceId}`,
+              `${capability.sourceId} context is unknown because a required source is unavailable.`
+            )
+          );
+        }
         emit("source.failed", {
           adapterId: capability.adapterId,
-          code: normalized.result.error?.code ?? "SOURCE_ERROR"
+          code: safeSourceFailureCode(normalized.result.status)
         });
         continue;
       }
@@ -142,8 +179,8 @@ export async function buildRelationshipBrief({
         response.status = "partial";
         response.unknowns.push(
           unknownAssertion(
-            `source.${capability.sourceId}.freshness`,
-            `${capability.sourceId} context is unknown because the source result was not fresh.`
+            `context.${request.domains[0]}.freshness`,
+            `${request.domains.join(", ")} context is unknown because required evidence was not fresh.`
           )
         );
         emit("source.skipped", { adapterId: capability.adapterId, reason: "freshness" });
@@ -162,15 +199,26 @@ export async function buildRelationshipBrief({
       step.status = error.code === "SOURCE_ACCESS_DENIED" ? "denied" : "failed";
       step.detail = step.status === "denied" ? "Access denied" : "Source boundary failed";
       response.status = "partial";
-      response.unknowns.push(
-        unknownAssertion(
-          `source.${capability.sourceId}`,
-          `${capability.sourceId} context is unknown because the source boundary failed closed.`
-        )
-      );
+      if (step.status === "denied") {
+        for (const domain of request.domains) {
+          response.unknowns.push(
+            unknownAssertion(
+              `context.${domain}`,
+              `${domain} context is unavailable due to access policy.`
+            )
+          );
+        }
+      } else {
+        response.unknowns.push(
+          unknownAssertion(
+            `source.${capability.sourceId}`,
+            `${capability.sourceId} context is unknown because a required source boundary failed closed.`
+          )
+        );
+      }
       emit("source.failed", {
         adapterId: capability.adapterId,
-        code: error.code ?? "SOURCE_ERROR"
+        code: step.status === "denied" ? "SOURCE_ACCESS_DENIED" : "SOURCE_BOUNDARY_FAILED"
       });
     }
   }
@@ -183,6 +231,10 @@ export async function buildRelationshipBrief({
   const { assertions, conflicts } = reconcileAssertions(normalizedAssertions);
   response.facts.push(...assertions.filter((item) => item.kind === "fact"));
   response.observations.push(...assertions.filter((item) => item.kind === "observation"));
+  response.interpretations.push(
+    ...assertions.filter((item) => item.kind === "interpretation")
+  );
+  response.hypotheses.push(...assertions.filter((item) => item.kind === "hypothesis"));
   response.conflicts.push(...conflicts);
 
   const derived = deriveEpistemicItems({ assertions, conflicts });

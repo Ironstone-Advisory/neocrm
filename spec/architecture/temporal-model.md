@@ -1,21 +1,19 @@
-# Temporal Model
+# Temporal model
 
-Time is a first-class domain in NeoCRM. A calendar is one view of that model, not the owner of the model.
-
-## Concepts
+Time is a first-class domain. A calendar is one view over that model, not its owner.
 
 | Concept | Meaning |
 | --- | --- |
 | Event | A scheduled or recorded occurrence at a time or interval. |
-| Interval | A period with a start and end, such as leave, a campaign, or an active opportunity. |
-| Commitment | A promised future result, possibly inferred from an activity and confirmed by a user. |
-| Availability | Usable time subject to calendar, work pattern, and policy. |
+| Interval | A period with start/end, such as leave, a Journey stage, Campaign, or Opportunity. |
+| Commitment | A promised future result with Actor, beneficiary, due expectation, evidence, and status. |
+| Availability | Usable time subject to schedule, work pattern, consent, and policy. |
 | Capacity | Available ability to perform a category of work. |
-| Workload | Demand already placed on a person, team, or relationship portfolio. |
-| Time series | Measurements over time used to identify trend, change, or anomaly. |
+| Workload | Demand placed on a person, Agent, team, or relationship portfolio. |
+| TimeSeries | Measurements over time with window, denominator, provenance, and limitations. |
 
-## Example question
+Temporal semantics also govern Goal horizons, Plan dependencies, AgentRun budgets/expiry, WorkItems, Journey stages, ServiceCase/SLA periods, Campaign windows, consent and policy validity, evidence freshness, approval expiry, and Outcome observation windows.
 
-> You have eleven active opportunities, only four with meaningful activity in the last fourteen days, and eighteen hours of meetings next week. Which follow-ups merit protected time?
+> You have eleven active opportunities, only four with meaningful activity in fourteen days, and eighteen hours of meetings next week. Which follow-ups merit protected time?
 
-The answer requires relationship activity, opportunity context, commitments, meeting load, and capacity—rather than a simple calendar query.
+The answer requires relationship activity, opportunity context, commitments, workload, availability, and capacity—not a simple calendar query.

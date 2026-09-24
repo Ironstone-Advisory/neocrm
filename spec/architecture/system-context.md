@@ -1,35 +1,34 @@
-# Architecture Overview
+# System context
 
-## Layers
+**Status:** Proposed architecture baseline
 
-1. **Experience** — conversational, calendar, dashboard, or web interfaces.
-2. **Relationship Intelligence** — intent recognition, entity resolution, context planning, semantic routing, policy, provenance, reasoning, memory, and action orchestration.
-3. **Semantic Core** — canonical concepts and relationships.
-4. **Adapters** — systems that provide operational data, knowledge, activity, calendar data, and action endpoints.
+NeoCRM sits between relationship participants and the systems that hold or execute operational work. Its boundary is defined by semantics, agency, orchestration, context, policy, and outcomes—not by ownership of every datum.
 
 ```mermaid
-flowchart TB
-  Experience["Experience"] --> Intelligence["Relationship Intelligence Layer"]
-  Intelligence --> Core["Semantic Core"]
-  Intelligence --> Ops["Operational data adapters"]
-  Intelligence --> Know["Knowledge adapters"]
-  Intelligence --> Interactions["Activity adapters"]
-  Intelligence --> Time["Calendar adapters"]
-  Intelligence --> Actions["Action adapters"]
+flowchart LR
+    P["People and relationship participants"]
+    N["NeoCRM\nPresentation | Agents | Orchestration | Context"]
+    G["Governance and control\nidentity | delegation | consent | policy | audit"]
+    S["Source and execution systems\nCRM | knowledge | messaging | calendar | service | commerce"]
+    O["Outcome evidence\nuser | customer | operational | business | ethical"]
+    P <--> N
+    G -. constrains .-> N
+    N <--> S
+    N --> O
+    O --> N
 ```
 
-## Context assembly loop
+## Participants
 
-```text
-User intent
-  → entity resolution
-  → context plan
-  → governed adapter retrieval
-  → normalization and reconciliation
-  → provenance-aware reasoning
-  → answer or proposed action
-  → human approval (when required)
-  → adapter execution and audit
-```
+- **Relationship owner and customer-facing specialists** remain accountable for goals and consequential judgment.
+- **Coordinator and specialist Agents** plan and perform delegated bounded work.
+- **Policy/governance functions** define data, consent, autonomy, approval, retention, fairness, and redress controls.
+- **Data/system stewards** define mappings, authority, quality, and source boundaries.
+- **Customers and other Parties** are relationship participants whose value, rights, and outcomes remain explicit.
+- **Source systems** retain their own operational records and execute authorized effects through bounded interfaces.
 
-The Intelligence Layer does not directly expose native sources as the user model. It plans which evidence is needed, then presents a clear answer that retains its evidence boundary.
+## System boundary
+
+NeoCRM owns canonical meaning, Agent and orchestration contracts, context planning, provenance, policy decisions, action lifecycle, and outcome-learning governance. It may materialize approved semantic state, but does not claim universal ownership of source data or source-side transactions.
+
+The current executable boundary is smaller: CAP-001 uses synthetic adapters and performs only deterministic read-only context assembly.

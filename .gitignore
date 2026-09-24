@@ -9,3 +9,13 @@ node_modules/
 dist/
 coverage/
 *.tsbuildinfo
+
+# Credentials and operator-local experiment inputs
+.env
+.env.*
+!.env.example
+experiments/local-vault/
+experiments/private-results/
+*.pem
+*.key
+*.p12

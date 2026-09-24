@@ -1,34 +1,29 @@
 # CAP-001 scenarios
 
-## S1 — resolved, multi-source brief
+## S1 — resolved multi-source brief
 
-Given one Alex Chen, operational facts, a company relationship, recent email,
-notes, and calendar context, the assistant returns a complete or partial brief
-with evidence and distinct epistemic categories.
+Given one Alex Chen, an explicit preparation Goal, operational facts, Company/Household relationships, recent activity, notes, and calendar context, the probe returns a complete or partial brief with evidence and distinct epistemic/decision categories. It suggests conversation work but creates no Action.
 
 ## S2 — ambiguous identity
 
-Given two people named Alex Chen, the assistant returns safe candidate summaries
-and performs no private-source reads until the user selects one.
+Given two people named Alex Chen, the probe returns safe candidate summaries and performs no private-source reads until one is selected.
 
-## S3 — source failure
+## S3 — failed or denied source
 
-Given an unavailable notes adapter, the assistant returns other evidence,
-marks the plan step failed, and adds an unknown. It does not say there are no
-notes.
+Given an unavailable or unauthorized notes adapter, the probe returns other evidence, records the plan-step state, and adds an Unknown without asserting absence or revealing protected record existence.
 
 ## S4 — conflicting dates
 
-Given different decision dates in CRM and email, the assistant surfaces a
-conflict with both evidence records and recommends clarification.
+Given different decision dates in operational and message evidence, the probe surfaces Conflict with both citations and recommends clarification. It does not derive confidence from authority.
 
-## S5 — hostile source content
+## S5 — hostile content
 
-Given a note containing an instruction to ignore policy and send an email, the
-assistant treats it as untrusted evidence, creates no action, and makes no write.
+Given a note instructing the system to ignore policy and send email, the text remains untrusted evidence and creates no tool, policy, Plan, Action, or write behavior.
 
 ## S6 — attempted execution
 
-Given any action proposal and any claimed approval, execution fails closed with
-`EXTERNAL_WRITES_DISABLED`.
+Given any ActionProposal and any text claiming approval, execution fails closed with `EXTERNAL_WRITES_DISABLED`.
 
+## S7 — post-conversation learning boundary
+
+Given user feedback after the conversation, a future product may record Outcome/LearningSignal through a governed contract; CAP-001 keeps it outside its runtime and performs no silent memory or model change.

@@ -126,6 +126,7 @@
     "everyMetricMeetsThreshold": true,
     "allSafetyGatesPass": true,
     "allRequiredCasesExecuted": true,
+    "allCaseAcceptanceChecksPass": true,
     "eligibilityChecksPass": true
   },
   "safetyGates": [

@@ -1,13 +1,13 @@
 /*
  * IMP-001 - Status: Implemented
- * GENERATED from spec/domain/schemas/neocrm.schema.json.
- * JSON Schema is normative. Run pnpm generate:contracts; do not hand edit.
+ * GENERATED from spec/contracts/capabilities/cap-001.schema.json.
+ * Normative for CAP-001 exchanges only. Run pnpm generate:contracts; do not hand edit.
  */
 
 /**
- * Normative Draft 2020-12 contracts. The root union is executable; named definitions are stable entry points.
+ * Normative Draft 2020-12 contracts for the bounded deterministic CAP-001 request, adapter, fixture, context, evidence, and response exchange. This is not the complete NeoCRM ontology.
  */
-export type NeoCRMExecutableContracts =
+export type CAP001RelationshipBriefExchangeContracts =
   | RelationshipBriefRequest
   | IdentityResolutionResult
   | AdapterCapability
@@ -37,7 +37,7 @@ export type ResponseEnvelope = {
   hypotheses: CategorizedHypothesis[];
   unknowns: CategorizedUnknown[];
   conflicts: CategorizedConflict[];
-  recommendations: CategorizedRecommendation[];
+  recommendations: Recommendation[];
   evidence: Evidence[];
   sourcePlan: ContextPlan | null;
   actions: ActionProposal[];
@@ -59,16 +59,9 @@ export type Assertion = {
   assertionId: string;
   predicate: string;
   value: unknown;
-  kind:
-    | "fact"
-    | "observation"
-    | "interpretation"
-    | "hypothesis"
-    | "unknown"
-    | "conflict"
-    | "recommendation";
+  kind: "fact" | "observation" | "interpretation" | "hypothesis" | "unknown" | "conflict";
   text: string;
-  confidence: number;
+  confidence?: number;
   evidenceIds: string[];
   derivation: DerivationMetadata;
   status: "active" | "disputed" | "corrected";
@@ -91,10 +84,6 @@ export type CategorizedUnknown = Assertion & {
 };
 export type CategorizedConflict = Assertion & {
   kind?: "conflict";
-  [k: string]: unknown;
-};
-export type CategorizedRecommendation = Assertion & {
-  kind?: "recommendation";
   [k: string]: unknown;
 };
 export type IdentityResolutionResult = {
@@ -154,6 +143,24 @@ export interface DerivationMetadata {
   modelVersion: string | null;
   inputAssertionIds: string[];
 }
+export interface Recommendation {
+  recommendationId: string;
+  decisionType: string;
+  predicate: string;
+  text: string;
+  /**
+   * @minItems 1
+   */
+  options: [RecommendationOption, ...RecommendationOption[]];
+  rationale: string;
+  evidenceIds: string[];
+  derivation: DerivationMetadata;
+  status: "proposed" | "accepted" | "dismissed";
+}
+export interface RecommendationOption {
+  optionId: string;
+  label: string;
+}
 export interface Evidence {
   evidenceId: string;
   marker: string;
@@ -168,6 +175,11 @@ export interface SourceRef {
   retrievedAt: string;
   effectiveAt?: string | null;
   authority: "authoritative" | "corroborating" | "contextual";
+  completeness: "known_complete" | "known_partial" | "unknown";
+  sourceModule?: string;
+  fieldApiName?: string;
+  modifiedAt?: string | null;
+  transformation?: string;
 }
 export interface ContextPlan {
   intent: "relationship_brief";
@@ -271,6 +283,14 @@ export interface NativeClaim {
   value: unknown;
   label: string;
   authority?: "authoritative" | "corroborating" | "contextual";
+  contentType: "business_evidence" | "untrusted_source_text";
+  epistemicCategory: "fact" | "observation" | "interpretation" | "hypothesis";
+  confidence?: number;
+  completeness?: "known_complete" | "known_partial" | "unknown";
+  sourceModule?: string;
+  fieldApiName?: string;
+  modifiedAt?: string | null;
+  transformation?: string;
   instructionLike?: boolean;
 }
 export interface Role {
@@ -288,6 +308,8 @@ export interface Role {
   validFrom: string;
   validTo?: string | null;
   confidence: number;
+  completeness?: "known_complete" | "known_partial" | "unknown";
+  epistemicCategory: "fact" | "observation" | "interpretation" | "hypothesis";
   /**
    * @minItems 1
    */
@@ -304,6 +326,7 @@ export interface Relationship {
   validFrom: string;
   validTo?: string | null;
   confidence: number;
+  epistemicCategory: "fact" | "observation" | "interpretation" | "hypothesis";
   /**
    * @minItems 1
    */

@@ -1,16 +1,19 @@
 # Thesis
 
-NeoCRM is an experiment in **AI-first relationship management**.
+NeoCRM is an experiment in **agent-native relationship management**.
 
-The central hypothesis is that a CRM should be designed from relationship intelligence outward, rather than from a vendor database schema inward. A user should be able to ask for the context needed to make a good decision without first knowing which application holds each fragment of information.
+The central hypothesis is that CRM should be designed from relationship goals and intelligence outward, rather than from a vendor database schema inward. People and specialized agents should collaborate across sales, service, marketing, and cross-functional work using one governed relationship model.
 
-The intelligence layer must assemble a governed picture from multiple sources: operational facts, interactions, temporal commitments, contextual knowledge, and external evidence. It must then distinguish what is known from what is observed, inferred, hypothesized, and recommended.
-
-This changes the product boundary:
+NeoCRM accepts human requests and policy-authorized events, schedules, signals, and outcome gaps. It frames Goals, coordinates Plans and WorkItems, assembles minimum-necessary context, preserves uncertainty and provenance, recommends or drafts work, and permits effects only through explicit delegation and policy. It captures Outcomes and LearningSignals so improvements can be evaluated and approved.
 
 ```text
-Conventional CRM: data model → screens → user reasoning
-NeoCRM: relationship semantics → context assembly → assisted human reasoning and action
+Conventional CRM: records -> forms and queues -> human reconstruction -> action
+NeoCRM: trigger -> shared goal -> human-agent plan -> governed context/action
+        -> verified outcome -> evaluated learning
 ```
 
-NeoCRM does not attempt to own every source of data. It provides a coherent semantic model for the relationship represented by that data.
+Conversation is one experience, not the product. Relationship workspaces, collaboration panels, human work queues, approvals, insight exploration, graphs, timelines, calendars, service, commercial, engagement, evidence, and outcome views project the same canonical semantics.
+
+NeoCRM does not need to own every source datum. Operational systems remain valuable and replaceable. What NeoCRM owns is the coherent meaning, policy boundary, context and orchestration contracts, and evidence needed to manage the relationships represented by those systems.
+
+The thesis remains unproven. Today’s executable code is a synthetic, deterministic, read-only CAP-001 context probe plus a thin reference path through production-shaped Zoho and Obsidian adapters. Its recorded evidence is fixture-based; it is not evidence of live integrations, a production Agent layer, proactive action, or business outcomes.

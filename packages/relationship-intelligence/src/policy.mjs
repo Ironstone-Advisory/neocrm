@@ -12,6 +12,11 @@ export function applyReadOnlyPolicy(response) {
  * objects/handles. Source text remains explicitly untrusted.
  */
 export function toModelSafeContext(response) {
+  const untrustedEvidenceIds = new Set(
+    response.evidence
+      .filter((item) => item.untrustedContent)
+      .map((item) => item.evidenceId)
+  );
   return Object.freeze({
     subject: structuredClone(response.subject),
     assertions: [
@@ -21,19 +26,28 @@ export function toModelSafeContext(response) {
       ...response.hypotheses,
       ...response.unknowns,
       ...response.conflicts
-    ].map(({ assertionId, kind, predicate, value, confidence, evidenceIds }) => ({
-      assertionId,
-      kind,
-      predicate,
-      value: structuredClone(value),
-      confidence,
-      evidenceIds: [...evidenceIds]
-    })),
+    ].map(({ assertionId, kind, predicate, value, confidence, evidenceIds }) => {
+      const untrusted = evidenceIds.some((id) => untrustedEvidenceIds.has(id));
+      return {
+        assertionId,
+        kind,
+        predicate,
+        value: untrusted
+          ? { channel: "untrusted_data", payload: structuredClone(value) }
+          : structuredClone(value),
+        ...(Number.isFinite(confidence) ? { confidence } : {}),
+        evidenceIds: [...evidenceIds],
+        controlCapabilities: []
+      };
+    }),
     evidence: response.evidence.map(({ evidenceId, marker, summary, untrustedContent }) => ({
       evidenceId,
       marker,
-      summary,
-      untrustedContent
+      content: untrustedContent
+        ? { channel: "untrusted_data", text: summary }
+        : { channel: "trusted_metadata", text: summary },
+      untrustedContent,
+      controlCapabilities: []
     }))
   });
 }

@@ -1,13 +1,7 @@
 # Relationship
 
-A **Relationship** expresses how two or more parties are connected in a defined context and period.
+A **Relationship** expresses how two or more Parties are connected in a defined context and period.
 
-It must support:
+It carries participating Parties and contextual Roles; type and direction; validity and lifecycle; ownership/accountability; Goals and CustomerNeeds; Journey, commercial, service, Campaign, Activity, Conversation, Commitment, WorkItem, and Outcome links; source evidence and provenance; and independent authority, freshness, confidence, completeness, and epistemic treatment.
 
-- relationship type and direction where relevant;
-- participating Parties and their contextual roles;
-- organizational structure, including employment, membership, ownership, and partnership;
-- commercial, household, and personal contexts;
-- validity period, evidence, provenance, and confidence.
-
-Roles are attached to a Party in a relationship or business context, rather than being forced into a single permanent contact type.
+Relationship health is not a primitive fact or opaque score. It is a reviewable Insight derived from declared Signals, windows, evidence, missingness, and limitations. Relationship goals and measured outcomes must remain distinguishable from the organization's desired commercial result.

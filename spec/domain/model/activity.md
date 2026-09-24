@@ -1,22 +1,11 @@
-# Activity and Conversation
+# Activity, Message, and Conversation
 
-An **Activity** is a canonical record of an interaction or event involving Parties. It is distinct from the communications channel that supplied it.
+An **Activity** is a canonical record of an interaction or event involving Parties and/or Actors. It is distinct from the channel that supplied it.
 
-Examples include email, SMS, WhatsApp, phone call, video meeting, in-person meeting, and CRM activity.
+A **Message** is a communication artifact with sender, recipients, channel, direction, occurrence/delivery state, threading references, classification, and source provenance. Raw content may remain in its source.
 
-```yaml
-activity_id: ACT-10482
-type: email
-occurred_at: 2026-09-18T14:32:00-04:00
-participants: [party:person:example]
-channel: gmail
-direction: outbound
-related_entities: [party:company:example, opportunity:example]
-source:
-  system: gmail
-  native_id: provider-message-id
-```
+A **Conversation** groups related Activities/Messages into a coherent interaction episode, potentially across channels. An **OBJ-074 Touchpoint** is a Journey-relative projection of an Activity, not a replacement for it.
 
-Raw content remains in the source system, subject to policy. NeoCRM retains the semantic representation needed for relationship reasoning.
+Activities may link to Relationships, Goals, Plans, AgentRuns, Journeys, Campaigns, Opportunities, Deals, Contracts, ServiceCases, Commitments, WorkItems, Decisions, and Outcomes. Agent participation and human participation remain explicit.
 
-A **Conversation** groups related activities into an interaction episode. It can include multiple channels when they jointly describe one continuing relationship moment.
+Channel delivery is not proof of customer engagement or an Outcome. Those require separate attributed evidence.

@@ -1,5 +1,5 @@
 import { assertContract } from "../../contracts/src/runtime.mjs";
-import { createAssertion, confidenceForAuthority } from "./assertions.mjs";
+import { createAssertion } from "./assertions.mjs";
 import { opaqueId } from "./ids.mjs";
 
 const authorityRank = { contextual: 1, corroborating: 2, authoritative: 3 };
@@ -21,19 +21,57 @@ function declaredAuthority(capability, domain) {
   return entry.authority;
 }
 
-function sourceRef({ capability, nativeId, retrievedAt, effectiveAt, authority }) {
+function sourceRef({
+  capability,
+  nativeId,
+  retrievedAt,
+  effectiveAt,
+  authority,
+  provenance = {}
+}) {
   return {
     sourceId: capability.sourceId,
     adapterId: capability.adapterId,
     nativeId,
     retrievedAt,
     effectiveAt: effectiveAt ?? null,
-    authority
+    authority,
+    completeness: provenance.completeness ?? "unknown",
+    ...Object.fromEntries(
+      ["sourceModule", "fieldApiName", "modifiedAt", "transformation"]
+        .filter((key) => provenance[key] !== undefined)
+        .map((key) => [key, provenance[key]])
+    )
   };
 }
 
-function epistemicKind(authority) {
-  return authority === "authoritative" ? "fact" : "observation";
+const CONTROL_DIRECTIVE_PATTERN = new RegExp(
+  [
+    "\\b(?:ignore|disregard|override)\\b[\\s\\S]{0,80}\\b(?:instruction|policy|system|developer)\\b",
+    "\\b(?:system|developer)\\s+(?:message|prompt)\\b",
+    "\\b(?:create|invoke|call|use)\\b[\\s\\S]{0,60}\\b(?:tool|function)\\b",
+    "[\\\"']?(?:tool|function|action|policy|state)[\\\"']?\\s*:\\s*[\\\"']?(?:execute|executed|send|delete|update)"
+  ].join("|"),
+  "i"
+);
+
+function containsControlDirective(claim) {
+  if (claim.instructionLike === true) return true;
+  const value = typeof claim.value === "string"
+    ? claim.value
+    : JSON.stringify(claim.value);
+  return CONTROL_DIRECTIVE_PATTERN.test(`${claim.label}\n${value ?? ""}`);
+}
+
+function admissibleBusinessEvidence(claim) {
+  return (
+    claim.contentType === "business_evidence" &&
+    !containsControlDirective(claim) &&
+    !claim.predicate.startsWith("source.") &&
+    !claim.predicate.startsWith("tool.") &&
+    !claim.predicate.startsWith("policy.") &&
+    !claim.predicate.startsWith("action.")
+  );
 }
 
 function addEvidenceAndAssertion({
@@ -47,9 +85,11 @@ function addEvidenceAndAssertion({
   predicate,
   value,
   text,
-  sourceConfidence = 1,
+  epistemicCategory = "observation",
+  confidence,
   untrustedContent = true,
-  discriminator
+  discriminator,
+  provenance
 }) {
   const evidenceId = opaqueId(
     "evidence",
@@ -62,17 +102,17 @@ function addEvidenceAndAssertion({
   output.evidence.push({
     evidenceId,
     marker: nextMarker(),
-    source: sourceRef({ capability, nativeId, retrievedAt, effectiveAt, authority }),
+    source: sourceRef({ capability, nativeId, retrievedAt, effectiveAt, authority, provenance }),
     summary: text,
     untrustedContent
   });
   output.assertions.push(
     createAssertion({
-      kind: epistemicKind(authority),
+      kind: epistemicCategory,
       predicate,
       value,
       text,
-      confidence: confidenceForAuthority(authority, sourceConfidence),
+      confidence,
       evidenceIds: [evidenceId],
       transformationId: "normalize-adapter-evidence-v1",
       extractor: "adapter"
@@ -120,6 +160,10 @@ export function normalizeAdapterResult({
       throw error;
     }
     for (const claim of record.claims) {
+      // Only claims explicitly placed in the data-only business-evidence
+      // channel can cross this boundary. Source text cannot become policy,
+      // tools, actions, or executable directives regardless of its wording.
+      if (!admissibleBusinessEvidence(claim)) continue;
       if (!request.domains.includes(claim.domain) || !capability.readDomains.includes(claim.domain)) {
         const error = new Error("Adapter returned a claim outside the requested domain scope.");
         error.code = "ADAPTER_SCOPE_VIOLATION";
@@ -140,8 +184,11 @@ export function normalizeAdapterResult({
         predicate: claim.predicate,
         value: claim.value,
         text: claim.label,
+        epistemicCategory: claim.epistemicCategory,
+        confidence: claim.confidence,
         untrustedContent: record.untrustedContent ?? true,
-        discriminator: claim.domain
+        discriminator: claim.domain,
+        provenance: claim
       });
     }
   }
@@ -171,7 +218,7 @@ export function normalizeAdapterResult({
           validTo: role.validTo ?? null
         },
         text: `${subject.displayName} has the ${role.roleType.replaceAll("_", " ")} role${context}.`,
-        sourceConfidence: role.confidence,
+        epistemicCategory: role.epistemicCategory ?? "observation",
         discriminator: role.roleId
       });
     }
@@ -203,7 +250,7 @@ export function normalizeAdapterResult({
           validTo: relationship.validTo ?? null
         },
         text: `${subject.displayName} participates in an ${relationship.relationshipType.replaceAll("_", " ")} relationship.`,
-        sourceConfidence: relationship.confidence,
+        epistemicCategory: relationship.epistemicCategory ?? "observation",
         discriminator: relationship.relationshipId
       });
     }

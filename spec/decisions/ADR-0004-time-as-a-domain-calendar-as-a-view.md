@@ -1,17 +1,31 @@
-# ADR-0004: Time is a domain; calendar is a view
+# ADR-0004: Model Time as a domain and Calendar as a view
 
-**Status:** Provisional
+**Decision status:** Accepted
 
-**Validation plan:** EXP-003 / EVAL-001
+**Implementation status:** Planned
 
-**Demonstration evidence:** EXP-006 / EVAL-001
+**Evidence maturity:** Planned
+
+**Validation plan:** EXP-010 / EVAL-003
+
+**Validation plan:** EXP-011 / EVAL-003
+
+**Validation plan:** EXP-012 / EVAL-003
 
 ## Decision
 
-Events, intervals, commitments, availability, capacity, workload, and time series are canonical temporal concepts. Google Calendar, Outlook, and other calendars are adapters and views over parts of this domain.
+Calendar = View; Time = Domain.
+
+**OBJ-018 Event**, **OBJ-019 Interval**, **OBJ-020 Commitment**,
+**OBJ-021 Availability**, **OBJ-022 Capacity**, **OBJ-023 Workload**, and
+**OBJ-024 TimeSeries** are canonical temporal objects. Google Calendar,
+Outlook, and other providers are adapters and partial views over this domain.
 
 ## Consequences
 
-- Time and load can be reasoned about alongside relationship and commercial context.
-- Calendar providers do not become owners of NeoCRM's temporal semantics.
-- Reporting can include momentum, allocation, capacity, and trend rather than only scheduled events.
+- Time and load can be reasoned about alongside relationship and commercial
+  context.
+- A calendar record cannot by itself determine capacity, commitment, or
+  relationship priority.
+- Temporal analysis declares windows, inclusion rules, sources, and missing
+  data.

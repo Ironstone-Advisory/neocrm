@@ -2,5 +2,3 @@ packages:
   - apps/*
   - packages/*
   - adapters/*
-  - "!apps/api"
-  - "!packages/domain"

@@ -2,9 +2,15 @@ import { readFile } from "node:fs/promises";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
-const schema = JSON.parse(
+const cap001Schema = JSON.parse(
   await readFile(
-    new URL("../../../spec/domain/schemas/neocrm.schema.json", import.meta.url),
+    new URL("../../../spec/contracts/capabilities/cap-001.schema.json", import.meta.url),
+    "utf8"
+  )
+);
+const agentRuntimeSchema = JSON.parse(
+  await readFile(
+    new URL("../../../spec/contracts/agent-runtime.schema.json", import.meta.url),
     "utf8"
   )
 );
@@ -17,25 +23,45 @@ const ajv = new Ajv2020({
   validateFormats: true
 });
 addFormats(ajv);
-ajv.addSchema(schema);
+ajv.addSchema(cap001Schema);
+ajv.addSchema(agentRuntimeSchema);
 
-const entryPoints = [
-  "RelationshipBriefRequest",
-  "IdentityResolutionResult",
-  "AdapterCapability",
-  "AdapterRequest",
-  "AdapterResult",
-  "Fixture",
-  "ResponseEnvelope"
-];
+const entryPoints = new Map([
+  ...[
+    "RelationshipBriefRequest",
+    "IdentityResolutionResult",
+    "AdapterCapability",
+    "AdapterRequest",
+    "AdapterResult",
+    "Fixture",
+    "ResponseEnvelope",
+    "Assertion",
+    "Recommendation"
+  ].map((name) => [name, cap001Schema]),
+  ...[
+    "AgentDefinition",
+    "AuthorityGrant",
+    "Trigger",
+    "Goal",
+    "Plan",
+    "AgentRun",
+    "Handoff",
+    "PolicyDecision",
+    "ContextSnapshot",
+    "Outcome",
+    "LearningSignal",
+    "AuditEvent"
+  ].map((name) => [name, agentRuntimeSchema])
+]);
 const validators = Object.fromEntries(
-  entryPoints.map((name) => [
+  [...entryPoints].map(([name, owner]) => [
     name,
-    ajv.getSchema(`${schema.$id}#/$defs/${name}`) ??
-      ajv.compile({ $ref: `${schema.$id}#/$defs/${name}` })
+    ajv.getSchema(`${owner.$id}#/$defs/${name}`) ??
+      ajv.compile({ $ref: `${owner.$id}#/$defs/${name}` })
   ])
 );
-validators.Root = ajv.getSchema(schema.$id);
+validators.Root = ajv.getSchema(cap001Schema.$id);
+validators.AgentRuntimeRoot = ajv.getSchema(agentRuntimeSchema.$id);
 
 export class ContractValidationError extends Error {
   constructor(contractName, errors) {
@@ -64,4 +90,4 @@ export function assertContract(contractName, value) {
   return value;
 }
 
-export { schema };
+export { cap001Schema as schema, agentRuntimeSchema };

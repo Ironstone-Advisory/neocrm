@@ -1,57 +1,37 @@
 # Specification authority
 
-`spec/` is the single authoritative design boundary for NeoCRM. Code,
-prototypes, experiments, and research may test the specification; they do not
-silently redefine it.
+`spec/` is NeoCRM's authoritative design boundary. Code, prototypes, experiments, and research may implement or test it; they do not silently redefine the product.
 
-## Authority and precedence
+## Precedence
 
-Normative material uses RFC 2119 terms (`MUST`, `SHOULD`, and `MAY`) and a
-stable identifier recorded in [`traceability.json`](traceability.json).
 Conflicts are resolved in this order:
 
-1. safety and privacy requirements;
-2. normative JSON Schemas under `domain/schemas/`;
-3. accepted capability, functional, and quality requirements;
-4. accepted Architecture Decision Records;
-5. descriptive domain, experience, architecture, product, and vision text.
+1. The cleaned [origin](vision/origin.md) governs product purpose, human-agent operating model, seven logical layers, cross-functional scope, proactive work, experience philosophy, and outcome learning.
+2. The [canonical specification](canonical/NeoCRM-v0.1-Canonical-Specification.md) reconciles that origin with the later semantic, temporal, provenance, adapter, governance, safety, CTS, and traceability design.
+3. Safety, privacy, consent, identity, delegation, and governance requirements constrain how the vision is realized; they do not remove its agentic foundation.
+4. Accepted ADRs define the adopted design baseline. Decision status is independent of implementation status and evidence maturity.
+5. System requirements and canonical object definitions govern product behavior and meaning.
+6. Capability specifications and their exchange schemas govern only their declared slice. The current JSON Schema is normative for CAP-001 exchanges, not for the complete NeoCRM ontology.
+7. Implementation, experiments, evaluations, and results supply scoped evidence and cannot broaden their own claims.
 
-JSON Schema is the normative representation of exchanged data. The TypeScript
-types in `packages/contracts` are a checked projection for developer
-ergonomics. If the two disagree, the schema wins and the projection must be
-corrected.
+The four axioms, Party/Role/Relationship distinctions, source authority, consent, action boundaries, and other canonical invariants cannot be overridden by a narrower capability schema or fixture.
 
-Research, experiment plans/results, evaluation outputs, prototypes, examples,
-and implementation notes are informative evidence unless explicitly promoted
-through this lifecycle.
+## Status dimensions
 
-## Lifecycle
+Traceability keeps three questions separate:
 
-Normative artifacts have one status:
+- **Decision status:** Draft, Proposed, Accepted, Superseded, or Rejected.
+- **Implementation status:** NotStarted, Planned, Partial, Implemented, Verified, Retired, or NotApplicable.
+- **Evidence maturity:** Unassessed, Planned, Demonstrated, Validated, Inconclusive, or Rejected.
 
-- **Draft** — incomplete and unsuitable as a dependency.
-- **Proposed** — reviewable but not yet used as the development baseline.
-- **Provisional** — the development baseline while linked evidence is gathered.
-- **Accepted** — supported by linked experiment/evaluation evidence.
-- **Superseded** or **Rejected** — retained for decision history.
+An ADR may be Accepted while implementation is Partial and evidence is Demonstrated. “Accepted” means the decision is adopted, not empirically proven. Human evaluation state belongs to the scoped evaluation/result record rather than being overloaded into decision status.
 
-A Provisional artifact becomes Accepted only when each required trace follows
-typed lifecycle links to a validated experiment, passed evaluation, verified
-implementation, and validated result that meet its acceptance rule. A
-demonstration result may support continued Provisional development, but it is
-not validation evidence. A change to semantics, safety, or externally visible
-contracts requires a new or amended ADR and traceability update in the same
-change.
+## Contract authority
+
+Normative data exchanged by a capability uses its versioned JSON Schema. Generated TypeScript is a checked projection for developer ergonomics. If a projection disagrees with its declared schema, regenerate or correct the projection. Neither one may be described as the complete product ontology unless the canonical specification explicitly grants that scope.
 
 ## Required trace
 
-```text
-Capability -> FR/NFR/SAFE -> ADR -> EXP -> EVAL -> implementation -> result
-```
+Traceability links product goals, business capabilities, architecture responsibilities, canonical objects, views, requirements, decisions, experiments, evaluations, implementations, and results. Evidence links must be typed and scoped. Ordering edges such as `precedes` never count as validation.
 
-`pnpm validate:spec` validates `traceability.json` against
-`traceability.schema.json`; rejects invalid node kinds, lifecycle statuses, and
-edge direction; reconciles artifact status and ADR validation declarations;
-and requires every capability requirement to end in result evidence scoped to
-the same experiment, evaluation, and implementation. Sequencing links such as
-`precedes` never count as evidence. CI runs that command on every change.
+Changes to product purpose, semantics, safety, externally visible contracts, or evidence claims require the affected ADR/requirement and traceability records to change together.

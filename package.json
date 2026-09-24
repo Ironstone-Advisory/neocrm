@@ -2,7 +2,7 @@
   "name": "neocrm",
   "version": "0.1.0",
   "private": true,
-  "description": "Chatbot-first relationship intelligence experiment",
+  "description": "Agent-native relationship management architecture and bounded experiments",
   "type": "module",
   "packageManager": "pnpm@9.15.4",
   "engines": {
@@ -15,10 +15,14 @@
     "check:contracts": "node scripts/generate-contracts.mjs --check",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "validate:spec": "node scripts/validate-spec.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "check:article": "node scripts/check-article-claims.mjs",
     "test": "node --test",
     "eval": "node evals/run-eval.mjs",
-    "check": "pnpm validate:spec && pnpm check:contracts && pnpm typecheck && pnpm test && pnpm eval",
-    "demo": "node apps/assistant/src/cli.mjs"
+    "check": "pnpm validate:spec && pnpm check:links && pnpm check:article && pnpm check:contracts && pnpm typecheck && pnpm test && pnpm eval",
+    "demo": "node apps/assistant/src/cli.mjs",
+    "exp:001": "node apps/experiment-cli/src/cli.mjs",
+    "exp:001:preflight": "node apps/experiment-cli/src/cli.mjs --preflight"
   },
   "dependencies": {
     "ajv": "^8.17.1",

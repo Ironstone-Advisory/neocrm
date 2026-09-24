@@ -2,7 +2,7 @@
 
 NeoCRM treats time as a domain, not merely as record metadata.
 
-Temporal semantics include events, intervals, commitments, availability, capacity, workload, and time series. A calendar renders selected events and commitments; it does not define all temporal meaning.
+Temporal semantics include Events, Intervals, Commitments, Availability, Capacity, Workload, and TimeSeries. They also govern Goal horizons, Plan dependencies, AgentRun budgets/expiry, WorkItems, Journey and Campaign windows, ServiceCase/SLA obligations, consent/policy validity, evidence freshness, approval expiry, and Outcome observation periods. A calendar renders selected temporal objects; it does not define their meaning.
 
 This enables relationship questions such as:
 

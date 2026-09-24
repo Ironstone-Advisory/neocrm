@@ -1,4 +1,4 @@
-// IMP-003 - Status: Implemented. Chatbot-first rendering for the CAP-001 reference slice.
+// IMP-003 - Status: Implemented. Deterministic conversational rendering for CAP-001 only.
 
 import { buildRelationshipBrief } from "../../../packages/relationship-intelligence/src/index.mjs";
 import { assertContract } from "../../../packages/contracts/src/runtime.mjs";
@@ -121,6 +121,16 @@ function isWhyIntent(message) {
   );
 }
 
+function isExternalWriteIntent(message) {
+  return /^\s*(?:please\s+)?(?:send|email|message|update|create|delete)\b/i.test(
+    message
+  );
+}
+
+function isFinalSignatoryIntent(message) {
+  return /\b(?:final\s+)?(?:contract\s+)?signator(?:y|ies)\b/i.test(message);
+}
+
 function approvedProvenance(item, evidenceById) {
   const sources = item.evidenceIds
     .map((evidenceId) => evidenceById.get(evidenceId))
@@ -158,14 +168,14 @@ export function renderWhy(response) {
   ].join("\n");
 }
 
-function clarificationResponse({ traceId, message, sessionContextUsed }) {
+function clarificationResponse({ traceId, message, subject, sessionContextUsed }) {
   return assertContract("ResponseEnvelope", {
     contractType: "response_envelope",
     version: "1.0",
     traceId,
     intent: "relationship_brief",
     status: "needs_clarification",
-    subject: { unresolvedQuery: message },
+    subject: subject ?? { unresolvedQuery: message },
     facts: [],
     observations: [],
     interpretations: [],
@@ -194,11 +204,29 @@ export function renderRelationshipBrief(response) {
       "I found more than one matching person. Which one did you mean?",
       ...response.subject.candidates.map(
         (candidate, index) =>
-          `${index + 1}. ${candidate.displayName} (${candidate.partyType})`
+          `${index + 1}. ${candidate.displayName} (${candidate.partyType})${
+            candidate.disambiguationLabel
+              ? ` — ${candidate.disambiguationLabel}`
+              : ""
+          }`
       )
     ].join("\n");
   }
-  if (response.status === "error") return response.unknowns[0]?.text ?? "No brief available.";
+  if (response.status === "error") {
+    const totalSourceFailure =
+      response.subject.partyId &&
+      response.sourcePlan?.steps.length > 0 &&
+      response.sourcePlan.steps.every((step) =>
+        ["failed", "denied", "skipped"].includes(step.status)
+      );
+    if (totalSourceFailure) {
+      return [
+        "I am unable to produce a reliable brief because all planned sources were unavailable.",
+        ...response.unknowns.map((item) => `- ${item.text}`)
+      ].join("\n");
+    }
+    return response.unknowns[0]?.text ?? "No brief available.";
+  }
 
   const evidenceById = evidenceIndex(response);
 
@@ -224,6 +252,30 @@ export function createAssistant({ identityResolver, adapters, now, logger }) {
         return {
           message: "Selection cleared. Tell me which person you want to discuss.",
           structured: null,
+          state
+        };
+      }
+
+      if (isExternalWriteIntent(message)) {
+        const selectedPartyId = context.selectedPartyId ?? context.state.selectedPartyId;
+        const priorSubject = context.state.lastBrief?.subject;
+        const subject =
+          selectedPartyId && priorSubject?.partyId === selectedPartyId
+            ? clone(priorSubject)
+            : undefined;
+        const structured = clarificationResponse({
+          traceId: context.traceId ?? "trace-cap-001",
+          message,
+          subject,
+          sessionContextUsed: Object.keys(sessionContext).length > 0
+        });
+        const state = clone(context.state);
+        state.turnCount += 1;
+        assertConversationState(state);
+        return {
+          message:
+            "External writes are disabled, so I did not send the security pack. I can prepare a draft for your review and explicit approval.",
+          structured,
           state
         };
       }
@@ -268,23 +320,38 @@ export function createAssistant({ identityResolver, adapters, now, logger }) {
         priorCandidates.length > 0 &&
         !priorCandidates.some((candidate) => candidate.partyId === requestedPartyId);
       const selectedPartyId = invalidPendingSelection ? undefined : requestedPartyId;
-      const query = context.state.pendingIdentityQuery && selectedPartyId
+      const query = context.state.pendingIdentityQuery && requestedPartyId
         ? context.state.pendingIdentityQuery
         : message;
       const hints = identityHints(query);
-      let identity = invalidPendingSelection
-        ? {
-            contractType: "identity_resolution_result",
-            status: "ambiguous",
-            candidates: priorCandidates
-          }
-        : await identityResolver.resolve({ query, selectedPartyId, hints });
-      identity = narrowWithHints(identity, hints);
+      let identity;
+      let identityBoundaryFailed = false;
+      try {
+        identity = invalidPendingSelection
+          ? {
+              contractType: "identity_resolution_result",
+              status: "ambiguous",
+              candidates: priorCandidates
+            }
+          : await identityResolver.resolve({ query, selectedPartyId, hints });
+        identity = narrowWithHints(identity, hints);
+      } catch {
+        identityBoundaryFailed = true;
+      }
 
       const structured = await buildRelationshipBrief({
         query,
         selectedPartyId,
-        identityResolver: { resolve: async () => clone(identity) },
+        identityResolver: {
+          async resolve() {
+            if (identityBoundaryFailed) {
+              const error = new Error("Identity boundary failed closed.");
+              error.code = "IDENTITY_BOUNDARY_FAILED";
+              throw error;
+            }
+            return clone(identity);
+          }
+        },
         adapters,
         now,
         traceId: context.traceId ?? "trace-cap-001",
@@ -299,7 +366,7 @@ export function createAssistant({ identityResolver, adapters, now, logger }) {
       if (structured.status === "needs_disambiguation") {
         delete state.selectedPartyId;
         state.pendingIdentityQuery = query;
-      } else if (structured.status === "complete" || structured.status === "partial") {
+      } else if (structured.subject.partyId) {
         const priorPartyId = context.state.selectedPartyId;
         const resolvedPartyId = structured.subject.partyId;
         if (priorPartyId && priorPartyId !== resolvedPartyId) {
@@ -315,8 +382,13 @@ export function createAssistant({ identityResolver, adapters, now, logger }) {
         delete state.pendingIdentityQuery;
       }
       assertConversationState(state);
+      const renderedMessage = isFinalSignatoryIntent(message)
+        ? structured.unknowns.find(
+            (item) => item.predicate === "commercial.final_signatory"
+          )?.text ?? renderRelationshipBrief(structured)
+        : renderRelationshipBrief(structured);
       return {
-        message: renderRelationshipBrief(structured),
+        message: renderedMessage,
         structured,
         state
       };

@@ -1,0 +1,229 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neocrm.example/spec/contracts/agent-runtime.schema.json",
+  "title": "NeoCRM bounded agent-runtime contracts",
+  "description": "Executable contracts for the EXP-001 single-agent reference path. They do not claim to implement the complete NeoCRM agency model.",
+  "oneOf": [
+    { "$ref": "#/$defs/AgentDefinition" },
+    { "$ref": "#/$defs/AuthorityGrant" },
+    { "$ref": "#/$defs/Trigger" },
+    { "$ref": "#/$defs/Goal" },
+    { "$ref": "#/$defs/Plan" },
+    { "$ref": "#/$defs/AgentRun" },
+    { "$ref": "#/$defs/Handoff" },
+    { "$ref": "#/$defs/PolicyDecision" },
+    { "$ref": "#/$defs/ContextSnapshot" },
+    { "$ref": "#/$defs/Outcome" },
+    { "$ref": "#/$defs/LearningSignal" },
+    { "$ref": "#/$defs/AuditEvent" }
+  ],
+  "$defs": {
+    "AgentDefinition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "agentId", "name", "version", "capabilities", "allowedOperations"],
+      "properties": {
+        "contractType": { "const": "agent_definition" },
+        "agentId": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "capabilities": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
+        "allowedOperations": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "const": "read" } }
+      }
+    },
+    "AuthorityGrant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "grantId", "delegator", "agentId", "capability", "operations", "expiresAt"],
+      "properties": {
+        "contractType": { "const": "authority_grant" },
+        "grantId": { "type": "string", "minLength": 1 },
+        "delegator": { "type": "string", "minLength": 1 },
+        "agentId": { "type": "string", "minLength": 1 },
+        "capability": { "const": "CAP-001" },
+        "operations": { "type": "array", "minItems": 1, "maxItems": 1, "items": { "const": "read" } },
+        "expiresAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Trigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "triggerId", "kind", "receivedAt", "query"],
+      "properties": {
+        "contractType": { "const": "trigger" },
+        "triggerId": { "type": "string", "minLength": 1 },
+        "kind": { "enum": ["conversational", "scheduled"] },
+        "receivedAt": { "type": "string", "format": "date-time" },
+        "query": { "type": "string", "minLength": 1 },
+        "selectedPartyId": { "type": "string", "minLength": 1 }
+      }
+    },
+    "Goal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "goalId", "intent", "objective", "requiredDomains", "constraints"],
+      "properties": {
+        "contractType": { "const": "goal" },
+        "goalId": { "type": "string", "minLength": 1 },
+        "intent": { "const": "relationship_brief" },
+        "objective": { "type": "string", "minLength": 1 },
+        "requiredDomains": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["party", "relationship", "commercial", "activity", "knowledge", "time"] }
+        },
+        "constraints": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["externalWrites", "durableMemory", "minimumNecessary"],
+          "properties": {
+            "externalWrites": { "const": false },
+            "durableMemory": { "const": false },
+            "minimumNecessary": { "const": true }
+          }
+        }
+      }
+    },
+    "PlanStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stepId", "kind", "operation", "status"],
+      "properties": {
+        "stepId": { "type": "string", "minLength": 1 },
+        "kind": { "enum": ["policy_precheck", "identity_resolution", "context_retrieval", "synthesis"] },
+        "operation": { "const": "read" },
+        "status": { "enum": ["planned", "completed", "blocked", "failed"] }
+      }
+    },
+    "Plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "planId", "goalId", "steps"],
+      "properties": {
+        "contractType": { "const": "plan" },
+        "planId": { "type": "string", "minLength": 1 },
+        "goalId": { "type": "string", "minLength": 1 },
+        "steps": { "type": "array", "minItems": 4, "items": { "$ref": "#/$defs/PlanStep" } }
+      }
+    },
+    "PolicyDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "decisionId", "decision", "allowedOperations", "reasonCode"],
+      "properties": {
+        "contractType": { "const": "policy_decision" },
+        "decisionId": { "type": "string", "minLength": 1 },
+        "decision": { "enum": ["allow", "deny"] },
+        "allowedOperations": { "type": "array", "maxItems": 1, "items": { "const": "read" } },
+        "reasonCode": { "enum": ["READ_ONLY_GRANT_VALID", "GRANT_EXPIRED", "GRANT_INVALID", "WRITE_NOT_ALLOWED"] }
+      }
+    },
+    "ContextSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "snapshotId", "capturedAt", "subjectPartyId", "evidenceIds", "sourceStatuses", "containsCredentials", "containsRawPrivateContent"],
+      "properties": {
+        "contractType": { "const": "context_snapshot" },
+        "snapshotId": { "type": "string", "minLength": 1 },
+        "capturedAt": { "type": "string", "format": "date-time" },
+        "subjectPartyId": { "type": "string", "minLength": 1 },
+        "evidenceIds": { "type": "array", "uniqueItems": true, "items": { "type": "string" } },
+        "sourceStatuses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["adapterId", "status"],
+            "properties": {
+              "adapterId": { "type": "string", "minLength": 1 },
+              "status": { "enum": ["queried", "skipped", "failed", "denied"] }
+            }
+          }
+        },
+        "containsCredentials": { "const": false },
+        "containsRawPrivateContent": { "const": false }
+      }
+    },
+    "Handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "handoffId", "fromAgentId", "toAgentId", "status", "reason"],
+      "properties": {
+        "contractType": { "const": "handoff" },
+        "handoffId": { "type": "string", "minLength": 1 },
+        "fromAgentId": { "type": "string", "minLength": 1 },
+        "toAgentId": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["not_required", "requested", "accepted", "declined"] },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "Outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "outcomeId", "runId", "recordedAt", "rating", "notes"],
+      "properties": {
+        "contractType": { "const": "outcome" },
+        "outcomeId": { "type": "string", "minLength": 1 },
+        "runId": { "type": "string", "minLength": 1 },
+        "recordedAt": { "type": "string", "format": "date-time" },
+        "rating": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "notes": { "type": "string", "maxLength": 2000 }
+      }
+    },
+    "LearningSignal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "signalId", "outcomeId", "kind", "effect", "prohibitedMutations"],
+      "properties": {
+        "contractType": { "const": "learning_signal" },
+        "signalId": { "type": "string", "minLength": 1 },
+        "outcomeId": { "type": "string", "minLength": 1 },
+        "kind": { "const": "human_feedback" },
+        "effect": { "const": "record_only" },
+        "prohibitedMutations": {
+          "type": "array",
+          "minItems": 5,
+          "uniqueItems": true,
+          "items": { "enum": ["prompt", "policy", "mapping", "configuration", "source_data"] }
+        }
+      }
+    },
+    "AuditEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "eventId", "runId", "event", "occurredAt", "safeMetadata"],
+      "properties": {
+        "contractType": { "const": "audit_event" },
+        "eventId": { "type": "string", "minLength": 1 },
+        "runId": { "type": "string", "minLength": 1 },
+        "event": { "type": "string", "minLength": 1 },
+        "occurredAt": { "type": "string", "format": "date-time" },
+        "safeMetadata": {
+          "type": "object",
+          "additionalProperties": { "type": ["string", "number", "boolean", "null"] }
+        }
+      }
+    },
+    "AgentRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "runId", "agent", "grant", "trigger", "goal", "plan", "policyDecision", "status", "brief", "contextSnapshot", "handoff", "audit"],
+      "properties": {
+        "contractType": { "const": "agent_run" },
+        "runId": { "type": "string", "minLength": 1 },
+        "agent": { "$ref": "#/$defs/AgentDefinition" },
+        "grant": { "$ref": "#/$defs/AuthorityGrant" },
+        "trigger": { "$ref": "#/$defs/Trigger" },
+        "goal": { "$ref": "#/$defs/Goal" },
+        "plan": { "$ref": "#/$defs/Plan" },
+        "policyDecision": { "$ref": "#/$defs/PolicyDecision" },
+        "status": { "enum": ["completed", "needs_disambiguation", "denied", "failed"] },
+        "brief": { "type": ["object", "null"] },
+        "contextSnapshot": { "oneOf": [{ "$ref": "#/$defs/ContextSnapshot" }, { "type": "null" }] },
+        "handoff": { "$ref": "#/$defs/Handoff" },
+        "audit": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/AuditEvent" } }
+      }
+    }
+  }
+}

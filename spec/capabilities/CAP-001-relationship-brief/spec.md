@@ -4,36 +4,22 @@
 
 ## Outcome
 
-Before a conversation, a user receives a concise, evidence-grounded picture of
-the person, their relationships, current commercial context, recent activity,
-commitments, relevant knowledge, conflicts, unknowns, and a sensible next
-conversation step without naming source systems.
+Before a conversation, a relationship owner receives a concise, evidence-grounded picture of the resolved Person, related Parties, commercial context, recent Activity, Commitments, contextual knowledge, conflicts, Unknowns, and a suggested next conversation step without needing to navigate source systems.
 
-## Scope
+## Scope and proof boundary
 
-CAP-001 supports Person lookup with Company and Household relationship context.
-It reads synthetic CRM, notes, email, and calendar sources through capability
-contracts. It exposes a structured response and a chat rendering.
+CAP-001 is a **synthetic deterministic read-only context probe**. It reads mock operational, knowledge, activity, and calendar sources through capability contracts, then emits a structured ResponseEnvelope and conversational rendering.
 
-It excludes durable memory, source mutation, autonomous follow-up, production
-identity/access control, and model-provider-specific behavior.
+It is not NeoCRM, the complete RIL, or a general Agent runtime. It excludes a production LLM, proactive triggers, Goal/Plan/AgentRun execution, specialist Agent collaboration, live Zoho/Obsidian access, durable memory, source mutation, autonomous follow-up, production identity/access control, and business Outcome claims.
 
 ## Requirements
 
-CAP-001 depends on FR-RES-001, FR-CTX-001, FR-CTX-002, FR-PROV-001,
-FR-EPI-001, FR-MEM-001, FR-ACT-002, NFR-REL-001, NFR-OBS-001,
-NFR-TEST-001, SAFE-ACT-001, SAFE-APP-001, SAFE-DATA-001, and
-SAFE-IDENT-001.
+The bounded requirements are defined in [`requirements.md`](requirements.md); runtime behavior is in [`runtime.md`](runtime.md). System requirements remain future-facing unless explicitly exercised here.
 
 ## Decisions and evidence
 
-ADR-0001, ADR-0002, ADR-0003, and ADR-0005 define the implementation boundary.
-EXP-006 tests the unified brief after EXP-001 through EXP-005 isolate its major
-causal claims. EVAL-001 scores the deterministic fixture.
+ADR-0001, ADR-0002, ADR-0003, ADR-0005, ADR-0006, ADR-0010, and ADR-0014 constrain the slice. EVAL-001 scores deterministic CAP-001 conformance. The reference demo is a preflight for canonical EXP-001; it does not validate EXP-001's live/human hypothesis.
 
 ## Acceptance
 
-CAP-001 is accepted only when all automated checks in
-[`acceptance.md`](acceptance.md) pass and a human evaluator scores usefulness
-at least 3 of 4 without any safety gate failure.
-
+Automated acceptance is defined in [`acceptance.md`](acceptance.md). Human usefulness uses the same 1-5 rubric as EXP-001 and remains a separate evidence gate.

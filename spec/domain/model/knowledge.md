@@ -1,13 +1,19 @@
-# Knowledge and Evidence
+# Knowledge, evidence, and reasoning
 
-Knowledge is an explicit domain so NeoCRM can distinguish what is recorded from what is believed or inferred.
+Knowledge is explicit so NeoCRM can distinguish recorded content, evidence, claims, reasoning, and decisions.
 
-| Object | Purpose |
+| Object/category | Purpose |
 | --- | --- |
-| Evidence | A source artifact or extract supporting a claim. |
-| Observation | A bounded description grounded in evidence. |
-| Interpretation | Contextual sense-making based on observations. |
-| Hypothesis | A testable, uncertain explanation. |
-| Research | Context gathered about a Party, market, problem, or opportunity. |
+| OBJ-075 Knowledge | A linked, reusable content object or claim with provenance and access classification. |
+| Evidence | Source artifact/extract supporting or contradicting a claim, with provenance and access policy. |
+| Fact | Source- and time-bounded claim supported under applicable authority rules. |
+| Observation | Bounded description of evidence or attributed human observation. |
+| Interpretation | Contextual meaning derived from evidence. |
+| Hypothesis | Testable uncertain explanation or prediction. |
+| Unknown | Explicit missing fact, ambiguity, or unestablished condition. |
+| Conflict | Material unreconciled claims. |
+| OBJ-076 Research | Governed context gathered about a Party, need, market, problem, or opportunity. |
 
-Each object has provenance, confidence, authorship or derivation, and relation to its relevant Parties, commercial objects, or activities.
+Authority, freshness, confidence, completeness, and epistemic category are independent. Authoritative does not mean current or confident; contextual does not mean false. Recommendation is a decision artifact, not an epistemic category.
+
+Insights, Signals, feedback, and outcome evidence are defined separately. Every derived artifact records inputs, derivation/version, author or AgentRun, effective time, expiry/review, and disposition.

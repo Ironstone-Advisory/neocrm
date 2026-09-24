@@ -1,28 +1,22 @@
-# Adapter Model
+# Adapter model
 
-An adapter maps between an external system and NeoCRM's canonical semantics. It does not transfer ownership of those semantics to the external system.
+An adapter is the bounded Integration-layer component that maps an external system or tool to and from canonical NeoCRM contracts. The source system is not itself the adapter, and its vocabulary does not become product semantics.
 
-## Adapter domains
+## Capability families
 
-| Domain | Question answered | Example sources |
+| Family | Question answered | Example sources |
 | --- | --- | --- |
 | Operational | Who and what is formally recorded? | Zoho, Salesforce, ERP, spreadsheets |
-| Knowledge | What is known, observed, or hypothesized? | Markdown, Obsidian, research repository |
-| Activity | What interactions occurred? | Gmail, SMS, WhatsApp, calls, meetings |
-| Calendar | What is planned, available, or overloaded? | Google Calendar, Outlook |
-| Action | What should be changed or sent? | Email, messaging, tasks, calendar invitations |
+| Knowledge | What is recorded, observed, interpreted, or hypothesized? | Markdown, Obsidian, research repository |
+| Activity | What interactions occurred? | Gmail, SMS, calls, meetings |
+| Calendar/time | What is planned, available, committed, or overloaded? | Google Calendar, Outlook |
+| Event | What changed or became due? | Webhook, change stream, scheduler |
+| Action | What bounded effect can be proposed, executed, and verified? | CRM, messaging, tasks, calendar |
+| Outcome | What resulted from work or action? | Human feedback, verification, service/commercial measures |
+| Model/tool | What bounded reasoning or operation is available? | Model gateway, search, approved internal tool |
 
-## Adapter contract
+## Contract
 
-Each adapter should expose:
+Each adapter declares capabilities and authorization scope; native/canonical mappings and loss; source references and retrieval/occurrence time; authority and ownership by field/concept; reads, subscriptions, proposals, executions, and verification; freshness, pagination, rate/cost, replay, idempotency, and partial failure; reversibility/compensation; audit references; credential isolation; and hostile-content treatment.
 
-- capability declaration and authorization scope;
-- native-to-canonical mapping;
-- source identifiers and retrieval timestamps;
-- read, propose, and execute boundaries;
-- error, freshness, and partial-result semantics;
-- write-back and audit behaviour where applicable.
-
-## Non-goal
-
-Adapters are not miniature copies of each other. An adapter may expose only the capabilities its source supports. The canonical layer must make those limitations explicit rather than hiding them.
+A declared capability never grants an Agent authority. Delegation, ToolGrant, consent, policy, and approval still apply. Adapters may expose only what their source supports and must make limitations visible.

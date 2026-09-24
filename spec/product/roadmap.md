@@ -1,29 +1,43 @@
-# Roadmap
+# Evidence-gated roadmap
 
-## v0.1 — Semantic Architecture
+**Status:** Proposed
 
-Published in this repository. Establishes the thesis, canonical model, architectural boundary, initial ADRs, and experiment plan.
+## Phase 0 — restore the product contract
 
-## v0.2 — Test the ontology
+Freeze the origin-first seven-layer architecture, canonical semantics, agency/control objects, 25-item CTS, EXP-001 through EXP-012 registry, status/evidence vocabulary, and honest CAP-001 boundary.
 
-- Define canonical examples and fixture data.
-- Test the model against 20–25 real relationship-management questions.
-- Record results and refine only where the semantic model fails to express reality clearly.
+**Exit:** specification and links validate; no artifact calls CAP-001 the complete NeoCRM or RIL.
 
-## v0.3 — Reference integration slice
+## Phase 1 — deterministic CAP-001 conformance
 
-- Build one read-only context-assembly path.
-- Connect at least one operational, knowledge, activity, and calendar source.
-- Require entity resolution, provenance, and source-level confidence in every answer.
+Keep the current relationship-context probe synthetic and read-only. Repair authority/confidence rules, schema scope, safety wording, and deterministic evaluations.
 
-## v0.4 — Governed action
+**Exit:** full repository check passes with external writes disabled.
 
-- Propose and preview actions across email, messaging, tasks, and calendar.
-- Add explicit human approval and audit events.
+## Phase 2 — safe read-only source experiment
 
-## Open questions
+Implement explicit Zoho and Obsidian read ports, configuration preflight, allowlists, source mappings, credential isolation, vault-root confinement, retention rules, and opt-in live tests.
 
-- What is the smallest durable canonical representation that supports portability?
-- Which facts must be materialized, and which can be derived at query time?
-- When should a hypothesis become an observation or a fact?
-- How should consent, retention, and access policy work across external sources?
+**Exit:** all hard-stop controls pass; live behavior is evidenced without committing customer data.
+
+## Phase 3 — run EXP-001
+
+Compare A: Zoho record workflow; B: NeoCRM with Zoho; C: NeoCRM with Zoho plus permissioned Obsidian. Use the same cases, preregistered measures, 1-5 rubric, post-conversation Outcomes, and honest negative/inconclusive reporting.
+
+**Exit:** evidence record completed; human usefulness no longer pending.
+
+## Phase 4 — agency and collaboration contracts
+
+Exercise Triggers, Goals, Plans, AgentRuns, WorkItems, typed Handoffs, ContextSnapshots, PolicyDecisions, Outcomes, and LearningSignals with bounded specialist Agents. Maintain zero external write capability.
+
+## Phase 5 — governed action experiments
+
+Add approval and audit workspaces plus an isolated action gateway. Test only low-risk, reversible, explicitly delegated Level-3 effects before considering broader workflow autonomy.
+
+## Phase 6 — unified relationship operations
+
+Exercise Journey, ServiceCase, Campaign, Audience, CustomerNeed, Insight/Signal, graph/time intelligence, portfolio work, customer outcomes, and governed learning across sales, service, and engagement perspectives.
+
+## Publication gates
+
+An architecture/method article may describe the origin, reconciled design, safety boundaries, and falsifiable EXP-001 protocol. Results or performance claims require the corresponding committed evidence and limitations.

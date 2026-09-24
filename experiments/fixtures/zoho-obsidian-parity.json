@@ -1,0 +1,35 @@
+{
+  "fixtureId": "FIX-EXP-001-ZOHO-OBSIDIAN-v1",
+  "clock": "2026-09-23T14:00:00.000Z",
+  "zoho": {
+    "Contacts": [
+      {
+        "id": "zc-101",
+        "Full_Name": "Alex Rivera",
+        "First_Name": "Alex",
+        "Last_Name": "Rivera",
+        "Title": "Chief Operating Officer",
+        "Account_Name": { "id": "za-201", "name": "Northstar Components" },
+        "Modified_Time": "2026-09-22T16:30:00.000Z"
+      }
+    ],
+    "Accounts": [
+      {
+        "id": "za-201",
+        "Account_Name": "Northstar Components",
+        "Modified_Time": "2026-09-22T16:30:00.000Z"
+      }
+    ],
+    "Deals": [
+      {
+        "id": "zd-301",
+        "Contact_Id": "zc-101",
+        "Deal_Name": "Resilience operating-model workshop",
+        "Stage": "Evaluation",
+        "Closing_Date": "2026-10-30",
+        "Amount": 24000,
+        "Modified_Time": "2026-09-22T17:00:00.000Z"
+      }
+    ]
+  }
+}

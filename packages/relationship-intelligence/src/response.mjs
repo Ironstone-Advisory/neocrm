@@ -8,7 +8,6 @@ export function unknownAssertion(predicate, text, inputAssertionIds = []) {
     predicate,
     value: null,
     text,
-    confidence: 1,
     inputAssertionIds,
     transformationId: "declare-unavailable-context-v1"
   });

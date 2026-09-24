@@ -1,18 +1,16 @@
-# Commercial Domain
+# Commercial domain
 
-## Offer
-
-An **Offer** is the general abstraction for something that can be sold.
-
-- A **Product** is relatively defined and repeatable, such as a subscription, licence, policy, or hardware item.
-- A **Service** is performed or delivered, such as advisory, training, implementation, or an engagement.
-
-## Opportunity, Deal, and Contract
+**OBJ-072 CustomerNeed** records an evidenced Party problem, desired Outcome, constraint, or job. **OBJ-073 ValueHypothesis** is a testable proposition linking an Offer to a CustomerNeed and expected customer and business Outcomes.
 
 | Concept | Meaning |
 | --- | --- |
-| Opportunity | A potential business outcome with uncertainty, expected timing, evidence, and next action. |
-| Deal | A specific commercial transaction being negotiated or executed; one opportunity can lead to multiple deals. |
-| Contract | A formal agreement between parties containing terms, effective period, obligations, and commitments. |
+| CustomerNeed | An evidenced problem, desired Outcome, constraint, or job for a Party. |
+| ValueHypothesis | A testable proposition linking an Offer to a CustomerNeed and expected customer/business Outcome. |
+| Offer | The general abstraction for something that may be sold or provided. |
+| Product | A relatively defined, repeatable Offer such as a subscription, policy, licence, or hardware item. |
+| Service | Work performed or delivered, such as advisory, training, implementation, or support. |
+| Opportunity | Potential business with uncertainty, expected value/time, stakeholders, evidence, and next work. |
+| Deal | A specific commercial transaction being negotiated or executed; one Opportunity may lead to several Deals. |
+| Contract | A formal agreement among Parties with terms, effective period, obligations, entitlements, and Commitments. |
 
-Product and Service describe **what is sold**. Opportunity, Deal, and Contract describe **the commercial relationship and its progression**.
+Product and Service describe what is offered. Opportunity, Deal, and Contract describe potential, transaction, and agreement. Delivery/fulfillment, ServiceCases, customer Outcomes, and revenue Outcomes link to these objects without becoming stage fields on one record.

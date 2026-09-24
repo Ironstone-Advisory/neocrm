@@ -21,7 +21,6 @@ export function reconcileAssertions(assertions) {
         text: `Sources disagree about ${plainName(predicate)}: ${[...values.values()]
           .map(String)
           .join(" versus ")}.`,
-        confidence: Math.min(...active.map((candidate) => candidate.confidence)),
         evidenceIds: active.flatMap((candidate) => candidate.evidenceIds),
         inputAssertionIds: inputs,
         transformationId: "reconcile-distinct-values-v1"
