@@ -1,0 +1,24 @@
+{
+  "evaluationId": "EVAL-003",
+  "status": "Defined",
+  "scope": "Planned evaluation framework for canonical product experiments beyond the CAP-001 conformance suite",
+  "appliesTo": [
+    "EXP-002",
+    "EXP-003",
+    "EXP-004",
+    "EXP-005",
+    "EXP-007",
+    "EXP-008",
+    "EXP-009",
+    "EXP-010",
+    "EXP-011",
+    "EXP-012"
+  ],
+  "method": [
+    "Freeze the experiment-specific protocol, cases, versions, measures, stop rules, and evidence boundary before execution.",
+    "Use the relevant CTS items plus experiment-specific technical, human, safety, customer, and cost measures.",
+    "Record negative, failed, and inconclusive results; a fluent output or CAP-001 fixture pass is never sufficient.",
+    "Require scoped implementation and result records before promoting evidence maturity."
+  ],
+  "claimBoundary": "EVAL-003 is a defined plan, not an implemented evaluator or evidence that any listed experiment has run. EVAL-001 remains scoped to CAP-001 deterministic conformance; EVAL-002 remains scoped to the EXP-001 fixture preflight."
+}

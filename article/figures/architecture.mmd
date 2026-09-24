@@ -1,0 +1,48 @@
+flowchart TB
+    L1["1. Presentation<br/>relationship workspaces | conversation | insight | approvals"]:::presentation
+
+    subgraph RIL["Relationship Intelligence Layer - Layers 2 to 4"]
+        direction TB
+        L2["2. Agent<br/>specialist agents | goals | plans | runs | handoffs"]:::agent
+        L3["3. Relationship Orchestration<br/>people and agents | workflows | policy gates | actions | outcomes"]:::orchestration
+        L4["4. Context and Data Access<br/>identity | minimum context | evidence | reconciliation"]:::context
+        L2 --> L3 --> L4
+    end
+
+    L5["5. Hybrid Storage<br/>operational | analytical | graph | semantic | memory | audit"]:::storage
+    L6["6. Integration and Ecosystem<br/>bounded adapters | events | APIs | models | action gateway"]:::integration
+    L7["7. Infrastructure and Resilience<br/>identity substrate | isolation | secrets | observability | recovery"]:::infrastructure
+
+    CS["Canonical Semantics<br/>shared meaning | provenance | time | epistemic discipline"]:::semantic
+    GC["Governance and Control<br/>delegation | consent | policy | approval | audit | evaluation | redress"]:::governance
+
+    L1 --> L2
+    L4 --> L5 --> L6 --> L7
+
+    CS -.-> L1
+    CS -.-> L2
+    CS -.-> L3
+    CS -.-> L4
+    CS -.-> L5
+    CS -.-> L6
+    CS -.-> L7
+
+    GC -.-> L1
+    GC -.-> L2
+    GC -.-> L3
+    GC -.-> L4
+    GC -.-> L5
+    GC -.-> L6
+    GC -.-> L7
+
+    classDef presentation fill:#2563EB,stroke:#1E3A8A,color:#FFFFFF,stroke-width:2px;
+    classDef agent fill:#7C3AED,stroke:#4C1D95,color:#FFFFFF,stroke-width:3px;
+    classDef orchestration fill:#9333EA,stroke:#581C87,color:#FFFFFF,stroke-width:3px;
+    classDef context fill:#0F766E,stroke:#134E4A,color:#FFFFFF,stroke-width:3px;
+    classDef storage fill:#0E7490,stroke:#164E63,color:#FFFFFF,stroke-width:2px;
+    classDef integration fill:#475569,stroke:#1E293B,color:#FFFFFF,stroke-width:2px;
+    classDef infrastructure fill:#334155,stroke:#0F172A,color:#FFFFFF,stroke-width:2px;
+    classDef semantic fill:#D97706,stroke:#78350F,color:#FFFFFF,stroke-width:3px;
+    classDef governance fill:#BE123C,stroke:#881337,color:#FFFFFF,stroke-width:3px;
+
+    style RIL fill:#F5F3FF,stroke:#6D28D9,stroke-width:3px,color:#2E1065

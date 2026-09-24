@@ -1,0 +1,737 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neocrm.example/spec/contracts/capabilities/cap-001.schema.json",
+  "title": "CAP-001 relationship-brief exchange contracts",
+  "description": "Normative Draft 2020-12 contracts for the bounded deterministic CAP-001 request, adapter, fixture, context, evidence, and response exchange. This is not the complete NeoCRM ontology.",
+  "oneOf": [
+    { "$ref": "#/$defs/RelationshipBriefRequest" },
+    { "$ref": "#/$defs/IdentityResolutionResult" },
+    { "$ref": "#/$defs/AdapterCapability" },
+    { "$ref": "#/$defs/AdapterRequest" },
+    { "$ref": "#/$defs/AdapterResult" },
+    { "$ref": "#/$defs/Fixture" },
+    { "$ref": "#/$defs/ResponseEnvelope" }
+  ],
+  "$defs": {
+    "PartyRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partyId", "displayName", "partyType"],
+      "properties": {
+        "partyId": { "type": "string", "minLength": 1 },
+        "displayName": { "type": "string", "minLength": 1 },
+        "partyType": { "enum": ["person", "company", "household"] },
+        "disambiguationLabel": { "type": "string", "minLength": 1 }
+      }
+    },
+    "Person": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partyId", "partyType", "displayName"],
+      "properties": {
+        "partyId": { "type": "string", "minLength": 1 },
+        "partyType": { "const": "person" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "givenName": { "type": "string" },
+        "familyName": { "type": "string" },
+        "aliases": { "type": "array", "uniqueItems": true, "items": { "type": "string" } }
+      }
+    },
+    "Company": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partyId", "partyType", "displayName"],
+      "properties": {
+        "partyId": { "type": "string", "minLength": 1 },
+        "partyType": { "const": "company" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "legalName": { "type": "string" },
+        "aliases": { "type": "array", "uniqueItems": true, "items": { "type": "string" } }
+      }
+    },
+    "Household": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partyId", "partyType", "displayName"],
+      "properties": {
+        "partyId": { "type": "string", "minLength": 1 },
+        "partyType": { "const": "household" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "aliases": { "type": "array", "uniqueItems": true, "items": { "type": "string" } }
+      }
+    },
+    "Party": {
+      "oneOf": [
+        { "$ref": "#/$defs/Person" },
+        { "$ref": "#/$defs/Company" },
+        { "$ref": "#/$defs/Household" }
+      ]
+    },
+    "SourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "adapterId", "nativeId", "retrievedAt", "authority", "completeness"],
+      "properties": {
+        "sourceId": { "type": "string", "minLength": 1 },
+        "adapterId": { "type": "string", "minLength": 1 },
+        "nativeId": { "type": "string", "minLength": 1 },
+        "retrievedAt": { "type": "string", "format": "date-time" },
+        "effectiveAt": { "type": ["string", "null"], "format": "date-time" },
+        "authority": { "enum": ["authoritative", "corroborating", "contextual"] },
+        "completeness": { "enum": ["known_complete", "known_partial", "unknown"] },
+        "sourceModule": { "type": "string", "minLength": 1 },
+        "fieldApiName": { "type": "string", "minLength": 1 },
+        "modifiedAt": { "type": ["string", "null"], "format": "date-time" },
+        "transformation": { "type": "string", "minLength": 1 }
+      }
+    },
+    "Role": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["roleId", "partyId", "roleType", "validFrom", "confidence", "epistemicCategory", "provenance"],
+      "properties": {
+        "roleId": { "type": "string", "minLength": 1 },
+        "partyId": { "type": "string", "minLength": 1 },
+        "roleType": {
+          "enum": ["customer", "prospect", "partner", "supplier", "employee", "decision_maker", "contract_party"]
+        },
+        "contextPartyId": { "type": "string" },
+        "validFrom": { "type": "string", "format": "date-time" },
+        "validTo": { "type": ["string", "null"], "format": "date-time" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "completeness": { "enum": ["known_complete", "known_partial", "unknown"] },
+        "epistemicCategory": { "enum": ["fact", "observation", "interpretation", "hypothesis"] },
+        "provenance": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/SourceRef" } }
+      }
+    },
+    "Relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relationshipId",
+        "relationshipType",
+        "participantPartyIds",
+        "direction",
+        "validFrom",
+        "confidence",
+        "epistemicCategory",
+        "provenance"
+      ],
+      "properties": {
+        "relationshipId": { "type": "string", "minLength": 1 },
+        "relationshipType": { "type": "string", "minLength": 1 },
+        "participantPartyIds": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "direction": { "enum": ["directed", "undirected"] },
+        "validFrom": { "type": "string", "format": "date-time" },
+        "validTo": { "type": ["string", "null"], "format": "date-time" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "epistemicCategory": { "enum": ["fact", "observation", "interpretation", "hypothesis"] },
+        "provenance": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/SourceRef" } }
+      }
+    },
+    "DerivationMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["transformationId", "extractor", "modelVersion", "inputAssertionIds"],
+      "properties": {
+        "transformationId": { "type": "string", "minLength": 1 },
+        "extractor": { "enum": ["adapter", "deterministic_rule", "model", "user"] },
+        "modelVersion": { "type": ["string", "null"] },
+        "inputAssertionIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "Evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidenceId", "marker", "source", "summary", "untrustedContent"],
+      "properties": {
+        "evidenceId": { "type": "string", "minLength": 1 },
+        "marker": { "type": "string", "pattern": "^E[1-9][0-9]*$" },
+        "source": { "$ref": "#/$defs/SourceRef" },
+        "summary": { "type": "string", "minLength": 1 },
+        "untrustedContent": { "type": "boolean" }
+      }
+    },
+    "Assertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assertionId",
+        "predicate",
+        "value",
+        "kind",
+        "text",
+        "evidenceIds",
+        "derivation",
+        "status"
+      ],
+      "properties": {
+        "assertionId": { "type": "string", "minLength": 1 },
+        "predicate": { "type": "string", "minLength": 1 },
+        "value": {},
+        "kind": {
+          "enum": ["fact", "observation", "interpretation", "hypothesis", "unknown", "conflict"]
+        },
+        "text": { "type": "string", "minLength": 1 },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "evidenceIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "derivation": { "$ref": "#/$defs/DerivationMetadata" },
+        "status": { "enum": ["active", "disputed", "corrected"] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "enum": ["fact", "observation"] } }, "required": ["kind"] },
+          "then": { "properties": { "evidenceIds": { "type": "array", "minItems": 1 } } }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": { "enum": ["conflict"] }
+            },
+            "required": ["kind"]
+          },
+          "then": {
+            "properties": {
+              "derivation": {
+                "type": "object",
+                "properties": { "inputAssertionIds": { "type": "array", "minItems": 1 } }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "RecommendationOption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["optionId", "label"],
+      "properties": {
+        "optionId": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 }
+      }
+    },
+    "Recommendation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recommendationId",
+        "decisionType",
+        "predicate",
+        "text",
+        "options",
+        "rationale",
+        "evidenceIds",
+        "derivation",
+        "status"
+      ],
+      "properties": {
+        "recommendationId": { "type": "string", "minLength": 1 },
+        "decisionType": { "type": "string", "minLength": 1 },
+        "predicate": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 },
+        "options": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/RecommendationOption" }
+        },
+        "rationale": { "type": "string", "minLength": 1 },
+        "evidenceIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "derivation": { "$ref": "#/$defs/DerivationMetadata" },
+        "status": { "enum": ["proposed", "accepted", "dismissed"] }
+      }
+    },
+    "ConversationCorrection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assertionId", "replacement", "recordedAt"],
+      "properties": {
+        "assertionId": { "type": "string", "minLength": 1 },
+        "replacement": { "type": "string", "minLength": 1 },
+        "recordedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "ConversationState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conversationId", "turnCount", "corrections"],
+      "properties": {
+        "conversationId": { "type": "string", "minLength": 1 },
+        "turnCount": { "type": "integer", "minimum": 0 },
+        "selectedPartyId": { "type": "string", "minLength": 1 },
+        "pendingIdentityQuery": { "type": "string" },
+        "corrections": { "type": "array", "items": { "$ref": "#/$defs/ConversationCorrection" } },
+        "lastBrief": { "$ref": "#/$defs/ResponseEnvelope" }
+      }
+    },
+    "RelationshipBriefRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "version", "message", "state"],
+      "properties": {
+        "contractType": { "const": "relationship_brief_request" },
+        "version": { "const": "1.0" },
+        "message": { "type": "string", "minLength": 1 },
+        "state": { "$ref": "#/$defs/ConversationState" }
+      }
+    },
+    "IdentityResolutionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "status", "candidates"],
+      "properties": {
+        "contractType": { "const": "identity_resolution_result" },
+        "status": { "enum": ["resolved", "ambiguous", "not_found"] },
+        "candidates": { "type": "array", "items": { "$ref": "#/$defs/PartyRef" } },
+        "selectedPartyId": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "resolved" } }, "required": ["status"] },
+          "then": {
+            "required": ["selectedPartyId"],
+            "properties": { "candidates": { "type": "array", "minItems": 1, "maxItems": 1 } }
+          }
+        },
+        {
+          "if": { "properties": { "status": { "const": "ambiguous" } }, "required": ["status"] },
+          "then": {
+            "properties": { "candidates": { "type": "array", "minItems": 2 } },
+            "not": { "required": ["selectedPartyId"] }
+          }
+        },
+        {
+          "if": { "properties": { "status": { "const": "not_found" } }, "required": ["status"] },
+          "then": {
+            "properties": { "candidates": { "type": "array", "maxItems": 0 } },
+            "not": { "required": ["selectedPartyId"] }
+          }
+        }
+      ]
+    },
+    "DomainAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["domain", "authority"],
+      "properties": {
+        "domain": { "enum": ["party", "relationship", "commercial", "activity", "knowledge", "time"] },
+        "authority": { "enum": ["authoritative", "corroborating", "contextual"] }
+      }
+    },
+    "AdapterCapability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contractType",
+        "adapterId",
+        "sourceId",
+        "readDomains",
+        "supportedFilters",
+        "domainAuthorities",
+        "freshnessPolicy",
+        "authorization",
+        "writeActions",
+        "externalWritesEnabled"
+      ],
+      "properties": {
+        "contractType": { "const": "adapter_capability" },
+        "adapterId": { "type": "string", "minLength": 1 },
+        "sourceId": { "type": "string", "minLength": 1 },
+        "readDomains": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["party", "relationship", "commercial", "activity", "knowledge", "time"] }
+        },
+        "supportedFilters": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["partyId", "effectiveAfter", "effectiveBefore"] }
+        },
+        "domainAuthorities": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/DomainAuthority" }
+        },
+        "freshnessPolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["maximumAgeSeconds"],
+          "properties": { "maximumAgeSeconds": { "type": "integer", "minimum": 0 } }
+        },
+        "authorization": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "scopes"],
+          "properties": {
+            "status": { "enum": ["granted", "denied", "unknown"] },
+            "scopes": { "type": "array", "uniqueItems": true, "items": { "type": "string" } }
+          }
+        },
+        "writeActions": { "type": "array", "uniqueItems": true, "items": { "type": "string" } },
+        "externalWritesEnabled": { "type": "boolean" }
+      }
+    },
+    "AdapterRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "adapterId", "domains", "filters"],
+      "properties": {
+        "contractType": { "const": "adapter_request" },
+        "adapterId": { "type": "string", "minLength": 1 },
+        "domains": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["party", "relationship", "commercial", "activity", "knowledge", "time"] }
+        },
+        "filters": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["partyId"],
+          "properties": {
+            "partyId": { "type": "string", "minLength": 1 },
+            "effectiveAfter": { "type": "string", "format": "date-time" },
+            "effectiveBefore": { "type": "string", "format": "date-time" }
+          }
+        }
+      }
+    },
+    "NativeClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["domain", "predicate", "value", "label", "contentType", "epistemicCategory"],
+      "properties": {
+        "domain": { "enum": ["party", "relationship", "commercial", "activity", "knowledge", "time"] },
+        "predicate": { "type": "string", "minLength": 1 },
+        "value": {},
+        "label": { "type": "string", "minLength": 1 },
+        "authority": { "enum": ["authoritative", "corroborating", "contextual"] },
+        "contentType": { "enum": ["business_evidence", "untrusted_source_text"] },
+        "epistemicCategory": { "enum": ["fact", "observation", "interpretation", "hypothesis"] },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "completeness": { "enum": ["known_complete", "known_partial", "unknown"] },
+        "sourceModule": { "type": "string", "minLength": 1 },
+        "fieldApiName": { "type": "string", "minLength": 1 },
+        "modifiedAt": { "type": ["string", "null"], "format": "date-time" },
+        "transformation": { "type": "string", "minLength": 1 },
+        "instructionLike": { "type": "boolean", "default": false }
+      }
+    },
+    "NativeRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nativeId", "partyId", "effectiveAt", "summary", "claims"],
+      "properties": {
+        "nativeId": { "type": "string", "minLength": 1 },
+        "partyId": { "type": "string", "minLength": 1 },
+        "effectiveAt": { "type": "string", "format": "date-time" },
+        "summary": { "type": "string", "minLength": 1 },
+        "untrustedContent": { "type": "boolean", "default": true },
+        "claims": { "type": "array", "items": { "$ref": "#/$defs/NativeClaim" } }
+      }
+    },
+    "AdapterResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contractType",
+        "adapterId",
+        "sourceId",
+        "status",
+        "retrievedAt",
+        "records",
+        "roles",
+        "relationships"
+      ],
+      "properties": {
+        "contractType": { "const": "adapter_result" },
+        "adapterId": { "type": "string", "minLength": 1 },
+        "sourceId": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["ok", "failed", "denied"] },
+        "retrievedAt": { "type": "string", "format": "date-time" },
+        "records": { "type": "array", "items": { "$ref": "#/$defs/NativeRecord" } },
+        "roles": { "type": "array", "items": { "$ref": "#/$defs/Role" } },
+        "relationships": { "type": "array", "items": { "$ref": "#/$defs/Relationship" } },
+        "error": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["code", "message"],
+          "properties": {
+            "code": { "type": "string", "minLength": 1 },
+            "message": { "type": "string", "minLength": 1 }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "ok" } }, "required": ["status"] },
+          "then": { "not": { "required": ["error"] } }
+        },
+        {
+          "if": { "properties": { "status": { "enum": ["failed", "denied"] } }, "required": ["status"] },
+          "then": {
+            "required": ["error"],
+            "properties": {
+              "records": { "type": "array", "maxItems": 0 },
+              "roles": { "type": "array", "maxItems": 0 },
+              "relationships": { "type": "array", "maxItems": 0 }
+            }
+          }
+        }
+      ]
+    },
+    "FixtureSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capability", "records"],
+      "properties": {
+        "capability": { "$ref": "#/$defs/AdapterCapability" },
+        "records": { "type": "array", "items": { "$ref": "#/$defs/NativeRecord" } }
+      }
+    },
+    "Fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractType", "fixtureId", "clock", "parties", "roles", "relationships", "sources"],
+      "properties": {
+        "contractType": { "const": "fixture" },
+        "fixtureId": { "type": "string", "minLength": 1 },
+        "clock": { "type": "string", "format": "date-time" },
+        "parties": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/Party" } },
+        "roles": { "type": "array", "items": { "$ref": "#/$defs/Role" } },
+        "relationships": { "type": "array", "items": { "$ref": "#/$defs/Relationship" } },
+        "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/FixtureSource" } }
+      }
+    },
+    "ContextPlanStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adapterId", "domains", "filters", "reason", "authorization", "freshness", "status"],
+      "properties": {
+        "adapterId": { "type": "string", "minLength": 1 },
+        "domains": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["party", "relationship", "commercial", "activity", "knowledge", "time"] }
+        },
+        "filters": { "type": "object" },
+        "reason": { "type": "string", "minLength": 1 },
+        "authorization": { "enum": ["granted", "denied", "unknown"] },
+        "freshness": { "enum": ["fresh", "stale", "unknown"] },
+        "status": { "enum": ["planned", "queried", "skipped", "failed", "denied"] },
+        "detail": { "type": "string" }
+      }
+    },
+    "ContextPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intent", "subjectPartyId", "steps"],
+      "properties": {
+        "intent": { "const": "relationship_brief" },
+        "subjectPartyId": { "type": "string", "minLength": 1 },
+        "steps": { "type": "array", "items": { "$ref": "#/$defs/ContextPlanStep" } }
+      }
+    },
+    "ActionProposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actionId",
+        "actionType",
+        "targetAdapterId",
+        "rationale",
+        "preview",
+        "state",
+        "requiresExplicitApproval",
+        "externalWrite",
+        "evidenceIds"
+      ],
+      "properties": {
+        "actionId": { "type": "string", "minLength": 1 },
+        "actionType": { "type": "string", "minLength": 1 },
+        "targetAdapterId": { "type": "string", "minLength": 1 },
+        "rationale": { "type": "string", "minLength": 1 },
+        "preview": { "type": "object" },
+        "state": { "enum": ["proposed", "awaiting_approval", "approved", "disabled", "executed", "failed"] },
+        "requiresExplicitApproval": { "const": true },
+        "externalWrite": { "type": "boolean" },
+        "evidenceIds": { "type": "array", "uniqueItems": true, "items": { "type": "string" } }
+      }
+    },
+    "CategorizedFact": {
+      "allOf": [{ "$ref": "#/$defs/Assertion" }, { "type": "object", "properties": { "kind": { "const": "fact" } } }]
+    },
+    "CategorizedObservation": {
+      "allOf": [{ "$ref": "#/$defs/Assertion" }, { "type": "object", "properties": { "kind": { "const": "observation" } } }]
+    },
+    "CategorizedInterpretation": {
+      "allOf": [{ "$ref": "#/$defs/Assertion" }, { "type": "object", "properties": { "kind": { "const": "interpretation" } } }]
+    },
+    "CategorizedHypothesis": {
+      "allOf": [{ "$ref": "#/$defs/Assertion" }, { "type": "object", "properties": { "kind": { "const": "hypothesis" } } }]
+    },
+    "CategorizedUnknown": {
+      "allOf": [{ "$ref": "#/$defs/Assertion" }, { "type": "object", "properties": { "kind": { "const": "unknown" } } }]
+    },
+    "CategorizedConflict": {
+      "allOf": [{ "$ref": "#/$defs/Assertion" }, { "type": "object", "properties": { "kind": { "const": "conflict" } } }]
+    },
+    "ResponseEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contractType",
+        "version",
+        "traceId",
+        "intent",
+        "status",
+        "subject",
+        "facts",
+        "observations",
+        "interpretations",
+        "hypotheses",
+        "unknowns",
+        "conflicts",
+        "recommendations",
+        "evidence",
+        "sourcePlan",
+        "actions",
+        "memory",
+        "policy"
+      ],
+      "properties": {
+        "contractType": { "const": "response_envelope" },
+        "version": { "const": "1.0" },
+        "traceId": { "type": "string", "minLength": 1 },
+        "intent": { "const": "relationship_brief" },
+        "status": { "enum": ["complete", "partial", "needs_disambiguation", "needs_clarification", "error"] },
+        "subject": {
+          "oneOf": [
+            { "$ref": "#/$defs/PartyRef" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["candidates"],
+              "properties": { "candidates": { "type": "array", "items": { "$ref": "#/$defs/PartyRef" } } }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["unresolvedQuery"],
+              "properties": { "unresolvedQuery": { "type": "string" } }
+            }
+          ]
+        },
+        "facts": { "type": "array", "items": { "$ref": "#/$defs/CategorizedFact" } },
+        "observations": { "type": "array", "items": { "$ref": "#/$defs/CategorizedObservation" } },
+        "interpretations": { "type": "array", "items": { "$ref": "#/$defs/CategorizedInterpretation" } },
+        "hypotheses": { "type": "array", "items": { "$ref": "#/$defs/CategorizedHypothesis" } },
+        "unknowns": { "type": "array", "items": { "$ref": "#/$defs/CategorizedUnknown" } },
+        "conflicts": { "type": "array", "items": { "$ref": "#/$defs/CategorizedConflict" } },
+        "recommendations": { "type": "array", "items": { "$ref": "#/$defs/Recommendation" } },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/Evidence" } },
+        "sourcePlan": { "oneOf": [{ "$ref": "#/$defs/ContextPlan" }, { "type": "null" }] },
+        "actions": { "type": "array", "items": { "$ref": "#/$defs/ActionProposal" } },
+        "memory": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sessionContextUsed", "durableMemoryWritten"],
+          "properties": {
+            "sessionContextUsed": { "type": "boolean" },
+            "durableMemoryWritten": { "const": false }
+          }
+        },
+        "policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["externalWrites"],
+          "properties": { "externalWrites": { "const": "disabled" } }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "needs_disambiguation" } }, "required": ["status"] },
+          "then": {
+            "properties": {
+              "subject": {
+                "type": "object",
+                "required": ["candidates"],
+                "properties": { "candidates": { "type": "array", "minItems": 2 } }
+              },
+              "facts": { "type": "array", "maxItems": 0 },
+              "observations": { "type": "array", "maxItems": 0 },
+              "interpretations": { "type": "array", "maxItems": 0 },
+              "hypotheses": { "type": "array", "maxItems": 0 },
+              "conflicts": { "type": "array", "maxItems": 0 },
+              "recommendations": { "type": "array", "maxItems": 0 },
+              "evidence": { "type": "array", "maxItems": 0 },
+              "actions": { "type": "array", "maxItems": 0 },
+              "sourcePlan": { "type": "null" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "status": { "const": "needs_clarification" } }, "required": ["status"] },
+          "then": {
+            "properties": {
+              "facts": { "type": "array", "maxItems": 0 },
+              "observations": { "type": "array", "maxItems": 0 },
+              "interpretations": { "type": "array", "maxItems": 0 },
+              "hypotheses": { "type": "array", "maxItems": 0 },
+              "conflicts": { "type": "array", "maxItems": 0 },
+              "recommendations": { "type": "array", "maxItems": 0 },
+              "evidence": { "type": "array", "maxItems": 0 },
+              "actions": { "type": "array", "maxItems": 0 },
+              "sourcePlan": { "type": "null" }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "policy": {
+                "type": "object",
+                "properties": { "externalWrites": { "const": "disabled" } },
+                "required": ["externalWrites"]
+              }
+            },
+            "required": ["policy"]
+          },
+          "then": {
+            "properties": {
+              "actions": {
+                "type": "array",
+                "items": {
+                  "not": {
+                    "type": "object",
+                    "properties": { "state": { "const": "executed" } },
+                    "required": ["state"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

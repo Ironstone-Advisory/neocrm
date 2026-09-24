@@ -1,0 +1,22 @@
+# Adapter model
+
+An adapter is the bounded Integration-layer component that maps an external system or tool to and from canonical NeoCRM contracts. The source system is not itself the adapter, and its vocabulary does not become product semantics.
+
+## Capability families
+
+| Family | Question answered | Example sources |
+| --- | --- | --- |
+| Operational | Who and what is formally recorded? | Zoho, Salesforce, ERP, spreadsheets |
+| Knowledge | What is recorded, observed, interpreted, or hypothesized? | Markdown, Obsidian, research repository |
+| Activity | What interactions occurred? | Gmail, SMS, calls, meetings |
+| Calendar/time | What is planned, available, committed, or overloaded? | Google Calendar, Outlook |
+| Event | What changed or became due? | Webhook, change stream, scheduler |
+| Action | What bounded effect can be proposed, executed, and verified? | CRM, messaging, tasks, calendar |
+| Outcome | What resulted from work or action? | Human feedback, verification, service/commercial measures |
+| Model/tool | What bounded reasoning or operation is available? | Model gateway, search, approved internal tool |
+
+## Contract
+
+Each adapter declares capabilities and authorization scope; native/canonical mappings and loss; source references and retrieval/occurrence time; authority and ownership by field/concept; reads, subscriptions, proposals, executions, and verification; freshness, pagination, rate/cost, replay, idempotency, and partial failure; reversibility/compensation; audit references; credential isolation; and hostile-content treatment.
+
+A declared capability never grants an Agent authority. Delegation, ToolGrant, consent, policy, and approval still apply. Adapters may expose only what their source supports and must make limitations visible.

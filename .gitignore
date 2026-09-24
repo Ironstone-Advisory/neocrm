@@ -1,8 +1,21 @@
+# Local editor and operating-system files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Generated dependencies and test/build output
 node_modules/
 dist/
 coverage/
+*.tsbuildinfo
+
+# Credentials and operator-local experiment inputs
 .env
 .env.*
 !.env.example
-.DS_Store
-*.log
+experiments/local-vault/
+experiments/private-results/
+*.pem
+*.key
+*.p12

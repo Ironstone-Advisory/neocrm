@@ -1,0 +1,42 @@
+flowchart TB
+    L1["1. Presentation<br/>workspaces - collaboration - conversation - insight"]:::presentation
+    L2["2. Agent<br/>specialists - goals - plans - runs - handoffs"]:::agent
+    L3["3. Business Logic / Relationship Orchestration<br/>workflows - people and agents - policy gates - actions - outcomes"]:::orchestration
+    L4["4. Data Access / Context<br/>identity - minimum context - evidence graph - reconciliation"]:::context
+    L5["5. Hybrid Data Storage<br/>operational - analytical - graph - semantic - memory - audit"]:::storage
+    L6["6. Integration / Ecosystem<br/>adapters - events - APIs - models - action gateway"]:::integration
+    L7["7. Infrastructure / Resilience<br/>isolation - secrets - observability - budgets - recovery"]:::infrastructure
+    CS["Canonical Semantics<br/>shared meaning - provenance - time - epistemics"]:::semantic
+    GC["Governance / Control<br/>identity - delegation - consent - policy - approval - audit - evaluation"]:::governance
+
+    L1 --> L2 --> L3 --> L4 --> L5 --> L6 --> L7
+    CS -.-> L1
+    CS -.-> L2
+    CS -.-> L3
+    CS -.-> L4
+    CS -.-> L5
+    CS -.-> L6
+    CS -.-> L7
+    GC -.-> L1
+    GC -.-> L2
+    GC -.-> L3
+    GC -.-> L4
+    GC -.-> L5
+    GC -.-> L6
+    GC -.-> L7
+
+    subgraph RIL["Relationship Intelligence Layer spans Layers 2-4; boundaries remain explicit"]
+      L2
+      L3
+      L4
+    end
+
+    classDef presentation fill:#2563eb,stroke:#1e3a8a,color:#fff,stroke-width:2px;
+    classDef agent fill:#7c3aed,stroke:#4c1d95,color:#fff,stroke-width:3px;
+    classDef orchestration fill:#9333ea,stroke:#581c87,color:#fff,stroke-width:3px;
+    classDef context fill:#0f766e,stroke:#134e4a,color:#fff,stroke-width:3px;
+    classDef storage fill:#0e7490,stroke:#164e63,color:#fff,stroke-width:2px;
+    classDef integration fill:#475569,stroke:#1e293b,color:#fff,stroke-width:2px;
+    classDef infrastructure fill:#334155,stroke:#0f172a,color:#fff,stroke-width:2px;
+    classDef semantic fill:#d97706,stroke:#92400e,color:#fff,stroke-width:3px;
+    classDef governance fill:#be123c,stroke:#881337,color:#fff,stroke-width:3px;

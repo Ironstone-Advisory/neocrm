@@ -1,0 +1,11 @@
+{
+  "evaluationId": "EVAL-002",
+  "status": "Implemented",
+  "scope": "EXP-001 fixture preflight only",
+  "commands": [
+    "node --test test/agent-runtime.test.mjs test/zoho-adapter.test.mjs test/obsidian-adapter.test.mjs test/exp001-cli.test.mjs",
+    "node apps/experiment-cli/src/cli.mjs --preflight --mode fixture --condition C",
+    "node apps/experiment-cli/src/cli.mjs --mode fixture --condition C --query \"What do I need to know before I speak with Alex Rivera?\""
+  ],
+  "claimBoundary": "Validates deterministic contracts, safety boundaries, and fixture behavior. It is not live or human evidence for the EXP-001 hypothesis."
+}
