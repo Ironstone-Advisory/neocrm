@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0.0",
+  "adapterId": "obsidian-vault",
+  "displayName": "Obsidian read-only adapter",
+  "implementationStatus": "Implemented",
+  "sourceCategories": ["source-category.knowledge", "source-category.local-files"],
+  "capabilityIntents": [
+    { "intentId": "source.knowledge.read", "availability": "implemented", "operations": ["read"], "conditions": "Only explicitly linked, schema-marked Markdown inside the canonical vault boundary." },
+    { "intentId": "source.relationship.read", "availability": "partial", "operations": ["read"], "conditions": "Relationship context is evidence only when stable party references are explicitly declared." }
+  ],
+  "scopeVerification": {
+    "tenantRequired": true,
+    "principalRequired": true,
+    "verificationMode": "caller-bound",
+    "boundary": "The caller binds the user and workspace while the adapter confines reads to the canonical vault root and explicit linked notes.",
+    "ambiguityBehavior": "stop"
+  },
+  "dataSemantics": {
+    "freshness": { "timestampBasis": "filesystem-and-retrieved-at", "maximumAgeEnforcedByAdapter": false, "staleBehavior": "caller-must-decide" },
+    "missingness": "Missing, denied, failed, filtered, truncated and unsupported are distinct; none may be interpreted as zero or absence.",
+    "pagination": { "mode": "bounded-directory-walk", "bounded": true, "cursorBehavior": "Each read performs a bounded walk; no durable cross-run cursor is claimed.", "truncationDisclosed": true }
+  },
+  "operationalControls": {
+    "costSignal": "none",
+    "budgetControl": "caller-required",
+    "fallback": { "supported": true, "modes": ["user-owned-local-source", "pasted-text", "uploaded-document"], "degradationDisclosureRequired": true }
+  },
+  "connection": {
+    "registrationRuntime": "not-implemented",
+    "registrationGrantsAuthority": false,
+    "credentialBoundary": "Canonical local path confinement replaces a remote credential boundary."
+  },
+  "authority": {
+    "principalAuthorityRequired": true,
+    "manifestGrantsAuthority": false,
+    "writeExecutionEnabled": false,
+    "deletionExecutionEnabled": false
+  },
+  "semanticBoundary": {
+    "canonicalMeaningOwnedByNeoCRM": true,
+    "sourceProvidesEvidence": true,
+    "missingIsNotZero": true
+  },
+  "actionSafety": {
+    "maximumMaterialEffect": "read-only",
+    "effectClassificationRequired": true,
+    "idempotencyRequiredForExternalEffects": true,
+    "verificationRequiredForExternalEffects": true,
+    "uncertainOutcomeBehavior": "Stop and require verification plus human resolution before retry."
+  }
+}

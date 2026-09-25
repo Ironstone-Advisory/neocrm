@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "1.0.0",
+  "adapterId": "mock",
+  "displayName": "Deterministic mock adapters",
+  "implementationStatus": "Implemented",
+  "sourceCategories": ["source-category.synthetic"],
+  "capabilityIntents": [
+    { "intentId": "source.identity.read", "availability": "implemented", "operations": ["read"], "conditions": "Synthetic fixture declares the identity candidates." },
+    { "intentId": "source.relationship.read", "availability": "implemented", "operations": ["read"], "conditions": "Synthetic fixture includes relationship claims." },
+    { "intentId": "source.commercial.read", "availability": "implemented", "operations": ["read"], "conditions": "Synthetic fixture includes commercial claims." },
+    { "intentId": "source.activity.read", "availability": "implemented", "operations": ["read"], "conditions": "Synthetic fixture includes activity claims." },
+    { "intentId": "source.knowledge.read", "availability": "implemented", "operations": ["read"], "conditions": "Synthetic fixture includes knowledge claims." },
+    { "intentId": "source.time.read", "availability": "implemented", "operations": ["read"], "conditions": "Synthetic fixture includes time claims." }
+  ],
+  "scopeVerification": {
+    "tenantRequired": true,
+    "principalRequired": true,
+    "verificationMode": "fixture-bound",
+    "boundary": "The test harness binds principal, tenant, fixture and injected authorization state.",
+    "ambiguityBehavior": "stop"
+  },
+  "dataSemantics": {
+    "freshness": { "timestampBasis": "fixture-clock", "maximumAgeEnforcedByAdapter": false, "staleBehavior": "caller-must-decide" },
+    "missingness": "Missing, denied, failed, filtered, truncated and unsupported are distinct; none may be interpreted as zero or absence.",
+    "pagination": { "mode": "fixture-collection", "bounded": true, "cursorBehavior": "The finite fixture collection has no resumable cursor.", "truncationDisclosed": true }
+  },
+  "operationalControls": {
+    "costSignal": "none",
+    "budgetControl": "caller-required",
+    "fallback": { "supported": true, "modes": ["synthetic-fixture"], "degradationDisclosureRequired": true }
+  },
+  "connection": {
+    "registrationRuntime": "not-implemented",
+    "registrationGrantsAuthority": false,
+    "credentialBoundary": "No external credential is used by synthetic fixtures."
+  },
+  "authority": {
+    "principalAuthorityRequired": true,
+    "manifestGrantsAuthority": false,
+    "writeExecutionEnabled": false,
+    "deletionExecutionEnabled": false
+  },
+  "semanticBoundary": {
+    "canonicalMeaningOwnedByNeoCRM": true,
+    "sourceProvidesEvidence": true,
+    "missingIsNotZero": true
+  },
+  "actionSafety": {
+    "maximumMaterialEffect": "read-only",
+    "effectClassificationRequired": true,
+    "idempotencyRequiredForExternalEffects": true,
+    "verificationRequiredForExternalEffects": true,
+    "uncertainOutcomeBehavior": "Stop and require verification plus human resolution before retry."
+  }
+}

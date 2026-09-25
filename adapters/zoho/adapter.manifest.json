@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "1.0.0",
+  "adapterId": "zoho-crm",
+  "displayName": "Zoho CRM read-only adapter",
+  "implementationStatus": "Implemented",
+  "sourceCategories": ["source-category.crm"],
+  "capabilityIntents": [
+    { "intentId": "source.identity.read", "availability": "implemented", "operations": ["read"], "conditions": "Limited to configured modules, fields and regional boundary." },
+    { "intentId": "source.relationship.read", "availability": "implemented", "operations": ["read"], "conditions": "Limited to configured Contacts and Accounts evidence." },
+    { "intentId": "source.commercial.read", "availability": "implemented", "operations": ["read"], "conditions": "Requires the configured Deals module and allowlisted fields." },
+    { "intentId": "source.activity.read", "availability": "partial", "operations": ["read"], "conditions": "Available only when Tasks, Calls or Meetings are configured." },
+    { "intentId": "source.time.read", "availability": "partial", "operations": ["read"], "conditions": "Available only when Meetings and allowed time fields are configured." },
+    { "intentId": "source.knowledge.read", "availability": "partial", "operations": ["read"], "conditions": "Available only when Notes and allowed fields are configured." }
+  ],
+  "scopeVerification": {
+    "tenantRequired": true,
+    "principalRequired": true,
+    "verificationMode": "partial",
+    "boundary": "Regional host, configured organization context and OAuth principal are bounded; a cross-source tenant registry is not implemented.",
+    "ambiguityBehavior": "stop"
+  },
+  "dataSemantics": {
+    "freshness": { "timestampBasis": "source-modified-and-retrieved-at", "maximumAgeEnforcedByAdapter": false, "staleBehavior": "adapter-discloses" },
+    "missingness": "Missing, denied, failed, filtered, truncated and unsupported are distinct; none may be interpreted as zero or absence.",
+    "pagination": { "mode": "page-token", "bounded": true, "cursorBehavior": "Page traversal is capped per request; no durable cross-run cursor is claimed.", "truncationDisclosed": true }
+  },
+  "operationalControls": {
+    "costSignal": "none",
+    "budgetControl": "caller-required",
+    "fallback": { "supported": true, "modes": ["csv", "pasted-text", "uploaded-document"], "degradationDisclosureRequired": true }
+  },
+  "connection": {
+    "registrationRuntime": "not-implemented",
+    "registrationGrantsAuthority": false,
+    "credentialBoundary": "OAuth exchange is confined to the configured Zoho regional endpoint."
+  },
+  "authority": {
+    "principalAuthorityRequired": true,
+    "manifestGrantsAuthority": false,
+    "writeExecutionEnabled": false,
+    "deletionExecutionEnabled": false
+  },
+  "semanticBoundary": {
+    "canonicalMeaningOwnedByNeoCRM": true,
+    "sourceProvidesEvidence": true,
+    "missingIsNotZero": true
+  },
+  "actionSafety": {
+    "maximumMaterialEffect": "read-only",
+    "effectClassificationRequired": true,
+    "idempotencyRequiredForExternalEffects": true,
+    "verificationRequiredForExternalEffects": true,
+    "uncertainOutcomeBehavior": "Stop and require verification plus human resolution before retry."
+  }
+}

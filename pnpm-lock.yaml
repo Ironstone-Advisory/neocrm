@@ -24,7 +24,17 @@ importers:
 
   adapters/mock: {}
 
+  adapters/obsidian: {}
+
+  adapters/zoho: {}
+
   apps/assistant: {}
+
+  apps/experiment-cli: {}
+
+  packages/agent-runtime: {}
+
+  packages/context-engine: {}
 
   packages/contracts: {}
 

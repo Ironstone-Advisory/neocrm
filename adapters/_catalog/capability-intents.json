@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "1.0.0",
+  "intents": [
+    { "id": "source.identity.read", "label": "Resolve identity evidence", "operation": "read" },
+    { "id": "source.relationship.read", "label": "Read relationship evidence", "operation": "read" },
+    { "id": "source.commercial.read", "label": "Read commercial evidence", "operation": "read" },
+    { "id": "source.activity.read", "label": "Read activity evidence", "operation": "read" },
+    { "id": "source.conversation.read", "label": "Read conversation evidence", "operation": "read" },
+    { "id": "source.consent.read", "label": "Read consent and preference evidence", "operation": "read" },
+    { "id": "source.engagement.read", "label": "Read engagement evidence", "operation": "read" },
+    { "id": "source.service.read", "label": "Read service evidence", "operation": "read" },
+    { "id": "source.knowledge.read", "label": "Read knowledge evidence", "operation": "read" },
+    { "id": "source.time.read", "label": "Read time and scheduling evidence", "operation": "read" },
+    { "id": "source.analytics.read", "label": "Read defined metrics and outcome evidence", "operation": "read" },
+    { "id": "source.data-quality.read", "label": "Read provenance and data-quality evidence", "operation": "read" },
+    { "id": "source.entitlement.read", "label": "Read service entitlement evidence", "operation": "read" },
+    { "id": "source.usage.read", "label": "Read product or service usage evidence", "operation": "read" },
+    { "id": "source.content.read", "label": "Read content, rights and claims evidence", "operation": "read" }
+  ]
+}

@@ -7,3 +7,5 @@ This adapter is the production-shaped Zoho boundary for EXP-001. It supports an 
 CRM requests are GET-only. The only POST path is OAuth token exchange to the exact endpoint registered for the selected Zoho region. API and token URL overrides must match that regional boundary exactly, redirects fail closed, and credentials are never sent to caller-selected hosts. Contacts map to Person identity candidates, Accounts to Company references, and Deals normally to Opportunity evidence. A Contact or Account is never inferred to be a Customer. Leads are optional and map to a Party plus Prospect role.
 
 No method for create, update, delete, rename, or write-back is exported.
+
+See the strict [capability manifest](adapter.manifest.json) and shared [adapter catalogue](../_catalog/README.md). Configuration or future connection registration grants no authority; this adapter remains GET-only.

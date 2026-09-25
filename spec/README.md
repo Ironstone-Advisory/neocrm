@@ -32,6 +32,8 @@ New portfolio objects, views, requirements, and experiment specifications are Ac
 
 Normative data exchanged by a capability uses its versioned JSON Schema. Generated TypeScript is a checked projection for developer ergonomics. If a projection disagrees with its declared schema, regenerate or correct the projection. Neither one may be described as the complete product ontology unless the canonical specification explicitly grants that scope.
 
+The strict [`WorkflowDefinition`](contracts/workflow-definition.schema.json) contract governs the discoverable workflow capsules under [`../workflows/`](../workflows/README.md). A WorkflowDefinition describes a reusable job and governance envelope. It is not a runtime Plan instantiated for one Goal and is not a PlaybookDefinition containing reusable guidance. Workflow definitions do not grant connection, read, write, send, schedule, or deletion authority, and their presence does not claim a routing or execution runtime.
+
 ## Required trace
 
 Traceability links product goals, business capabilities, architecture responsibilities, canonical objects, views, requirements, decisions, experiments, evaluations, implementations, and results. Evidence links must be typed and scoped. Ordering edges such as `precedes` never count as validation.

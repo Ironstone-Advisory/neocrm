@@ -1,0 +1,1626 @@
+{
+  "schemaVersion": "1.0.0",
+  "status": "Specification scaffolding; no live routing or execution runtime is claimed.",
+  "definitionCount": 57,
+  "groups": {
+    "sales": 14,
+    "marketing": 14,
+    "service": 16,
+    "meta": 4,
+    "shared": 9
+  },
+  "workflows": [
+    {
+      "workflowId": "WF-SAL-001",
+      "title": "Relationship Brief and Meeting Prep",
+      "slug": "relationship-brief-and-meeting-prep",
+      "primaryDomain": "sales",
+      "canonicalPerspective": "sales",
+      "routable": true,
+      "specificationStatus": "Accepted",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-only",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.commercial.read",
+        "source.identity.read",
+        "source.knowledge.read",
+        "source.relationship.read",
+        "source.time.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/sales/WF-SAL-001-relationship-brief-and-meeting-prep/workflow.json"
+    },
+    {
+      "workflowId": "WF-SAL-002",
+      "title": "Account Research and Buying Group",
+      "slug": "account-research-and-buying-group",
+      "primaryDomain": "sales",
+      "canonicalPerspective": "sales",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-only",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.commercial.read",
+        "source.identity.read",
+        "source.knowledge.read",
+        "source.relationship.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/sales/WF-SAL-002-account-research-and-buying-group/workflow.json"
+    },
+    {
+      "workflowId": "WF-SAL-003",
+      "title": "Lead Triage and Call Plan",
+      "slug": "lead-triage-and-call-plan",
+      "primaryDomain": "sales",
+      "canonicalPerspective": "sales",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "draft-only",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.commercial.read",
+        "source.identity.read",
+        "source.relationship.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/sales/WF-SAL-003-lead-triage-and-call-plan/workflow.json"
+    },
+    {
+      "workflowId": "WF-SAL-004",
+      "title": "Speed to Lead and Booking",
+      "slug": "speed-to-lead-and-booking",
+      "primaryDomain": "sales",
+      "canonicalPerspective": "sales",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.commercial.read",
+        "source.identity.read",
+        "source.relationship.read",
+        "source.time.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/sales/WF-SAL-004-speed-to-lead-and-booking/workflow.json"
+    },
+    {
+      "workflowId": "WF-SAL-005",
+      "title": "Opportunity Qualification and Next Step",
+      "slug": "opportunity-qualification-and-next-step",
+      "primaryDomain": "sales",
+      "canonicalPerspective": "sales",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.commercial.read",
+        "source.identity.read",
+        "source.relationship.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/sales/WF-SAL-005-opportunity-qualification-and-next-step/workflow.json"
+    },
+    {
+      "workflowId": "WF-SAL-006",
+      "title": "Pipeline Review and Hygiene",
+      "slug": "pipeline-review-and-hygiene",
+      "primaryDomain": "sales",
+      "canonicalPerspective": "sales",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.commercial.read",
+        "source.identity.read",
+        "source.relationship.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/sales/WF-SAL-006-pipeline-review-and-hygiene/workflow.json"
+    },
+    {
+      "workflowId": "WF-SAL-007",
+      "title": "Conversation Capture and Commitment Review",
+      "slug": "conversation-capture-and-commitment-review",
+      "primaryDomain": "sales",
+      "canonicalPerspective": "sales",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "draft-only",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.commercial.read",
+        "source.conversation.read",
+        "source.identity.read",
+        "source.relationship.read",
+        "source.time.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/sales/WF-SAL-007-conversation-capture-and-commitment-review/workflow.json"
+    },
+    {
+      "workflowId": "WF-SAL-008",
+      "title": "Consent Aware Follow Up",
+      "slug": "consent-aware-follow-up",
+      "primaryDomain": "sales",
+      "canonicalPerspective": "sales",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.commercial.read",
+        "source.consent.read",
+        "source.conversation.read",
+        "source.identity.read",
+        "source.relationship.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/sales/WF-SAL-008-consent-aware-follow-up/workflow.json"
+    },
+    {
+      "workflowId": "WF-SAL-009",
+      "title": "Outreach Sequence and Enrollment",
+      "slug": "outreach-sequence-and-enrollment",
+      "primaryDomain": "sales",
+      "canonicalPerspective": "sales",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.commercial.read",
+        "source.consent.read",
+        "source.conversation.read",
+        "source.identity.read",
+        "source.relationship.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/sales/WF-SAL-009-outreach-sequence-and-enrollment/workflow.json"
+    },
+    {
+      "workflowId": "WF-SAL-010",
+      "title": "Account and Mutual Action Plan",
+      "slug": "account-and-mutual-action-plan",
+      "primaryDomain": "sales",
+      "canonicalPerspective": "sales",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "draft-only",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.commercial.read",
+        "source.identity.read",
+        "source.relationship.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/sales/WF-SAL-010-account-and-mutual-action-plan/workflow.json"
+    },
+    {
+      "workflowId": "WF-SAL-011",
+      "title": "Proposal and RFP Response",
+      "slug": "proposal-and-rfp-response",
+      "primaryDomain": "sales",
+      "canonicalPerspective": "sales",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "draft-only",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.commercial.read",
+        "source.conversation.read",
+        "source.identity.read",
+        "source.knowledge.read",
+        "source.relationship.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/sales/WF-SAL-011-proposal-and-rfp-response/workflow.json"
+    },
+    {
+      "workflowId": "WF-SAL-012",
+      "title": "Governed CRM Activity and Opportunity Update",
+      "slug": "governed-crm-activity-and-opportunity-update",
+      "primaryDomain": "sales",
+      "canonicalPerspective": "sales",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.commercial.read",
+        "source.identity.read",
+        "source.relationship.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/sales/WF-SAL-012-governed-crm-activity-and-opportunity-update/workflow.json"
+    },
+    {
+      "workflowId": "WF-SAL-013",
+      "title": "Forecast and Scenario Review",
+      "slug": "forecast-and-scenario-review",
+      "primaryDomain": "sales",
+      "canonicalPerspective": "sales",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-only",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.analytics.read",
+        "source.commercial.read",
+        "source.identity.read",
+        "source.relationship.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/sales/WF-SAL-013-forecast-and-scenario-review/workflow.json"
+    },
+    {
+      "workflowId": "WF-SAL-014",
+      "title": "Dormant Relationship Reactivation",
+      "slug": "dormant-relationship-reactivation",
+      "primaryDomain": "sales",
+      "canonicalPerspective": "sales",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.commercial.read",
+        "source.consent.read",
+        "source.identity.read",
+        "source.relationship.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/sales/WF-SAL-014-dormant-relationship-reactivation/workflow.json"
+    },
+    {
+      "workflowId": "WF-MKT-001",
+      "title": "Audience and Contact Eligibility",
+      "slug": "audience-and-contact-eligibility",
+      "primaryDomain": "marketing",
+      "canonicalPerspective": "engagement",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-only",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read",
+        "source.consent.read",
+        "source.engagement.read",
+        "source.identity.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/marketing/WF-MKT-001-audience-and-contact-eligibility/workflow.json"
+    },
+    {
+      "workflowId": "WF-MKT-002",
+      "title": "Campaign Brief and Goal Plan",
+      "slug": "campaign-brief-and-goal-plan",
+      "primaryDomain": "marketing",
+      "canonicalPerspective": "engagement",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "draft-only",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read",
+        "source.consent.read",
+        "source.engagement.read",
+        "source.identity.read",
+        "source.knowledge.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/marketing/WF-MKT-002-campaign-brief-and-goal-plan/workflow.json"
+    },
+    {
+      "workflowId": "WF-MKT-003",
+      "title": "Content Strategy and Key Messages",
+      "slug": "content-strategy-and-key-messages",
+      "primaryDomain": "marketing",
+      "canonicalPerspective": "engagement",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "draft-only",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read",
+        "source.consent.read",
+        "source.content.read",
+        "source.engagement.read",
+        "source.identity.read",
+        "source.knowledge.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/marketing/WF-MKT-003-content-strategy-and-key-messages/workflow.json"
+    },
+    {
+      "workflowId": "WF-MKT-004",
+      "title": "Content and Asset Variant Drafting",
+      "slug": "content-and-asset-variant-drafting",
+      "primaryDomain": "marketing",
+      "canonicalPerspective": "engagement",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "draft-only",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read",
+        "source.consent.read",
+        "source.content.read",
+        "source.engagement.read",
+        "source.identity.read",
+        "source.knowledge.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/marketing/WF-MKT-004-content-and-asset-variant-drafting/workflow.json"
+    },
+    {
+      "workflowId": "WF-MKT-005",
+      "title": "Brand Rights and Claims Review",
+      "slug": "brand-rights-and-claims-review",
+      "primaryDomain": "marketing",
+      "canonicalPerspective": "engagement",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-only",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read",
+        "source.consent.read",
+        "source.content.read",
+        "source.engagement.read",
+        "source.identity.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/marketing/WF-MKT-005-brand-rights-and-claims-review/workflow.json"
+    },
+    {
+      "workflowId": "WF-MKT-006",
+      "title": "Treatment Experiment Design",
+      "slug": "treatment-experiment-design",
+      "primaryDomain": "marketing",
+      "canonicalPerspective": "engagement",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "draft-only",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read",
+        "source.consent.read",
+        "source.engagement.read",
+        "source.identity.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/marketing/WF-MKT-006-treatment-experiment-design/workflow.json"
+    },
+    {
+      "workflowId": "WF-MKT-007",
+      "title": "Assignment Exposure and Holdout Audit",
+      "slug": "assignment-exposure-and-holdout-audit",
+      "primaryDomain": "marketing",
+      "canonicalPerspective": "engagement",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-only",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read",
+        "source.consent.read",
+        "source.engagement.read",
+        "source.identity.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/marketing/WF-MKT-007-assignment-exposure-and-holdout-audit/workflow.json"
+    },
+    {
+      "workflowId": "WF-MKT-008",
+      "title": "Adaptive Journey Recommendation",
+      "slug": "adaptive-journey-recommendation",
+      "primaryDomain": "marketing",
+      "canonicalPerspective": "engagement",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read",
+        "source.consent.read",
+        "source.engagement.read",
+        "source.identity.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/marketing/WF-MKT-008-adaptive-journey-recommendation/workflow.json"
+    },
+    {
+      "workflowId": "WF-MKT-009",
+      "title": "Intent Signal and Account Activation",
+      "slug": "intent-signal-and-account-activation",
+      "primaryDomain": "marketing",
+      "canonicalPerspective": "engagement",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read",
+        "source.consent.read",
+        "source.engagement.read",
+        "source.identity.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/marketing/WF-MKT-009-intent-signal-and-account-activation/workflow.json"
+    },
+    {
+      "workflowId": "WF-MKT-010",
+      "title": "Inbound Qualification Booking and Handoff",
+      "slug": "inbound-qualification-booking-and-handoff",
+      "primaryDomain": "marketing",
+      "canonicalPerspective": "engagement",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read",
+        "source.consent.read",
+        "source.engagement.read",
+        "source.identity.read",
+        "source.time.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/marketing/WF-MKT-010-inbound-qualification-booking-and-handoff/workflow.json"
+    },
+    {
+      "workflowId": "WF-MKT-011",
+      "title": "Intelligent Marketing Follow",
+      "slug": "intelligent-marketing-follow",
+      "primaryDomain": "marketing",
+      "canonicalPerspective": "engagement",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read",
+        "source.consent.read",
+        "source.conversation.read",
+        "source.engagement.read",
+        "source.identity.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/marketing/WF-MKT-011-intelligent-marketing-follow/workflow.json"
+    },
+    {
+      "workflowId": "WF-MKT-012",
+      "title": "Campaign Performance and Attribution",
+      "slug": "campaign-performance-and-attribution",
+      "primaryDomain": "marketing",
+      "canonicalPerspective": "engagement",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-only",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read",
+        "source.consent.read",
+        "source.engagement.read",
+        "source.identity.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/marketing/WF-MKT-012-campaign-performance-and-attribution/workflow.json"
+    },
+    {
+      "workflowId": "WF-MKT-013",
+      "title": "Weekly Growth and Channel Brief",
+      "slug": "weekly-growth-and-channel-brief",
+      "primaryDomain": "marketing",
+      "canonicalPerspective": "engagement",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-only",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read",
+        "source.consent.read",
+        "source.engagement.read",
+        "source.identity.read",
+        "source.knowledge.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/marketing/WF-MKT-013-weekly-growth-and-channel-brief/workflow.json"
+    },
+    {
+      "workflowId": "WF-MKT-014",
+      "title": "Reputation and Voice of Customer",
+      "slug": "reputation-and-voice-of-customer",
+      "primaryDomain": "marketing",
+      "canonicalPerspective": "engagement",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-only",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read",
+        "source.consent.read",
+        "source.conversation.read",
+        "source.engagement.read",
+        "source.identity.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/marketing/WF-MKT-014-reputation-and-voice-of-customer/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-001",
+      "title": "Customer and Service Brief",
+      "slug": "customer-and-service-brief",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-only",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.knowledge.read",
+        "source.relationship.read",
+        "source.service.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-001-customer-and-service-brief/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-002",
+      "title": "Case Intake Identity and Entitlement",
+      "slug": "case-intake-identity-and-entitlement",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.relationship.read",
+        "source.service.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-002-case-intake-identity-and-entitlement/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-003",
+      "title": "Case Triage and Priority",
+      "slug": "case-triage-and-priority",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.relationship.read",
+        "source.service.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-003-case-triage-and-priority/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-004",
+      "title": "Response Draft and Deflection",
+      "slug": "response-draft-and-deflection",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "draft-only",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.conversation.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.relationship.read",
+        "source.service.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-004-response-draft-and-deflection/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-005",
+      "title": "SLA and Commitment Monitor",
+      "slug": "sla-and-commitment-monitor",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.relationship.read",
+        "source.service.read",
+        "source.time.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-005-sla-and-commitment-monitor/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-006",
+      "title": "Service Handoff and Escalation",
+      "slug": "service-handoff-and-escalation",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.relationship.read",
+        "source.service.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-006-service-handoff-and-escalation/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-007",
+      "title": "Resolution Verification and Closure",
+      "slug": "resolution-verification-and-closure",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.relationship.read",
+        "source.service.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-007-resolution-verification-and-closure/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-008",
+      "title": "Complaint Correction and Redress",
+      "slug": "complaint-correction-and-redress",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.data-quality.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.relationship.read",
+        "source.service.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-008-complaint-correction-and-redress/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-009",
+      "title": "Customer Health Review",
+      "slug": "customer-health-review",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-only",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.analytics.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.relationship.read",
+        "source.service.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-009-customer-health-review/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-010",
+      "title": "Success Plan and Outcome Review",
+      "slug": "success-plan-and-outcome-review",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "draft-only",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.relationship.read",
+        "source.service.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-010-success-plan-and-outcome-review/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-011",
+      "title": "Customer Onboarding and Adoption",
+      "slug": "customer-onboarding-and-adoption",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.relationship.read",
+        "source.service.read",
+        "source.usage.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-011-customer-onboarding-and-adoption/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-012",
+      "title": "Usage and Entitlement Anomaly",
+      "slug": "usage-and-entitlement-anomaly",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.analytics.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.relationship.read",
+        "source.service.read",
+        "source.usage.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-012-usage-and-entitlement-anomaly/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-013",
+      "title": "Renewal Readiness and Churn Risk",
+      "slug": "renewal-readiness-and-churn-risk",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-only",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.analytics.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.relationship.read",
+        "source.service.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-013-renewal-readiness-and-churn-risk/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-014",
+      "title": "Expansion With Service Guard",
+      "slug": "expansion-with-service-guard",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.relationship.read",
+        "source.service.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-014-expansion-with-service-guard/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-015",
+      "title": "Customer Education and Enablement",
+      "slug": "customer-education-and-enablement",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P2",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "draft-only",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.content.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.knowledge.read",
+        "source.relationship.read",
+        "source.service.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-015-customer-education-and-enablement/workflow.json"
+    },
+    {
+      "workflowId": "WF-SRV-016",
+      "title": "Service Knowledge Capture and Update",
+      "slug": "service-knowledge-capture-and-update",
+      "primaryDomain": "service",
+      "canonicalPerspective": "service",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "draft-only",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.content.read",
+        "source.entitlement.read",
+        "source.identity.read",
+        "source.knowledge.read",
+        "source.relationship.read",
+        "source.service.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/service/WF-SRV-016-service-knowledge-capture-and-update/workflow.json"
+    },
+    {
+      "workflowId": "WF-META-001",
+      "title": "Guided Onboarding and Source Readiness",
+      "slug": "guided-onboarding-and-source-readiness",
+      "primaryDomain": "meta",
+      "canonicalPerspective": "cross-functional",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-only",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/_meta/WF-META-001-guided-onboarding-and-source-readiness/workflow.json"
+    },
+    {
+      "workflowId": "WF-META-002",
+      "title": "Conversational Intent Router",
+      "slug": "conversational-intent-router",
+      "primaryDomain": "meta",
+      "canonicalPerspective": "cross-functional",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-only",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/_meta/WF-META-002-conversational-intent-router/workflow.json"
+    },
+    {
+      "workflowId": "WF-META-003",
+      "title": "Relationship Operations Pulse",
+      "slug": "relationship-operations-pulse",
+      "primaryDomain": "meta",
+      "canonicalPerspective": "cross-functional",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-only",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read",
+        "source.data-quality.read",
+        "source.identity.read",
+        "source.relationship.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/_meta/WF-META-003-relationship-operations-pulse/workflow.json"
+    },
+    {
+      "workflowId": "WF-META-004",
+      "title": "Workflow Authoring and Simulation",
+      "slug": "workflow-authoring-and-simulation",
+      "primaryDomain": "meta",
+      "canonicalPerspective": "cross-functional",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P2",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "draft-only",
+      "requiredSourceCapabilityIntents": [],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/_meta/WF-META-004-workflow-authoring-and-simulation/workflow.json"
+    },
+    {
+      "workflowId": "WF-SH-001",
+      "title": "Identity and Source Resolution",
+      "slug": "identity-and-source-resolution",
+      "primaryDomain": "shared",
+      "canonicalPerspective": "control",
+      "routable": false,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "internal-routine",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.identity.read",
+        "source.data-quality.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/_shared/WF-SH-001-identity-and-source-resolution/workflow.json"
+    },
+    {
+      "workflowId": "WF-SH-002",
+      "title": "Minimum Necessary Context and Evidence",
+      "slug": "minimum-necessary-context-and-evidence",
+      "primaryDomain": "shared",
+      "canonicalPerspective": "control",
+      "routable": false,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "internal-routine",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.relationship.read",
+        "source.knowledge.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/_shared/WF-SH-002-minimum-necessary-context-and-evidence/workflow.json"
+    },
+    {
+      "workflowId": "WF-SH-003",
+      "title": "Consent and Contact Safety",
+      "slug": "consent-and-contact-safety",
+      "primaryDomain": "shared",
+      "canonicalPerspective": "control",
+      "routable": false,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "internal-routine",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.consent.read",
+        "source.engagement.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/_shared/WF-SH-003-consent-and-contact-safety/workflow.json"
+    },
+    {
+      "workflowId": "WF-SH-004",
+      "title": "Evidence and Epistemic Review",
+      "slug": "evidence-and-epistemic-review",
+      "primaryDomain": "shared",
+      "canonicalPerspective": "control",
+      "routable": false,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "internal-routine",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.knowledge.read",
+        "source.conversation.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/_shared/WF-SH-004-evidence-and-epistemic-review/workflow.json"
+    },
+    {
+      "workflowId": "WF-SH-005",
+      "title": "Data Quality and Reconciliation",
+      "slug": "data-quality-and-reconciliation",
+      "primaryDomain": "shared",
+      "canonicalPerspective": "control",
+      "routable": false,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "internal-routine",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.data-quality.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/_shared/WF-SH-005-data-quality-and-reconciliation/workflow.json"
+    },
+    {
+      "workflowId": "WF-SH-006",
+      "title": "Time Locale and Scheduling",
+      "slug": "time-locale-and-scheduling",
+      "primaryDomain": "shared",
+      "canonicalPerspective": "control",
+      "routable": false,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "internal-routine",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.time.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/_shared/WF-SH-006-time-locale-and-scheduling/workflow.json"
+    },
+    {
+      "workflowId": "WF-SH-007",
+      "title": "Typed Handoff and Seam Recovery",
+      "slug": "typed-handoff-and-seam-recovery",
+      "primaryDomain": "shared",
+      "canonicalPerspective": "control",
+      "routable": false,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "internal-routine",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.relationship.read",
+        "source.activity.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/_shared/WF-SH-007-typed-handoff-and-seam-recovery/workflow.json"
+    },
+    {
+      "workflowId": "WF-SH-008",
+      "title": "Governed Action Verification and Receipt",
+      "slug": "governed-action-verification-and-receipt",
+      "primaryDomain": "shared",
+      "canonicalPerspective": "control",
+      "routable": false,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "internal-routine",
+      "writeIntent": "governed-action-proposal",
+      "requiredSourceCapabilityIntents": [
+        "source.data-quality.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/_shared/WF-SH-008-governed-action-verification-and-receipt/workflow.json"
+    },
+    {
+      "workflowId": "WF-SH-009",
+      "title": "Outcome and Learning Capture",
+      "slug": "outcome-and-learning-capture",
+      "primaryDomain": "shared",
+      "canonicalPerspective": "control",
+      "routable": false,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P2",
+      "authorityMode": "internal-routine",
+      "writeIntent": "none",
+      "requiredSourceCapabilityIntents": [
+        "source.analytics.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/_shared/WF-SH-009-outcome-and-learning-capture/workflow.json"
+    }
+  ]
+}

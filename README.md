@@ -26,6 +26,10 @@ The repository now includes configurable read-only Zoho and Obsidian adapters an
 
 CAP-001 and EXP-001 remain read-only. The product owner has accepted a broader [forty-eight-decision product direction](spec/product/decision-register.md), including time-bounded experimental write authority, a multi-workflow Zoho experiment, and a binding rule that every deletion requires fresh exact human authorization. Those additions are specifications and Planned experiments—not deployed write capability or validated product evidence.
 
+The additive [workflow catalogue](workflows/README.md) now organizes 57 host-neutral definitions across Sales, Marketing, Service, product-level Meta workflows, and non-routable Shared controls. These definitions make jobs, source intents, governance, fallbacks, typed flow, evaluation gaps, and discoverability explicit. They are specification scaffolding: no workflow router, live send/write, schedule registration, connection-registration runtime, or action gateway is claimed.
+
+For a guided route through the current runnable slice, start with the [Zoho + Obsidian first-experiment path](workflows/FIRST-EXPERIMENT.md). It distinguishes the intended workflow sequence from the narrower CAP-001 / EXP-001 implementation that exists today.
+
 The first product experiment, [EXP-001](experiments/EXP-001-zoho-obsidian-relationship-brief/spec.md), compares a Zoho baseline with NeoCRM over Zoho and then Zoho plus permissioned Obsidian context. Its live and human evidence is still pending.
 
 ## Repository map
@@ -33,12 +37,14 @@ The first product experiment, [EXP-001](experiments/EXP-001-zoho-obsidian-relati
 | Path | Responsibility |
 | --- | --- |
 | [`spec/`](spec/README.md) | Product authority: origin, canonical design, domain, architecture, experience, requirements, decisions, and capability scopes |
+| [`workflows/`](workflows/README.md) | 57 strict WorkflowDefinitions: Sales, Marketing/Engagement, Service, Meta coordination, and Shared controls |
 | [`experiments/`](experiments/README.md) | Unique EXP-001 through EXP-025 hypotheses, protocols, and evidence records |
 | [`evals/`](evals/README.md) | Bounded repeatable evaluations; EVAL-001 covers only CAP-001 |
 | [`apps/assistant/`](apps/assistant/README.md) | Deterministic conversational reference shell for CAP-001 |
 | [`packages/contracts/`](packages/contracts/README.md) | Generated projections of bounded exchange and planned governed-action schemas |
 | [`packages/relationship-intelligence/`](packages/relationship-intelligence/README.md) | Deterministic CAP-001 context engine; not the complete RIL |
 | [`adapters/mock/`](adapters/mock/README.md) | Synthetic source adapters |
+| [`adapters/`](adapters/README.md) | Capability-intent catalogue and strict, authority-neutral adapter manifests |
 | [`packages/agent-runtime/`](packages/agent-runtime/README.md) | Bounded RelationshipBriefAgent run, policy, audit, and feedback contracts |
 | [`packages/context-engine/`](packages/context-engine/README.md) | Credential-isolating context boundary over CAP-001 |
 | [`adapters/zoho/`](adapters/zoho/README.md) | Configurable production-shaped Zoho GET-only adapter |

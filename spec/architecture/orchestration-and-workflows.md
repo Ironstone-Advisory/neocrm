@@ -4,6 +4,17 @@
 
 Relationship Orchestration coordinates Goals, people, Agents, WorkItems, policies, and Outcomes. It is business logic, not prompt folklore.
 
+## WorkflowDefinition boundary
+
+A [`WorkflowDefinition`](../contracts/workflow-definition.schema.json) is a versioned, host-neutral description of a discoverable relationship-management job and its governance envelope. It declares Intent and Goal templates, personas and aliases, typed inputs and outputs, source capability intents, steps, dependencies, branches, failure and escalation paths, handoffs, policies, authority, operational controls, experience metadata, traceability, and planned evaluation.
+
+It is distinct from both:
+
+- a **Plan**, which is instantiated for one Goal, principal, context and run; and
+- a **PlaybookDefinition**, which supplies reusable guidance, evidence or techniques to a workflow or Plan.
+
+The [workflow catalogue](../../workflows/README.md) is discoverable specification scaffolding. A definition neither grants authority nor proves that routing, scheduling, connections or execution exist.
+
 ## Standard lifecycle
 
 ```text

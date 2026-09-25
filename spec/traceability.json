@@ -368,6 +368,7 @@
     { "id": "IMP-009", "kind": "implementation", "implementationStatus": "Implemented", "evidenceMaturity": "Demonstrated", "deliveryHorizon": "P0", "file": "adapters/obsidian/src/index.mjs" },
     { "id": "IMP-010", "kind": "implementation", "implementationStatus": "Implemented", "evidenceMaturity": "Demonstrated", "deliveryHorizon": "P0", "file": "apps/experiment-cli/src/cli.mjs" },
     { "id": "IMP-011", "kind": "implementation", "implementationStatus": "Implemented", "evidenceMaturity": "Planned", "deliveryHorizon": "P1", "file": "packages/contracts/src/governed-action.ts" },
+    { "id": "IMP-012", "name": "Generated WorkflowDefinition contract projection; no router or execution runtime", "kind": "implementation", "implementationStatus": "Implemented", "evidenceMaturity": "Planned", "deliveryHorizon": "P1", "file": "packages/contracts/src/workflow-definition.ts" },
     {
       "id": "RES-001",
       "kind": "result",
@@ -886,6 +887,7 @@
     { "from": "EVAL-002", "to": "IMP-009", "relation": "exercises" },
     { "from": "EVAL-002", "to": "IMP-010", "relation": "exercises" },
     { "from": "EVAL-004", "to": "IMP-011", "relation": "exercises" },
+    { "from": "EVAL-004", "to": "IMP-012", "relation": "exercises" },
     { "from": "IMP-001", "to": "RES-001", "relation": "reported-in" },
     { "from": "IMP-002", "to": "RES-001", "relation": "reported-in" },
     { "from": "IMP-003", "to": "RES-001", "relation": "reported-in" },
