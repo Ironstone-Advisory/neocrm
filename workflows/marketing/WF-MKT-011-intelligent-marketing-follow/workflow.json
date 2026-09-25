@@ -1,0 +1,910 @@
+{
+  "kind": "WorkflowDefinition",
+  "schemaVersion": "1.0.0",
+  "workflowId": "WF-MKT-011",
+  "version": "0.1.0",
+  "slug": "intelligent-marketing-follow",
+  "title": "Intelligent Marketing Follow",
+  "workflowClass": "business",
+  "definitionBoundary": {
+    "isRuntimePlan": false,
+    "isPlaybookDefinition": false,
+    "statement": "This definition describes a reusable job and its governance envelope. A Plan is instantiated for one Goal and run; a PlaybookDefinition supplies reusable guidance."
+  },
+  "classification": {
+    "primaryDomain": "marketing",
+    "canonicalPerspective": "engagement",
+    "secondaryDomains": [
+      "cross-functional"
+    ],
+    "routable": true,
+    "repositoryPath": "workflows/marketing/WF-MKT-011-intelligent-marketing-follow/workflow.json"
+  },
+  "intent": {
+    "intentId": "intent.marketing.intelligent.marketing.follow",
+    "name": "Intelligent Marketing Follow",
+    "description": "Help an authorized marketer or growth leader complete intelligent marketing follow from relationship evidence while keeping source gaps, uncertainty and authority visible.",
+    "aliases": [
+      "intelligent marketing follow",
+      "help with intelligent marketing follow",
+      "run intelligent marketing follow"
+    ],
+    "classification": "propose-action"
+  },
+  "goal": {
+    "goalType": "goal.marketing.intelligent.marketing.follow",
+    "objectiveTemplate": "Produce a useful, evidence-linked intelligent marketing follow result for the declared subjects, decision and permitted use.",
+    "successSignals": [
+      "The user can see the result, evidence, uncertainty, source gaps and next decision.",
+      "No context, recommendation or proposed effect exceeds the declared purpose and authority."
+    ],
+    "constraints": [
+      "Resolve identity before private context retrieval and retrieve only minimum-necessary fields.",
+      "Treat missing, denied, stale and conflicting evidence explicitly rather than as zero or absence.",
+      "Enforce consent, suppression, frequency, quiet-hours and service-conflict checks before contact can be proposed."
+    ]
+  },
+  "job": {
+    "jobToBeDone": "Help an authorized marketer or growth leader complete intelligent marketing follow from relationship evidence while keeping source gaps, uncertainty and authority visible.",
+    "useWhen": [
+      "An authorized marketer or growth leader asks for intelligent marketing follow.",
+      "A relevant event or signal suggests that intelligent marketing follow may be useful, subject to human review."
+    ],
+    "produces": [
+      "Intelligent Marketing Follow result",
+      "Evidence, uncertainty and source-gap summary",
+      "Draft or governed action proposal; never silent execution"
+    ],
+    "nonGoals": [
+      "Replacing canonical NeoCRM objects with a vendor schema.",
+      "Granting read, write, send, schedule, connection or deletion authority.",
+      "Claiming production runtime behavior or validated business outcomes."
+    ]
+  },
+  "inputs": [
+    {
+      "inputId": "IN-01",
+      "name": "Authenticated principal and purpose",
+      "semanticType": "principal",
+      "required": true,
+      "sourceCapabilityIntent": null,
+      "purpose": "Bind the workflow to the requesting principal, tenant, purpose and read authority.",
+      "fieldScope": [
+        "principal identifier",
+        "tenant identifier",
+        "purpose",
+        "authority references"
+      ],
+      "freshness": {
+        "mode": "point-in-time",
+        "maximumAge": null,
+        "staleBehavior": "stop"
+      },
+      "classification": "restricted",
+      "missingness": "stop"
+    },
+    {
+      "inputId": "IN-02",
+      "name": "Intent and Goal",
+      "semanticType": "goal",
+      "required": true,
+      "sourceCapabilityIntent": null,
+      "purpose": "State the user outcome, decision, constraints and permitted use before context retrieval.",
+      "fieldScope": [
+        "intent",
+        "objective",
+        "success signals",
+        "constraints",
+        "permitted use"
+      ],
+      "freshness": {
+        "mode": "point-in-time",
+        "maximumAge": null,
+        "staleBehavior": "stop"
+      },
+      "classification": "confidential",
+      "missingness": "stop"
+    },
+    {
+      "inputId": "IN-03",
+      "name": "source.analytics.read evidence",
+      "semanticType": "metric",
+      "required": false,
+      "sourceCapabilityIntent": "source.analytics.read",
+      "purpose": "Supply the minimum evidence necessary for intelligent marketing follow without importing vendor semantics.",
+      "fieldScope": [
+        "party identity",
+        "consent and preferences",
+        "engagement state",
+        "treatments and outcomes",
+        "provenance"
+      ],
+      "freshness": {
+        "mode": "bounded-window",
+        "maximumAge": "P30D",
+        "staleBehavior": "degrade-and-disclose"
+      },
+      "classification": "confidential",
+      "missingness": "degrade-and-disclose"
+    },
+    {
+      "inputId": "IN-04",
+      "name": "source.consent.read evidence",
+      "semanticType": "consent",
+      "required": false,
+      "sourceCapabilityIntent": "source.consent.read",
+      "purpose": "Supply the minimum evidence necessary for intelligent marketing follow without importing vendor semantics.",
+      "fieldScope": [
+        "party identity",
+        "consent and preferences",
+        "engagement state",
+        "treatments and outcomes",
+        "provenance"
+      ],
+      "freshness": {
+        "mode": "bounded-window",
+        "maximumAge": "P30D",
+        "staleBehavior": "degrade-and-disclose"
+      },
+      "classification": "confidential",
+      "missingness": "degrade-and-disclose"
+    },
+    {
+      "inputId": "IN-05",
+      "name": "source.conversation.read evidence",
+      "semanticType": "conversation",
+      "required": false,
+      "sourceCapabilityIntent": "source.conversation.read",
+      "purpose": "Supply the minimum evidence necessary for intelligent marketing follow without importing vendor semantics.",
+      "fieldScope": [
+        "party identity",
+        "consent and preferences",
+        "engagement state",
+        "treatments and outcomes",
+        "provenance"
+      ],
+      "freshness": {
+        "mode": "bounded-window",
+        "maximumAge": "P30D",
+        "staleBehavior": "degrade-and-disclose"
+      },
+      "classification": "confidential",
+      "missingness": "degrade-and-disclose"
+    },
+    {
+      "inputId": "IN-06",
+      "name": "source.engagement.read evidence",
+      "semanticType": "engagement",
+      "required": false,
+      "sourceCapabilityIntent": "source.engagement.read",
+      "purpose": "Supply the minimum evidence necessary for intelligent marketing follow without importing vendor semantics.",
+      "fieldScope": [
+        "party identity",
+        "consent and preferences",
+        "engagement state",
+        "treatments and outcomes",
+        "provenance"
+      ],
+      "freshness": {
+        "mode": "bounded-window",
+        "maximumAge": "P30D",
+        "staleBehavior": "degrade-and-disclose"
+      },
+      "classification": "confidential",
+      "missingness": "degrade-and-disclose"
+    },
+    {
+      "inputId": "IN-07",
+      "name": "source.identity.read evidence",
+      "semanticType": "party",
+      "required": true,
+      "sourceCapabilityIntent": "source.identity.read",
+      "purpose": "Supply the minimum evidence necessary for intelligent marketing follow without importing vendor semantics.",
+      "fieldScope": [
+        "party identity",
+        "consent and preferences",
+        "engagement state",
+        "treatments and outcomes",
+        "provenance"
+      ],
+      "freshness": {
+        "mode": "bounded-window",
+        "maximumAge": "P30D",
+        "staleBehavior": "degrade-and-disclose"
+      },
+      "classification": "confidential",
+      "missingness": "stop"
+    }
+  ],
+  "outputs": [
+    {
+      "outputId": "OUT-01",
+      "name": "Intelligent Marketing Follow result",
+      "semanticType": "action-proposal",
+      "epistemicCategory": "not-applicable",
+      "proposalState": "action-proposal",
+      "evidenceRequired": true,
+      "humanReviewRequired": true
+    },
+    {
+      "outputId": "OUT-02",
+      "name": "Evidence, counterevidence, unknowns and source gaps",
+      "semanticType": "evidence-gap",
+      "epistemicCategory": "not-applicable",
+      "proposalState": "none",
+      "evidenceRequired": true,
+      "humanReviewRequired": false
+    },
+    {
+      "outputId": "OUT-03",
+      "name": "Policy and authority decision input",
+      "semanticType": "policy-decision-input",
+      "epistemicCategory": "not-applicable",
+      "proposalState": "action-proposal",
+      "evidenceRequired": true,
+      "humanReviewRequired": true
+    },
+    {
+      "outputId": "OUT-04",
+      "name": "Verification and human-readable receipt input",
+      "semanticType": "receipt-input",
+      "epistemicCategory": "fact",
+      "proposalState": "none",
+      "evidenceRequired": true,
+      "humanReviewRequired": true
+    }
+  ],
+  "flow": {
+    "triggerModes": [
+      "human",
+      "conversational",
+      "outcome-gap"
+    ],
+    "steps": [
+      {
+        "stepId": "STEP-01",
+        "name": "Bind principal, purpose, Intent and Goal",
+        "kind": "scope",
+        "dependsOn": [],
+        "inputIds": [
+          "IN-01",
+          "IN-02"
+        ],
+        "outputIds": [],
+        "policyIds": [
+          "POL-01"
+        ],
+        "completionCriteria": [
+          "Bind principal, purpose, Intent and Goal has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "stop",
+        "escalationId": null
+      },
+      {
+        "stepId": "STEP-02",
+        "name": "Resolve identity and tenant scope",
+        "kind": "identity",
+        "dependsOn": [
+          "STEP-01"
+        ],
+        "inputIds": [
+          "IN-01",
+          "IN-03"
+        ],
+        "outputIds": [],
+        "policyIds": [
+          "POL-01"
+        ],
+        "completionCriteria": [
+          "Resolve identity and tenant scope has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "escalate",
+        "escalationId": "ESC-01"
+      },
+      {
+        "stepId": "STEP-03",
+        "name": "Retrieve minimum-necessary evidence",
+        "kind": "context",
+        "dependsOn": [
+          "STEP-02"
+        ],
+        "inputIds": [
+          "IN-03",
+          "IN-04",
+          "IN-05",
+          "IN-06",
+          "IN-07"
+        ],
+        "outputIds": [
+          "OUT-02"
+        ],
+        "policyIds": [
+          "POL-01"
+        ],
+        "completionCriteria": [
+          "Retrieve minimum-necessary evidence has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "degrade",
+        "escalationId": null
+      },
+      {
+        "stepId": "STEP-04",
+        "name": "Assess evidence sufficiency and conflicts",
+        "kind": "analysis",
+        "dependsOn": [
+          "STEP-03"
+        ],
+        "inputIds": [
+          "IN-03",
+          "IN-04",
+          "IN-05",
+          "IN-06",
+          "IN-07"
+        ],
+        "outputIds": [
+          "OUT-02"
+        ],
+        "policyIds": [
+          "POL-01"
+        ],
+        "completionCriteria": [
+          "Assess evidence sufficiency and conflicts has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "escalate",
+        "escalationId": "ESC-01"
+      },
+      {
+        "stepId": "STEP-05",
+        "name": "Synthesize intelligent marketing follow",
+        "kind": "synthesis",
+        "dependsOn": [
+          "STEP-04"
+        ],
+        "inputIds": [
+          "IN-03",
+          "IN-04",
+          "IN-05",
+          "IN-06",
+          "IN-07"
+        ],
+        "outputIds": [
+          "OUT-01",
+          "OUT-02"
+        ],
+        "policyIds": [
+          "POL-02"
+        ],
+        "completionCriteria": [
+          "Synthesize intelligent marketing follow has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "degrade",
+        "escalationId": null
+      },
+      {
+        "stepId": "STEP-06",
+        "name": "Form a non-destructive action proposal",
+        "kind": "proposal",
+        "dependsOn": [
+          "STEP-05"
+        ],
+        "inputIds": [
+          "IN-01",
+          "IN-02"
+        ],
+        "outputIds": [
+          "OUT-01",
+          "OUT-03"
+        ],
+        "policyIds": [
+          "POL-02"
+        ],
+        "completionCriteria": [
+          "Form a non-destructive action proposal has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "stop",
+        "escalationId": null
+      },
+      {
+        "stepId": "STEP-07",
+        "name": "Render exact targets, fields, effect and cost preview",
+        "kind": "preview",
+        "dependsOn": [
+          "STEP-06"
+        ],
+        "inputIds": [
+          "IN-01",
+          "IN-02"
+        ],
+        "outputIds": [
+          "OUT-03"
+        ],
+        "policyIds": [
+          "POL-02"
+        ],
+        "completionCriteria": [
+          "Render exact targets, fields, effect and cost preview has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "stop",
+        "escalationId": null
+      },
+      {
+        "stepId": "STEP-08",
+        "name": "Classify material effect and obtain policy decision",
+        "kind": "policy",
+        "dependsOn": [
+          "STEP-07"
+        ],
+        "inputIds": [
+          "IN-01",
+          "IN-02"
+        ],
+        "outputIds": [
+          "OUT-03"
+        ],
+        "policyIds": [
+          "POL-02"
+        ],
+        "completionCriteria": [
+          "Classify material effect and obtain policy decision has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "stop",
+        "escalationId": null
+      },
+      {
+        "stepId": "STEP-09",
+        "name": "Verify human approval and scoped authority",
+        "kind": "authority",
+        "dependsOn": [
+          "STEP-08"
+        ],
+        "inputIds": [
+          "IN-01",
+          "IN-02"
+        ],
+        "outputIds": [
+          "OUT-03"
+        ],
+        "policyIds": [
+          "POL-02"
+        ],
+        "completionCriteria": [
+          "Verify human approval and scoped authority has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "stop",
+        "escalationId": null
+      },
+      {
+        "stepId": "STEP-10",
+        "name": "Execute through isolated action gateway when implemented",
+        "kind": "execution",
+        "dependsOn": [
+          "STEP-09"
+        ],
+        "inputIds": [
+          "IN-01"
+        ],
+        "outputIds": [
+          "OUT-04"
+        ],
+        "policyIds": [
+          "POL-02"
+        ],
+        "completionCriteria": [
+          "Execute through isolated action gateway when implemented has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "stop",
+        "escalationId": null
+      },
+      {
+        "stepId": "STEP-11",
+        "name": "Verify target state and detect partial or uncertain outcome",
+        "kind": "verification",
+        "dependsOn": [
+          "STEP-10"
+        ],
+        "inputIds": [
+          "IN-01"
+        ],
+        "outputIds": [
+          "OUT-04"
+        ],
+        "policyIds": [
+          "POL-02"
+        ],
+        "completionCriteria": [
+          "Verify target state and detect partial or uncertain outcome has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "escalate",
+        "escalationId": "ESC-01"
+      },
+      {
+        "stepId": "STEP-12",
+        "name": "Issue human-readable action receipt",
+        "kind": "receipt",
+        "dependsOn": [
+          "STEP-11"
+        ],
+        "inputIds": [
+          "IN-01"
+        ],
+        "outputIds": [
+          "OUT-04"
+        ],
+        "policyIds": [
+          "POL-02"
+        ],
+        "completionCriteria": [
+          "Issue human-readable action receipt has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "stop",
+        "escalationId": null
+      },
+      {
+        "stepId": "STEP-13",
+        "name": "Capture outcome gap without self-expanding policy",
+        "kind": "learning",
+        "dependsOn": [
+          "STEP-12"
+        ],
+        "inputIds": [
+          "IN-02"
+        ],
+        "outputIds": [
+          "OUT-02"
+        ],
+        "policyIds": [
+          "POL-02"
+        ],
+        "completionCriteria": [
+          "Capture outcome gap without self-expanding policy has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "degrade",
+        "escalationId": null
+      },
+      {
+        "stepId": "STEP-14",
+        "name": "Escalate insufficient or conflicting evidence",
+        "kind": "human-review",
+        "dependsOn": [
+          "STEP-04"
+        ],
+        "inputIds": [
+          "IN-01",
+          "IN-02"
+        ],
+        "outputIds": [
+          "OUT-02"
+        ],
+        "policyIds": [
+          "POL-02"
+        ],
+        "completionCriteria": [
+          "Escalate insufficient or conflicting evidence has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "escalate",
+        "escalationId": "ESC-01"
+      }
+    ],
+    "branches": [
+      {
+        "branchId": "BR-01",
+        "afterStepId": "STEP-04",
+        "condition": "Evidence is sufficient for the declared purpose and permitted use.",
+        "onTrueStepId": "STEP-05",
+        "onFalseStepId": "STEP-14"
+      }
+    ],
+    "completionCriteria": [
+      "A proposal is not complete until exact preview, policy, authority, verification and receipt requirements are represented.",
+      "No execution success is claimed without verified target state and a human-readable receipt."
+    ],
+    "failureModes": [
+      {
+        "failureId": "FAIL-01",
+        "condition": "Identity or tenant scope is unresolved.",
+        "response": "stop",
+        "disclosureRequired": true
+      },
+      {
+        "failureId": "FAIL-02",
+        "condition": "A source is denied, failed, stale or incomplete.",
+        "response": "degrade",
+        "disclosureRequired": true
+      },
+      {
+        "failureId": "FAIL-03",
+        "condition": "Policy, consent, authority or material-effect classification is unavailable.",
+        "response": "escalate",
+        "disclosureRequired": true
+      }
+    ],
+    "escalations": [
+      {
+        "escalationId": "ESC-01",
+        "targetRole": "Authorized human owner",
+        "reason": "Resolve identity, evidence, policy, consent, authority or uncertain-outcome conditions that automation cannot safely decide.",
+        "requiredPayload": [
+          "purpose",
+          "subjects",
+          "evidence and gaps",
+          "decision needed",
+          "authority state"
+        ]
+      }
+    ],
+    "stopConditions": [
+      "Identity or tenant scope is ambiguous or conflicts with the request.",
+      "A required source is denied or failed and the disclosed fallback is insufficient.",
+      "Evidence is too incomplete, stale or conflicting for a safe recommendation.",
+      "The requested material effect is outside authority, or any deletion lacks fresh exact human authorization.",
+      "Consent, suppression, frequency-cap, quiet-hours or contact-purpose checks fail or are unavailable.",
+      "A current service issue, complaint, vulnerable-customer signal or other service conflict makes contact unsafe."
+    ],
+    "scheduleRegistration": "not-implemented"
+  },
+  "handoffs": [
+    {
+      "handoffId": "HO-01",
+      "direction": "outbound",
+      "targetRole": "Authorized human owner",
+      "payloadTypes": [
+        "result",
+        "evidence references",
+        "uncertainties",
+        "source gaps",
+        "policy and authority state",
+        "next decision"
+      ],
+      "acceptanceCriteria": [
+        "Recipient can identify the subject, purpose, evidence, gaps, authority and requested decision."
+      ],
+      "failureBehavior": "escalate"
+    }
+  ],
+  "policies": [
+    {
+      "policyId": "POL-01",
+      "name": "Purpose, identity and minimum-necessary context gate",
+      "requirementRefs": [
+        "FR-FOLLOWUP-001",
+        "FR-JOURNEY-002"
+      ],
+      "gate": "before-read",
+      "decisionRequired": true,
+      "failureBehavior": "stop"
+    },
+    {
+      "policyId": "POL-02",
+      "name": "Evidence, consent, effect and authority gate",
+      "requirementRefs": [
+        "FR-FOLLOWUP-001",
+        "FR-JOURNEY-002"
+      ],
+      "gate": "before-execution",
+      "decisionRequired": true,
+      "failureBehavior": "stop"
+    }
+  ],
+  "sources": {
+    "capabilityIntents": [
+      "source.analytics.read",
+      "source.consent.read",
+      "source.conversation.read",
+      "source.engagement.read",
+      "source.identity.read"
+    ],
+    "meaningRule": "Sources are selected by adapter capability intent and provide evidence; vendor products and schemas do not define NeoCRM canonical meaning.",
+    "readScope": {
+      "principalBound": true,
+      "purposeBound": true,
+      "minimumNecessary": true,
+      "subjectScope": "Only resolved parties, relationships and work items necessary for the declared Goal.",
+      "fieldScope": [
+        "party identity",
+        "consent and preferences",
+        "engagement state",
+        "treatments and outcomes",
+        "provenance"
+      ],
+      "timeScope": "Current state plus the bounded historical window declared by the requesting Goal.",
+      "deniedOrFailedSourceTreatment": "Disclose the gap; never infer absence, zero, or permission from an unavailable source."
+    },
+    "zeroConnectorFallback": {
+      "supported": true,
+      "modes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "degradationDisclosure": "Fallback inputs reduce freshness, completeness, verification and automation; show those limits beside the result."
+    }
+  },
+  "authority": {
+    "mode": "read-and-propose",
+    "writeIntent": "governed-action-proposal",
+    "maximumMaterialEffect": "non-destructive-action-proposal",
+    "riskClass": "high",
+    "approvalMode": "bounded-duration-grant-eligible",
+    "effectClassifierRequired": true,
+    "requiresWriteGrantForExecution": true,
+    "writeGrantRule": "A WriteGrant authorizes only registered, scoped, time-bounded non-destructive actions; it never authorizes deletion.",
+    "deletionRule": "Every deletion effect requires fresh exact human DeletionAuthorization bound to an immutable target list.",
+    "effectClassificationRule": "Authority follows the material effect, not the source-system verb; destructive clearing, unlinking, erasure, purge, or equivalent removal is deletion.",
+    "connectionRegistrationGrantsAuthority": false,
+    "liveExecutionEnabled": false,
+    "verificationAndReceiptRequired": true,
+    "humanReviewPoints": [
+      "Confirm ambiguous identity, intent, consent, evidence conflicts and material recommendations.",
+      "Review the exact action preview and applicable authority before any external execution."
+    ]
+  },
+  "operationalControls": {
+    "budgets": {
+      "maxContextRecords": 500,
+      "maxActions": 0,
+      "maxRuntimeSeconds": 300,
+      "maxCost": 0,
+      "currency": null
+    },
+    "idempotency": {
+      "requiredForExternalEffects": true,
+      "keyStrategy": "Bind any future external effect to workflow version, Goal, exact target, preview digest and grant."
+    },
+    "retry": {
+      "mode": "safe-read-only",
+      "maxAttempts": 2,
+      "uncertainOutcome": "Stop, verify target state, and require human resolution before any potentially duplicative or destructive retry."
+    },
+    "cursorCheckpoint": {
+      "mode": "not-required",
+      "resumeRule": "Resume only from a durable, principal-bound checkpoint after revalidating purpose, freshness and authority."
+    },
+    "time": {
+      "timezoneSource": "resolved-party-with-user-confirmation",
+      "quietHoursRequiredForContact": true,
+      "scheduleTruthRule": "Never claim a future run exists until a scheduler returns a durable schedule identifier and human-readable receipt."
+    },
+    "decisionSupport": {
+      "evidenceRequired": true,
+      "counterevidenceRequired": true,
+      "unknownsRequired": true,
+      "modelVersionRequired": true,
+      "expiryRequired": true,
+      "permittedUseRequired": true
+    },
+    "verification": {
+      "requiredForExternalEffects": true,
+      "method": "Read back or independently confirm exact target state before reporting success."
+    },
+    "compensation": {
+      "requiredForExternalEffects": true,
+      "rule": "Compensation is a new governed action; it is not an unaudited rollback shortcut."
+    },
+    "receipt": {
+      "requiredForExternalEffects": true,
+      "humanReadable": true,
+      "contents": [
+        "authority",
+        "targets",
+        "result",
+        "verification",
+        "cost",
+        "correction",
+        "compensation",
+        "timestamp"
+      ]
+    }
+  },
+  "experience": {
+    "menuLabel": "Intelligent Marketing Follow",
+    "oneLineSummary": "Help an authorized marketer or growth leader complete intelligent marketing follow from relationship evidence while keeping source gaps, uncertainty and authority visible.",
+    "personas": [
+      {
+        "personaId": "PERSONA-MARKETER",
+        "label": "Marketer or growth leader",
+        "aliases": [
+          "marketer",
+          "demand leader",
+          "growth leader"
+        ]
+      }
+    ],
+    "aliases": [
+      "intelligent marketing follow",
+      "marketing intelligent marketing follow",
+      "help with intelligent marketing follow"
+    ],
+    "searchTerms": [
+      "marketing",
+      "intelligent",
+      "follow"
+    ],
+    "invocationExamples": [
+      "Help me with intelligent marketing follow and show the evidence, gaps and decisions I need to make."
+    ],
+    "outputPresentation": [
+      "Lead with the outcome and the next human decision.",
+      "Separate evidence, interpretation, hypothesis, uncertainty and missing context.",
+      "Expose source degradation, authority stops and any proposed action."
+    ],
+    "emptyState": "Explain which evidence is missing, why it matters, what fallback inputs are safe, and what can still be done without inventing a result."
+  },
+  "traceability": {
+    "capabilityIds": [],
+    "objectIds": [
+      "OBJ-016",
+      "OBJ-064",
+      "OBJ-065",
+      "OBJ-066",
+      "OBJ-067",
+      "OBJ-068",
+      "OBJ-069",
+      "OBJ-070",
+      "OBJ-071",
+      "OBJ-100",
+      "OBJ-101",
+      "OBJ-102",
+      "OBJ-103",
+      "OBJ-104",
+      "OBJ-105",
+      "OBJ-111",
+      "OBJ-112",
+      "OBJ-113",
+      "OBJ-114"
+    ],
+    "viewIds": [
+      "VIEW-017",
+      "VIEW-023"
+    ],
+    "requirementIds": [
+      "FR-FOLLOWUP-001",
+      "FR-JOURNEY-002"
+    ],
+    "decisionRegisterIds": [],
+    "experimentIds": [
+      "EXP-014",
+      "EXP-020"
+    ],
+    "evaluationIds": []
+  },
+  "status": {
+    "specificationStatus": "Proposed",
+    "implementationStatus": "NotStarted",
+    "evidenceMaturity": "Unassessed",
+    "deliveryHorizon": "P1",
+    "runtimeClaim": "Definition scaffolding only; no workflow router, live write, send, schedule, or connection-registration runtime is claimed.",
+    "evidenceBoundary": "The definition is mapped to planned experiments and evaluation plans; no workflow-specific runtime or outcome evidence is claimed."
+  },
+  "evaluation": {
+    "status": "NotStarted",
+    "plannedFixtureIds": [
+      "PLANNED-FIXTURE-WF-MKT-011"
+    ],
+    "evidenceGap": "A workflow-specific fixture, adversarial cases, human review and outcome evidence must be created and run before any demonstration claim.",
+    "acceptanceCriteria": [
+      "Routes only when the declared job, principal and source capability intents match.",
+      "Discloses missing, denied, stale and conflicting evidence without treating missing as zero.",
+      "Stops action execution without the required policy decision, authority, verification and receipt path.",
+      "Returns a readable result that exposes evidence, counterevidence, unknowns, uncertainty, degradation and the next human decision.",
+      "Blocks contact when consent, suppression, frequency, quiet-hours or service-conflict controls are not satisfied."
+    ],
+    "knownGaps": [
+      "The workflow definition, router, adapters, runtime path and outcome evidence have not been implemented and evaluated as a unit."
+    ]
+  },
+  "changeControl": {
+    "owner": "NeoCRM product architecture",
+    "lastReviewed": "2026-09-24",
+    "definitionChangesRequire": [
+      "schema-validation",
+      "traceability-review",
+      "evaluation-review",
+      "safety-review",
+      "human-approval"
+    ],
+    "authorityExpansionRequires": "A separately reviewed contract, policy, experiment, and human approval; editing this definition cannot grant authority.",
+    "historyPolicy": "Version definitions and preserve superseded evidence; do not silently rewrite observed outcomes or receipts."
+  }
+}

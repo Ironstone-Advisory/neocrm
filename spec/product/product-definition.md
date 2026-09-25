@@ -1,6 +1,6 @@
 # Product definition
 
-**Status:** Proposed product baseline
+**Status:** Accepted product baseline
 
 ## Product
 
@@ -17,6 +17,8 @@ The product is not a chatbot over a CRM. Conversation is one Presentation view. 
 
 These are views over one relationship model, not separate departmental customer silos.
 
+The approved operational portfolio extends these perspectives with Trust Archive, identity/data-quality lifecycle, conversation intelligence, sales execution and planning, semantic metrics/experiments, customer success, content/brand governance, education, and bounded agent operations. It reuses existing semantics before adding objects: buying groups remain Party/Role/Relationship projections, account plans remain Plans, health and qualification remain expiring Insights, and agent value begins as an inspectable projection.
+
 ## Operating promise
 
 NeoCRM should help a relationship owner:
@@ -32,3 +34,5 @@ NeoCRM should help a relationship owner:
 ## Current evidence boundary
 
 The repository currently implements a synthetic deterministic CAP-001 context probe plus a thin, read-only EXP-001 reference path with production-shaped Zoho and Obsidian adapters. The committed evidence is fixture-based: no permissioned live Zoho tenant or private Obsidian vault run has been recorded. The slice performs no production model reasoning, durable memory, proactive work, external writes, multi-Agent collaboration, or production learning. Broader product statements are specifications and hypotheses until independently evidenced.
+
+Accepted experimental authority does not change that evidence boundary. Later experiments may receive scoped, revocable, time-bounded non-delete WriteGrants; each deletion always requires fresh exact human authorization for an immutable target list. No such gateway is implemented in the current slice.

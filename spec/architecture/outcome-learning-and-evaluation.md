@@ -26,3 +26,5 @@ Goal and intended Outcome
 - Offline and shadow evaluation precede expanded autonomy; negative and inconclusive results are retained.
 
 Evaluation evidence identifies dataset/cases, versions, rubric, evaluator, date, limitations, failures, and result scope. Synthetic CAP-001 conformance cannot validate live human usefulness or causal business impact.
+
+EVAL-004 applies the same separation to EXP-013 through EXP-025. It distinguishes accepted specification, generated contract scaffolding, implemented capability, technical conformance, human/customer value, safety, economics, and causal evidence. Product approval or a passing schema test never validates a capability or price.

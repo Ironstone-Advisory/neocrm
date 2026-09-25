@@ -1,0 +1,614 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neocrm.example/spec/contracts/workflow-definition.schema.json",
+  "title": "NeoCRM WorkflowDefinition",
+  "description": "A versioned, host-neutral discovery and orchestration definition. A WorkflowDefinition describes a reusable relationship-management job; it is neither a runtime Plan instantiated for one Goal nor a PlaybookDefinition that supplies a reusable Plan pattern. The contract is specification scaffolding and grants no source, write, send, schedule, connection, or deletion authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schemaVersion",
+    "workflowId",
+    "version",
+    "slug",
+    "title",
+    "workflowClass",
+    "definitionBoundary",
+    "classification",
+    "intent",
+    "goal",
+    "job",
+    "inputs",
+    "outputs",
+    "flow",
+    "handoffs",
+    "policies",
+    "sources",
+    "authority",
+    "operationalControls",
+    "experience",
+    "traceability",
+    "status",
+    "evaluation",
+    "changeControl"
+  ],
+  "$defs": {
+    "freshnessRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "maximumAge", "staleBehavior"],
+      "properties": {
+        "mode": { "enum": ["point-in-time", "bounded-window", "as-available"] },
+        "maximumAge": { "type": ["string", "null"], "pattern": "^P(?:[0-9]+D|T[0-9]+[HMS])$" },
+        "staleBehavior": { "enum": ["stop", "degrade-and-disclose", "request-refresh"] }
+      }
+    },
+    "workflowInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["inputId", "name", "semanticType", "required", "sourceCapabilityIntent", "purpose", "fieldScope", "freshness", "classification", "missingness"],
+      "properties": {
+        "inputId": { "type": "string", "pattern": "^IN-[0-9]{2}$" },
+        "name": { "type": "string", "minLength": 3 },
+        "semanticType": { "enum": ["principal", "intent", "goal", "party", "relationship", "commercial", "activity", "conversation", "consent", "engagement", "service", "entitlement", "knowledge", "time", "metric", "content", "policy", "evidence"] },
+        "required": { "type": "boolean" },
+        "sourceCapabilityIntent": { "type": ["string", "null"], "pattern": "^source\\.[a-z0-9]+(?:[.-][a-z0-9]+)*$" },
+        "purpose": { "type": "string", "minLength": 12 },
+        "fieldScope": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 2 } },
+        "freshness": { "$ref": "#/$defs/freshnessRequirement" },
+        "classification": { "enum": ["public", "internal", "confidential", "restricted"] },
+        "missingness": { "enum": ["stop", "degrade-and-disclose", "optional"] }
+      }
+    },
+    "workflowOutput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outputId", "name", "semanticType", "epistemicCategory", "proposalState", "evidenceRequired", "humanReviewRequired"],
+      "properties": {
+        "outputId": { "type": "string", "pattern": "^OUT-[0-9]{2}$" },
+        "name": { "type": "string", "minLength": 3 },
+        "semanticType": { "enum": ["brief", "recommendation", "draft", "plan", "metric", "risk", "handoff", "action-proposal", "policy-decision-input", "evidence-gap", "receipt-input", "learning-signal"] },
+        "epistemicCategory": { "enum": ["fact", "observation", "interpretation", "hypothesis", "unknown", "conflict", "not-applicable"] },
+        "proposalState": { "enum": ["none", "draft", "action-proposal"] },
+        "evidenceRequired": { "const": true },
+        "humanReviewRequired": { "type": "boolean" }
+      },
+      "allOf": [
+        {
+          "if": { "type": "object", "properties": { "semanticType": { "enum": ["brief", "recommendation", "draft", "plan", "handoff", "action-proposal", "policy-decision-input", "evidence-gap", "learning-signal"] } }, "required": ["semanticType"] },
+          "then": { "type": "object", "properties": { "epistemicCategory": { "const": "not-applicable" } } }
+        }
+      ]
+    },
+    "workflowStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stepId", "name", "kind", "dependsOn", "inputIds", "outputIds", "policyIds", "completionCriteria", "failureBehavior", "escalationId"],
+      "properties": {
+        "stepId": { "type": "string", "pattern": "^STEP-[0-9]{2}$" },
+        "name": { "type": "string", "minLength": 5 },
+        "kind": { "enum": ["scope", "identity", "context", "analysis", "synthesis", "proposal", "preview", "policy", "authority", "human-review", "execution", "verification", "receipt", "handoff", "learning"] },
+        "dependsOn": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^STEP-[0-9]{2}$" } },
+        "inputIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^IN-[0-9]{2}$" } },
+        "outputIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^OUT-[0-9]{2}$" } },
+        "policyIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^POL-[0-9]{2}$" } },
+        "completionCriteria": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 8 } },
+        "failureBehavior": { "enum": ["stop", "degrade", "escalate"] },
+        "escalationId": { "type": ["string", "null"], "pattern": "^ESC-[0-9]{2}$" }
+      }
+    },
+    "branch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["branchId", "afterStepId", "condition", "onTrueStepId", "onFalseStepId"],
+      "properties": {
+        "branchId": { "type": "string", "pattern": "^BR-[0-9]{2}$" },
+        "afterStepId": { "type": "string", "pattern": "^STEP-[0-9]{2}$" },
+        "condition": { "type": "string", "minLength": 8 },
+        "onTrueStepId": { "type": "string", "pattern": "^STEP-[0-9]{2}$" },
+        "onFalseStepId": { "type": "string", "pattern": "^STEP-[0-9]{2}$" }
+      }
+    },
+    "failureMode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["failureId", "condition", "response", "disclosureRequired"],
+      "properties": {
+        "failureId": { "type": "string", "pattern": "^FAIL-[0-9]{2}$" },
+        "condition": { "type": "string", "minLength": 8 },
+        "response": { "enum": ["stop", "degrade", "escalate", "request-input"] },
+        "disclosureRequired": { "const": true }
+      }
+    },
+    "escalation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["escalationId", "targetRole", "reason", "requiredPayload"],
+      "properties": {
+        "escalationId": { "type": "string", "pattern": "^ESC-[0-9]{2}$" },
+        "targetRole": { "type": "string", "minLength": 3 },
+        "reason": { "type": "string", "minLength": 8 },
+        "requiredPayload": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 3 } }
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["handoffId", "direction", "targetRole", "payloadTypes", "acceptanceCriteria", "failureBehavior"],
+      "properties": {
+        "handoffId": { "type": "string", "pattern": "^HO-[0-9]{2}$" },
+        "direction": { "enum": ["inbound", "outbound", "internal"] },
+        "targetRole": { "type": "string", "minLength": 3 },
+        "payloadTypes": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 3 } },
+        "acceptanceCriteria": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 8 } },
+        "failureBehavior": { "enum": ["return-to-sender", "escalate", "stop"] }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policyId", "name", "requirementRefs", "gate", "decisionRequired", "failureBehavior"],
+      "properties": {
+        "policyId": { "type": "string", "pattern": "^POL-[0-9]{2}$" },
+        "name": { "type": "string", "minLength": 3 },
+        "requirementRefs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^(?:FR|NFR|SAFE)-[A-Z]+-[0-9]{3}$" } },
+        "gate": { "enum": ["before-read", "before-synthesis", "before-proposal", "before-execution", "after-execution"] },
+        "decisionRequired": { "const": true },
+        "failureBehavior": { "enum": ["stop", "degrade", "escalate"] }
+      }
+    },
+    "persona": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["personaId", "label", "aliases"],
+      "properties": {
+        "personaId": { "type": "string", "pattern": "^PERSONA-[A-Z0-9-]+$" },
+        "label": { "type": "string", "minLength": 3 },
+        "aliases": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 2 } }
+      }
+    }
+  },
+  "properties": {
+    "kind": { "const": "WorkflowDefinition" },
+    "schemaVersion": { "const": "1.0.0" },
+    "workflowId": { "type": "string", "pattern": "^WF-(?:SAL|MKT|SRV|META|SH)-[0-9]{3}$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "title": { "type": "string", "minLength": 3 },
+    "workflowClass": { "enum": ["business", "meta", "shared-control"] },
+    "definitionBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["isRuntimePlan", "isPlaybookDefinition", "statement"],
+      "properties": {
+        "isRuntimePlan": { "const": false },
+        "isPlaybookDefinition": { "const": false },
+        "statement": {
+          "const": "This definition describes a reusable job and its governance envelope. A Plan is instantiated for one Goal and run; a PlaybookDefinition supplies reusable guidance."
+        }
+      }
+    },
+    "classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primaryDomain", "canonicalPerspective", "secondaryDomains", "routable", "repositoryPath"],
+      "properties": {
+        "primaryDomain": { "enum": ["sales", "marketing", "service", "meta", "shared"] },
+        "canonicalPerspective": { "enum": ["sales", "engagement", "service", "cross-functional", "control"] },
+        "secondaryDomains": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["sales", "engagement", "service", "cross-functional", "control"] }
+        },
+        "routable": { "type": "boolean" },
+        "repositoryPath": {
+          "type": "string",
+          "pattern": "^workflows/(?:sales|marketing|service|_meta|_shared)/WF-(?:SAL|MKT|SRV|META|SH)-[0-9]{3}-[a-z0-9]+(?:-[a-z0-9]+)*/workflow\\.json$"
+        }
+      }
+    },
+    "intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intentId", "name", "description", "aliases", "classification"],
+      "properties": {
+        "intentId": { "type": "string", "pattern": "^intent\\.[a-z0-9]+(?:[.-][a-z0-9]+)*$" },
+        "name": { "type": "string", "minLength": 3 },
+        "description": { "type": "string", "minLength": 20 },
+        "aliases": { "type": "array", "minItems": 2, "uniqueItems": true, "items": { "type": "string", "minLength": 3 } },
+        "classification": { "enum": ["inform", "decide", "draft", "propose-action", "coordinate", "control"] }
+      }
+    },
+    "goal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["goalType", "objectiveTemplate", "successSignals", "constraints"],
+      "properties": {
+        "goalType": { "type": "string", "pattern": "^goal\\.[a-z0-9]+(?:[.-][a-z0-9]+)*$" },
+        "objectiveTemplate": { "type": "string", "minLength": 20 },
+        "successSignals": { "type": "array", "minItems": 2, "uniqueItems": true, "items": { "type": "string", "minLength": 8 } },
+        "constraints": { "type": "array", "minItems": 2, "uniqueItems": true, "items": { "type": "string", "minLength": 8 } }
+      }
+    },
+    "job": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["jobToBeDone", "useWhen", "produces", "nonGoals"],
+      "properties": {
+        "jobToBeDone": { "type": "string", "minLength": 20 },
+        "useWhen": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 8 } },
+        "produces": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 3 } },
+        "nonGoals": { "type": "array", "minItems": 2, "uniqueItems": true, "items": { "type": "string", "minLength": 8 } }
+      }
+    },
+    "inputs": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/workflowInput" } },
+    "outputs": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/workflowOutput" } },
+    "flow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["triggerModes", "steps", "branches", "completionCriteria", "failureModes", "escalations", "stopConditions", "scheduleRegistration"],
+      "properties": {
+        "triggerModes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["human", "conversational", "event", "signal", "scheduled", "outcome-gap", "workflow-call"] }
+        },
+        "steps": { "type": "array", "minItems": 5, "items": { "$ref": "#/$defs/workflowStep" } },
+        "branches": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/branch" } },
+        "completionCriteria": { "type": "array", "minItems": 2, "uniqueItems": true, "items": { "type": "string", "minLength": 8 } },
+        "failureModes": { "type": "array", "minItems": 3, "items": { "$ref": "#/$defs/failureMode" } },
+        "escalations": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/escalation" } },
+        "stopConditions": { "type": "array", "minItems": 3, "uniqueItems": true, "items": { "type": "string", "minLength": 8 } },
+        "scheduleRegistration": { "const": "not-implemented" }
+      }
+    },
+    "handoffs": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/handoff" } },
+    "policies": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/policy" } },
+    "sources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilityIntents", "meaningRule", "readScope", "zeroConnectorFallback"],
+      "properties": {
+        "capabilityIntents": {
+          "type": "array",
+          "minItems": 0,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^source\\.[a-z0-9]+(?:[.-][a-z0-9]+)*$" }
+        },
+        "meaningRule": {
+          "const": "Sources are selected by adapter capability intent and provide evidence; vendor products and schemas do not define NeoCRM canonical meaning."
+        },
+        "readScope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["principalBound", "purposeBound", "minimumNecessary", "subjectScope", "fieldScope", "timeScope", "deniedOrFailedSourceTreatment"],
+          "properties": {
+            "principalBound": { "const": true },
+            "purposeBound": { "const": true },
+            "minimumNecessary": { "const": true },
+            "subjectScope": { "type": "string", "minLength": 8 },
+            "fieldScope": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 2 } },
+            "timeScope": { "type": "string", "minLength": 8 },
+            "deniedOrFailedSourceTreatment": { "const": "Disclose the gap; never infer absence, zero, or permission from an unavailable source." }
+          }
+        },
+        "zeroConnectorFallback": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["supported", "modes", "degradationDisclosure"],
+          "properties": {
+            "supported": { "const": true },
+            "modes": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "enum": ["pasted-text", "uploaded-document", "csv", "user-owned-local-source", "manual-entry"] }
+            },
+            "degradationDisclosure": { "type": "string", "minLength": 24 }
+          }
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "writeIntent",
+        "maximumMaterialEffect",
+        "riskClass",
+        "approvalMode",
+        "effectClassifierRequired",
+        "requiresWriteGrantForExecution",
+        "writeGrantRule",
+        "deletionRule",
+        "effectClassificationRule",
+        "connectionRegistrationGrantsAuthority",
+        "liveExecutionEnabled",
+        "verificationAndReceiptRequired",
+        "humanReviewPoints"
+      ],
+      "properties": {
+        "mode": { "enum": ["read-only", "read-and-propose", "internal-routine"] },
+        "writeIntent": { "enum": ["none", "draft-only", "governed-action-proposal"] },
+        "maximumMaterialEffect": { "enum": ["read", "draft", "non-destructive-action-proposal"] },
+        "riskClass": { "enum": ["low", "medium", "high", "critical"] },
+        "approvalMode": { "enum": ["none", "human-review-before-reliance", "exact-action-preview", "bounded-duration-grant-eligible"] },
+        "effectClassifierRequired": { "const": true },
+        "requiresWriteGrantForExecution": { "type": "boolean" },
+        "writeGrantRule": {
+          "const": "A WriteGrant authorizes only registered, scoped, time-bounded non-destructive actions; it never authorizes deletion."
+        },
+        "deletionRule": {
+          "const": "Every deletion effect requires fresh exact human DeletionAuthorization bound to an immutable target list."
+        },
+        "effectClassificationRule": {
+          "const": "Authority follows the material effect, not the source-system verb; destructive clearing, unlinking, erasure, purge, or equivalent removal is deletion."
+        },
+        "connectionRegistrationGrantsAuthority": { "const": false },
+        "liveExecutionEnabled": { "const": false },
+        "verificationAndReceiptRequired": { "const": true },
+        "humanReviewPoints": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 8 } }
+      },
+      "allOf": [
+        {
+          "if": { "type": "object", "properties": { "writeIntent": { "const": "governed-action-proposal" } }, "required": ["writeIntent"] },
+          "then": { "type": "object", "properties": { "requiresWriteGrantForExecution": { "const": true } } },
+          "else": { "type": "object", "properties": { "requiresWriteGrantForExecution": { "const": false } } }
+        }
+      ]
+    },
+    "operationalControls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["budgets", "idempotency", "retry", "cursorCheckpoint", "time", "decisionSupport", "verification", "compensation", "receipt"],
+      "properties": {
+        "budgets": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["maxContextRecords", "maxActions", "maxRuntimeSeconds", "maxCost", "currency"],
+          "properties": {
+            "maxContextRecords": { "type": "integer", "minimum": 1 },
+            "maxActions": { "type": "integer", "minimum": 0 },
+            "maxRuntimeSeconds": { "type": "integer", "minimum": 1 },
+            "maxCost": { "type": "number", "minimum": 0 },
+            "currency": { "type": ["string", "null"], "pattern": "^[A-Z]{3}$" }
+          },
+          "allOf": [
+            {
+              "if": { "type": "object", "properties": { "maxCost": { "const": 0 } }, "required": ["maxCost"] },
+              "then": { "type": "object", "properties": { "currency": { "const": null } } },
+              "else": { "type": "object", "properties": { "currency": { "type": "string", "pattern": "^[A-Z]{3}$" } } }
+            }
+          ]
+        },
+        "idempotency": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["requiredForExternalEffects", "keyStrategy"],
+          "properties": {
+            "requiredForExternalEffects": { "const": true },
+            "keyStrategy": { "type": "string", "minLength": 12 }
+          }
+        },
+        "retry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "maxAttempts", "uncertainOutcome"],
+          "properties": {
+            "mode": { "enum": ["none", "safe-read-only", "policy-controlled"] },
+            "maxAttempts": { "type": "integer", "minimum": 0 },
+            "uncertainOutcome": { "const": "Stop, verify target state, and require human resolution before any potentially duplicative or destructive retry." }
+          }
+        },
+        "cursorCheckpoint": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "resumeRule"],
+          "properties": {
+            "mode": { "enum": ["not-required", "planned"] },
+            "resumeRule": { "type": "string", "minLength": 12 }
+          }
+        },
+        "time": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["timezoneSource", "quietHoursRequiredForContact", "scheduleTruthRule"],
+          "properties": {
+            "timezoneSource": { "enum": ["authenticated-user", "resolved-party-with-user-confirmation", "explicit-workspace-policy"] },
+            "quietHoursRequiredForContact": { "const": true },
+            "scheduleTruthRule": { "const": "Never claim a future run exists until a scheduler returns a durable schedule identifier and human-readable receipt." }
+          }
+        },
+        "decisionSupport": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["evidenceRequired", "counterevidenceRequired", "unknownsRequired", "modelVersionRequired", "expiryRequired", "permittedUseRequired"],
+          "properties": {
+            "evidenceRequired": { "const": true },
+            "counterevidenceRequired": { "const": true },
+            "unknownsRequired": { "const": true },
+            "modelVersionRequired": { "const": true },
+            "expiryRequired": { "const": true },
+            "permittedUseRequired": { "const": true }
+          }
+        },
+        "verification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["requiredForExternalEffects", "method"],
+          "properties": {
+            "requiredForExternalEffects": { "const": true },
+            "method": { "type": "string", "minLength": 12 }
+          }
+        },
+        "compensation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["requiredForExternalEffects", "rule"],
+          "properties": {
+            "requiredForExternalEffects": { "const": true },
+            "rule": { "const": "Compensation is a new governed action; it is not an unaudited rollback shortcut." }
+          }
+        },
+        "receipt": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["requiredForExternalEffects", "humanReadable", "contents"],
+          "properties": {
+            "requiredForExternalEffects": { "const": true },
+            "humanReadable": { "const": true },
+            "contents": { "type": "array", "minItems": 5, "uniqueItems": true, "items": { "enum": ["authority", "targets", "result", "verification", "cost", "correction", "compensation", "timestamp"] } }
+          }
+        }
+      }
+    },
+    "experience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["menuLabel", "oneLineSummary", "personas", "aliases", "searchTerms", "invocationExamples", "outputPresentation", "emptyState"],
+      "properties": {
+        "menuLabel": { "type": "string", "minLength": 3 },
+        "oneLineSummary": { "type": "string", "minLength": 20 },
+        "personas": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/persona" } },
+        "aliases": { "type": "array", "minItems": 2, "uniqueItems": true, "items": { "type": "string", "minLength": 3 } },
+        "searchTerms": { "type": "array", "minItems": 3, "uniqueItems": true, "items": { "type": "string", "minLength": 2 } },
+        "invocationExamples": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 8 } },
+        "outputPresentation": { "type": "array", "minItems": 2, "uniqueItems": true, "items": { "type": "string", "minLength": 8 } },
+        "emptyState": { "type": "string", "minLength": 20 }
+      }
+    },
+    "traceability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilityIds", "objectIds", "viewIds", "requirementIds", "decisionRegisterIds", "experimentIds", "evaluationIds"],
+      "properties": {
+        "capabilityIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^CAP-[0-9]{3}$" } },
+        "objectIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^OBJ-[0-9]{3}$" } },
+        "viewIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^VIEW-[0-9]{3}$" } },
+        "requirementIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^(?:FR|NFR|SAFE)-[A-Z]+-[0-9]{3}$" } },
+        "decisionRegisterIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^D[0-9]{2}$" } },
+        "experimentIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^EXP-[0-9]{3}$" } },
+        "evaluationIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^EVAL-[0-9]{3}$" } }
+      }
+    },
+    "status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["specificationStatus", "implementationStatus", "evidenceMaturity", "deliveryHorizon", "runtimeClaim", "evidenceBoundary"],
+      "properties": {
+        "specificationStatus": { "enum": ["Proposed", "Accepted"] },
+        "implementationStatus": { "enum": ["NotStarted", "Partial"] },
+        "evidenceMaturity": { "enum": ["Unassessed", "Demonstrated"] },
+        "deliveryHorizon": { "enum": ["CurrentSlice", "P1", "P2"] },
+        "runtimeClaim": { "const": "Definition scaffolding only; no workflow router, live write, send, schedule, or connection-registration runtime is claimed." },
+        "evidenceBoundary": { "type": "string", "minLength": 20 }
+      }
+    },
+    "evaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "plannedFixtureIds", "evidenceGap", "acceptanceCriteria", "knownGaps"],
+      "properties": {
+        "status": { "enum": ["NotStarted", "Demonstrated"] },
+        "plannedFixtureIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^(?:PLANNED-)?FIXTURE-[A-Z0-9-]+$" } },
+        "evidenceGap": { "type": "string", "minLength": 20 },
+        "acceptanceCriteria": { "type": "array", "minItems": 3, "uniqueItems": true, "items": { "type": "string", "minLength": 8 } },
+        "knownGaps": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 8 } }
+      }
+    },
+    "changeControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner", "lastReviewed", "definitionChangesRequire", "authorityExpansionRequires", "historyPolicy"],
+      "properties": {
+        "owner": { "const": "NeoCRM product architecture" },
+        "lastReviewed": { "type": "string", "format": "date" },
+        "definitionChangesRequire": { "type": "array", "minItems": 3, "uniqueItems": true, "items": { "enum": ["schema-validation", "traceability-review", "evaluation-review", "safety-review", "human-approval"] } },
+        "authorityExpansionRequires": { "const": "A separately reviewed contract, policy, experiment, and human approval; editing this definition cannot grant authority." },
+        "historyPolicy": { "const": "Version definitions and preserve superseded evidence; do not silently rewrite observed outcomes or receipts." }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "type": "object", "properties": { "classification": { "type": "object", "properties": { "primaryDomain": { "enum": ["sales", "marketing", "service"] } }, "required": ["primaryDomain"] } }, "required": ["classification"] },
+      "then": { "properties": { "workflowClass": { "const": "business" } } }
+    },
+    {
+      "if": { "type": "object", "properties": { "classification": { "type": "object", "properties": { "primaryDomain": { "const": "meta" } }, "required": ["primaryDomain"] } }, "required": ["classification"] },
+      "then": { "properties": { "workflowClass": { "const": "meta" } } }
+    },
+    {
+      "if": { "type": "object", "properties": { "classification": { "type": "object", "properties": { "primaryDomain": { "const": "shared" } }, "required": ["primaryDomain"] } }, "required": ["classification"] },
+      "then": {
+        "properties": {
+          "workflowClass": { "const": "shared-control" },
+          "classification": { "type": "object", "properties": { "canonicalPerspective": { "const": "control" }, "routable": { "const": false } } },
+          "flow": { "type": "object", "properties": { "triggerModes": { "type": "array", "contains": { "const": "workflow-call" }, "minContains": 1 } } },
+          "authority": { "type": "object", "properties": { "mode": { "const": "internal-routine" } } }
+        }
+      },
+      "else": { "type": "object", "properties": { "classification": { "type": "object", "properties": { "routable": { "const": true } } } } }
+    },
+    {
+      "if": { "type": "object", "properties": { "classification": { "type": "object", "properties": { "primaryDomain": { "const": "marketing" } }, "required": ["primaryDomain"] } }, "required": ["classification"] },
+      "then": { "type": "object", "properties": { "classification": { "type": "object", "properties": { "canonicalPerspective": { "const": "engagement" } } } } }
+    },
+    {
+      "if": { "type": "object", "properties": { "workflowId": { "const": "WF-SAL-001" } }, "required": ["workflowId"] },
+      "then": {
+        "properties": {
+          "status": {
+            "type": "object",
+            "properties": {
+              "specificationStatus": { "const": "Accepted" },
+              "implementationStatus": { "const": "NotStarted" },
+              "evidenceMaturity": { "const": "Unassessed" }
+            }
+          },
+          "traceability": { "type": "object", "properties": { "evaluationIds": { "type": "array", "maxItems": 0 } }, "required": ["evaluationIds"] },
+          "evaluation": {
+            "type": "object",
+            "properties": {
+              "status": { "const": "NotStarted" },
+              "plannedFixtureIds": { "type": "array", "minItems": 1 }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "status": {
+            "type": "object",
+            "properties": {
+              "specificationStatus": { "const": "Proposed" },
+              "implementationStatus": { "const": "NotStarted" },
+              "evidenceMaturity": { "const": "Unassessed" }
+            }
+          },
+          "traceability": { "type": "object", "properties": { "evaluationIds": { "type": "array", "maxItems": 0 } } },
+          "evaluation": {
+            "type": "object",
+            "properties": {
+              "status": { "const": "NotStarted" },
+              "plannedFixtureIds": { "type": "array", "minItems": 1 }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": { "type": "object", "properties": { "authority": { "type": "object", "properties": { "writeIntent": { "const": "none" } }, "required": ["writeIntent"] } }, "required": ["authority"] },
+      "then": { "type": "object", "properties": { "authority": { "type": "object", "properties": { "maximumMaterialEffect": { "const": "read" } } } } }
+    },
+    {
+      "if": { "type": "object", "properties": { "authority": { "type": "object", "properties": { "writeIntent": { "const": "draft-only" } }, "required": ["writeIntent"] } }, "required": ["authority"] },
+      "then": { "type": "object", "properties": { "authority": { "type": "object", "properties": { "maximumMaterialEffect": { "const": "draft" } } } } }
+    },
+    {
+      "if": { "type": "object", "properties": { "authority": { "type": "object", "properties": { "writeIntent": { "const": "governed-action-proposal" } }, "required": ["writeIntent"] } }, "required": ["authority"] },
+      "then": { "type": "object", "properties": { "authority": { "type": "object", "properties": { "maximumMaterialEffect": { "const": "non-destructive-action-proposal" } } } } }
+    }
+  ]
+}

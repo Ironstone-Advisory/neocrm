@@ -1,0 +1,428 @@
+{
+  "schemaVersion": "1.0.0",
+  "status": "Planned routing fixtures only; no router runtime or routing accuracy is claimed.",
+  "cases": [
+    {
+      "fixtureId": "ROUTE-001",
+      "utterance": "Help me with relationship brief and meeting prep and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SAL-001"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-002",
+      "utterance": "Help me with account research and buying group and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SAL-002"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-003",
+      "utterance": "Help me with lead triage and call plan and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SAL-003"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-004",
+      "utterance": "Help me with speed to lead and booking and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SAL-004"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-005",
+      "utterance": "Help me with opportunity qualification and next step and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SAL-005"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-006",
+      "utterance": "Help me with pipeline review and hygiene and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SAL-006"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-007",
+      "utterance": "Help me with conversation capture and commitment review and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SAL-007"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-008",
+      "utterance": "Help me with consent aware follow up and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SAL-008"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-009",
+      "utterance": "Help me with outreach sequence and enrollment and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SAL-009"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-010",
+      "utterance": "Help me with account and mutual action plan and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SAL-010"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-011",
+      "utterance": "Help me with proposal and rfp response and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SAL-011"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-012",
+      "utterance": "Help me with governed crm activity and opportunity update and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SAL-012"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-013",
+      "utterance": "Help me with forecast and scenario review and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SAL-013"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-014",
+      "utterance": "Help me with dormant relationship reactivation and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SAL-014"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-015",
+      "utterance": "Help me with audience and contact eligibility and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-MKT-001"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-016",
+      "utterance": "Help me with campaign brief and goal plan and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-MKT-002"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-017",
+      "utterance": "Help me with content strategy and key messages and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-MKT-003"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-018",
+      "utterance": "Help me with content and asset variant drafting and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-MKT-004"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-019",
+      "utterance": "Help me with brand rights and claims review and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-MKT-005"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-020",
+      "utterance": "Help me with treatment experiment design and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-MKT-006"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-021",
+      "utterance": "Help me with assignment exposure and holdout audit and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-MKT-007"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-022",
+      "utterance": "Help me with adaptive journey recommendation and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-MKT-008"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-023",
+      "utterance": "Help me with intent signal and account activation and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-MKT-009"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-024",
+      "utterance": "Help me with inbound qualification booking and handoff and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-MKT-010"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-025",
+      "utterance": "Help me with intelligent marketing follow and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-MKT-011"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-026",
+      "utterance": "Help me with campaign performance and attribution and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-MKT-012"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-027",
+      "utterance": "Help me with weekly growth and channel brief and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-MKT-013"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-028",
+      "utterance": "Help me with reputation and voice of customer and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-MKT-014"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-029",
+      "utterance": "Help me with customer and service brief and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-001"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-030",
+      "utterance": "Help me with case intake identity and entitlement and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-002"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-031",
+      "utterance": "Help me with case triage and priority and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-003"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-032",
+      "utterance": "Help me with response draft and deflection and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-004"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-033",
+      "utterance": "Help me with sla and commitment monitor and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-005"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-034",
+      "utterance": "Help me with service handoff and escalation and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-006"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-035",
+      "utterance": "Help me with resolution verification and closure and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-007"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-036",
+      "utterance": "Help me with complaint correction and redress and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-008"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-037",
+      "utterance": "Help me with customer health review and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-009"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-038",
+      "utterance": "Help me with success plan and outcome review and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-010"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-039",
+      "utterance": "Help me with customer onboarding and adoption and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-011"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-040",
+      "utterance": "Help me with usage and entitlement anomaly and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-012"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-041",
+      "utterance": "Help me with renewal readiness and churn risk and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-013"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-042",
+      "utterance": "Help me with expansion with service guard and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-014"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-043",
+      "utterance": "Help me with customer education and enablement and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-015"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-044",
+      "utterance": "Help me with service knowledge capture and update and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SRV-016"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-045",
+      "utterance": "Help me with guided onboarding and source readiness and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-META-001"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-046",
+      "utterance": "Help me with conversational intent router and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-META-002"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-047",
+      "utterance": "Help me with relationship operations pulse and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-META-003"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-048",
+      "utterance": "Help me with workflow authoring and simulation and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-META-004"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-AMB-001",
+      "utterance": "Help me get ready for this customer.",
+      "expected": {
+        "kind": "clarification",
+        "candidateWorkflowIds": [
+          "WF-SAL-001",
+          "WF-SRV-001"
+        ],
+        "question": "Is this preparation for a sales conversation or a service conversation?"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-AMB-002",
+      "utterance": "Follow up with them.",
+      "expected": {
+        "kind": "clarification",
+        "candidateWorkflowIds": [
+          "WF-SAL-008",
+          "WF-MKT-011",
+          "WF-SRV-004"
+        ],
+        "question": "Is this a sales follow-up, a marketing follow, or a service response—and what consent and purpose apply?"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-AMB-003",
+      "utterance": "Fix the record and close it.",
+      "expected": {
+        "kind": "clarification",
+        "candidateWorkflowIds": [
+          "WF-SAL-012",
+          "WF-SRV-007",
+          "WF-SRV-008"
+        ],
+        "question": "Do you want a CRM correction proposal, service resolution verification, or complaint redress—and does any requested effect delete data?"
+      }
+    }
+  ]
+}

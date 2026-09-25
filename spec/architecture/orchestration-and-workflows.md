@@ -4,6 +4,17 @@
 
 Relationship Orchestration coordinates Goals, people, Agents, WorkItems, policies, and Outcomes. It is business logic, not prompt folklore.
 
+## WorkflowDefinition boundary
+
+A [`WorkflowDefinition`](../contracts/workflow-definition.schema.json) is a versioned, host-neutral description of a discoverable relationship-management job and its governance envelope. It declares Intent and Goal templates, personas and aliases, typed inputs and outputs, source capability intents, steps, dependencies, branches, failure and escalation paths, handoffs, policies, authority, operational controls, experience metadata, traceability, and planned evaluation.
+
+It is distinct from both:
+
+- a **Plan**, which is instantiated for one Goal, principal, context and run; and
+- a **PlaybookDefinition**, which supplies reusable guidance, evidence or techniques to a workflow or Plan.
+
+The [workflow catalogue](../../workflows/README.md) is discoverable specification scaffolding. A definition neither grants authority nor proves that routing, scheduling, connections or execution exist.
+
 ## Standard lifecycle
 
 ```text
@@ -32,5 +43,8 @@ Trigger and principal
 - Action execution is idempotent where possible and must be verified against the target system.
 - Compensation is a new governed Action, not an unaudited rollback shortcut.
 - Outcome capture distinguishes intended, observed, customer, service, commercial, ethical, and unintended results.
+- A time-bounded WriteGrant may cover repeated actions only through named, versioned workflow definitions and within its systems, object/record-set/field scope, purpose, time, volume, frequency, cost, risk ceiling, and approval limits.
+- Every deletion effect leaves the general workflow and requires a fresh exact single-use human DeletionAuthorization for an immutable target list; a WriteGrant never includes delete. Policy classifies the material effect rather than trusting the operation name, so a destructive update, transition, unlink, overwrite, redaction, retention, or disposition action cannot bypass this boundary.
+- Machine lifecycle events link to a HumanReadableReceipt that explains authority, target, result, verification, cost, and correction/compensation.
 
-Current CAP-001 stops before external execution and keeps every write disabled.
+Current CAP-001 and EXP-001 stop before external execution and keep every write disabled. EXP-015 and EXP-016 are Planned tests of the later authority contracts, not implemented action gateways.

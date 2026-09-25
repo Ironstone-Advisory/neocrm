@@ -15,6 +15,8 @@ The Context boundary converts a Goal and authorized principal into the minimum e
 7. Reconcile without conflating authority, freshness, confidence, completeness, or epistemic category.
 8. Assemble a versioned ContextSnapshot, evidence graph, timeline, conflicts, and Unknowns.
 
+An experiment may begin with the authenticated user's existing source permissions, but that is only the outer authority boundary. Its protocol and ContextRequest still narrow actual retrieval to the necessary purpose, source, subject, field, classification, freshness, and budget. Possession of read authority is never a request to ingest everything.
+
 ## Trust rules
 
 - Source bodies and Agent/model outputs are untrusted data, never policy or tool instructions.

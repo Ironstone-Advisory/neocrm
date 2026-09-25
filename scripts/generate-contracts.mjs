@@ -19,6 +19,22 @@ const targets = [
     implementationId: "IMP-005",
     source: "spec/contracts/agent-runtime.schema.json",
     scope: "bounded EXP-001 agent-runtime exchanges"
+  },
+  {
+    schemaPath: resolve(root, "spec/contracts/governed-action.schema.json"),
+    outputPath: resolve(root, "packages/contracts/src/governed-action.ts"),
+    name: "NeoCRMGovernedActionContract",
+    implementationId: "IMP-011",
+    source: "spec/contracts/governed-action.schema.json",
+    scope: "the planned experimental write-authority scaffold"
+  },
+  {
+    schemaPath: resolve(root, "spec/contracts/workflow-definition.schema.json"),
+    outputPath: resolve(root, "packages/contracts/src/workflow-definition.ts"),
+    name: "NeoCRMWorkflowDefinitionContract",
+    implementationId: "IMP-012",
+    source: "spec/contracts/workflow-definition.schema.json",
+    scope: "host-neutral workflow-definition scaffolding; it does not implement routing or execution"
   }
 ];
 

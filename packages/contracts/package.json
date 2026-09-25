@@ -8,6 +8,7 @@
       "types": "./src/index.ts",
       "import": "./src/runtime.mjs"
     },
-    "./runtime": "./src/runtime.mjs"
+    "./runtime": "./src/runtime.mjs",
+    "./workflow-conformance": "./src/workflow-conformance.mjs"
   }
 }

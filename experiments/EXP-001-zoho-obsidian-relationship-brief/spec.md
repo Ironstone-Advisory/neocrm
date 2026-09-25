@@ -2,6 +2,8 @@
 
 **Status:** Planned
 
+**Authority boundary:** EXP-001 is read-only. Later experimental WriteGrants do not broaden it.
+
 ## Question
 
 Can a governed context/insight Agent help a relationship owner prepare for and improve a consequential conversation by combining authoritative Zoho operational state with permissioned Obsidian relationship knowledge, while reducing effort and preserving provenance, uncertainty, consent, and human judgment?

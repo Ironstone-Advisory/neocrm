@@ -9,7 +9,7 @@ Conflicts are resolved in this order:
 1. The cleaned [origin](vision/origin.md) governs product purpose, human-agent operating model, seven logical layers, cross-functional scope, proactive work, experience philosophy, and outcome learning.
 2. The [canonical specification](canonical/NeoCRM-v0.1-Canonical-Specification.md) reconciles that origin with the later semantic, temporal, provenance, adapter, governance, safety, CTS, and traceability design.
 3. Safety, privacy, consent, identity, delegation, and governance requirements constrain how the vision is realized; they do not remove its agentic foundation.
-4. Accepted ADRs define the adopted design baseline. Decision status is independent of implementation status and evidence maturity.
+4. Accepted ADRs define the adopted design baseline. Decision status is independent of implementation status and evidence maturity. The [forty-eight-decision register](product/decision-register.md) records the approved 2026-09-24 portfolio direction; ADR-0016 through ADR-0019 make its authority, deletion, semantic-portfolio, and product-value rules architectural.
 5. System requirements and canonical object definitions govern product behavior and meaning.
 6. Capability specifications and their exchange schemas govern only their declared slice. The current JSON Schema is normative for CAP-001 exchanges, not for the complete NeoCRM ontology.
 7. Implementation, experiments, evaluations, and results supply scoped evidence and cannot broaden their own claims.
@@ -28,7 +28,11 @@ An ADR may be Accepted while implementation is Partial and evidence is Demonstra
 
 ## Contract authority
 
+New portfolio objects, views, requirements, and experiment specifications are Accepted or Planned design as declared. They remain `Planned` in implementation and evidence unless a traceable implementation and result says otherwise.
+
 Normative data exchanged by a capability uses its versioned JSON Schema. Generated TypeScript is a checked projection for developer ergonomics. If a projection disagrees with its declared schema, regenerate or correct the projection. Neither one may be described as the complete product ontology unless the canonical specification explicitly grants that scope.
+
+The strict [`WorkflowDefinition`](contracts/workflow-definition.schema.json) contract governs the discoverable workflow capsules under [`../workflows/`](../workflows/README.md). A WorkflowDefinition describes a reusable job and governance envelope. It is not a runtime Plan instantiated for one Goal and is not a PlaybookDefinition containing reusable guidance. Workflow definitions do not grant connection, read, write, send, schedule, or deletion authority, and their presence does not claim a routing or execution runtime.
 
 ## Required trace
 

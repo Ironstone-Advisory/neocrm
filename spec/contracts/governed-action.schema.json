@@ -1,0 +1,260 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neocrm.example/spec/contracts/governed-action.schema.json",
+  "title": "NeoCRM governed experimental action contract",
+  "description": "Normative scaffold for time-bounded non-delete WriteGrants and fresh exact single-use DeletionAuthorizations. It does not enable execution by itself.",
+  "oneOf": [
+    { "$ref": "#/$defs/writeGrant" },
+    { "$ref": "#/$defs/deletionAuthorization" },
+    { "$ref": "#/$defs/actionReceipt" }
+  ],
+  "$defs": {
+    "nonDeleteOperation": {
+      "description": "Operations eligible for a time-bounded WriteGrant. Policy must still classify the material effect and route any destructive or equivalent deletion effect to DeletionAuthorization.",
+      "enum": ["create", "update", "link", "assign", "transition", "append", "send"]
+    },
+    "exactTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["system", "objectType", "recordId"],
+      "properties": {
+        "system": { "type": "string", "minLength": 1 },
+        "objectType": { "type": "string", "minLength": 1 },
+        "recordId": { "type": "string", "minLength": 1, "pattern": "^(?!.*[\\*\\?]).+$" },
+        "recordVersion": { "type": "string", "minLength": 1 },
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "writeTargetScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["system", "objectType", "fields", "recordScope"],
+      "properties": {
+        "system": { "type": "string", "minLength": 1 },
+        "objectType": { "type": "string", "minLength": 1 },
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "recordScope": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["kind", "recordIds"],
+              "properties": {
+                "kind": { "const": "exact-records" },
+                "recordIds": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": { "type": "string", "minLength": 1, "pattern": "^(?!.*[\\*\\?]).+$" }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["kind", "allowlistId"],
+              "properties": {
+                "kind": { "const": "registered-set" },
+                "allowlistId": { "type": "string", "minLength": 1 }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["kind"],
+              "properties": { "kind": { "const": "create-new" } }
+            }
+          ]
+        }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxActions", "maxActionsPerHour", "maxCost"],
+      "properties": {
+        "maxActions": { "type": "integer", "minimum": 1 },
+        "maxActionsPerHour": { "type": "integer", "minimum": 1 },
+        "maxCost": { "type": "number", "minimum": 0 },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" }
+      }
+    },
+    "writeGrant": {
+      "type": "object",
+      "description": "A time-bounded grant for registered non-delete workflows. Operation names never override effect-based deletion classification.",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "grantId",
+        "principalId",
+        "grantorHumanActorId",
+        "purpose",
+        "experimentId",
+        "workflowDefinitionIds",
+        "systems",
+        "operations",
+        "targetScopes",
+        "riskCeiling",
+        "materialEffectBoundary",
+        "effectClassificationPolicyId",
+        "effectiveAt",
+        "expiresAt",
+        "revocable",
+        "limits",
+        "approvalMode",
+        "verificationRequired",
+        "receiptRequired",
+        "compensationPlan"
+      ],
+      "properties": {
+        "kind": { "const": "WriteGrant" },
+        "grantId": { "type": "string", "minLength": 1 },
+        "principalId": { "type": "string", "minLength": 1 },
+        "grantorHumanActorId": { "type": "string", "minLength": 1 },
+        "purpose": { "type": "string", "minLength": 1 },
+        "experimentId": { "type": "string", "pattern": "^EXP-[0-9]{3}$" },
+        "workflowDefinitionIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "systems": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "operations": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/nonDeleteOperation" } },
+        "targetScopes": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/writeTargetScope" } },
+        "riskCeiling": { "enum": ["low", "medium", "high"] },
+        "materialEffectBoundary": {
+          "const": "non-destructive-only",
+          "description": "A WriteGrant never authorizes deletion or an equivalent destructive material effect, regardless of the source-system verb."
+        },
+        "effectClassificationPolicyId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The versioned policy that classifies material effect before authority is selected."
+        },
+        "effectiveAt": { "type": "string", "format": "date-time" },
+        "expiresAt": { "type": "string", "format": "date-time" },
+        "revocable": { "const": true },
+        "limits": { "$ref": "#/$defs/limits" },
+        "approvalMode": { "enum": ["per-action", "bounded-duration", "risk-triggered"] },
+        "verificationRequired": { "const": true },
+        "receiptRequired": { "const": true },
+        "compensationPlan": { "type": "string", "minLength": 1 },
+        "revokedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "deletionAuthorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "authorizationId",
+        "authorizingHumanActorId",
+        "principalId",
+        "operation",
+        "purpose",
+        "targets",
+        "previewDigest",
+        "humanReadablePreview",
+        "issuedAt",
+        "expiresAt",
+        "singleUse",
+        "immutableTargetList",
+        "policyDecisionId",
+        "verificationRequired",
+        "receiptRequired"
+      ],
+      "properties": {
+        "kind": { "const": "DeletionAuthorization" },
+        "authorizationId": { "type": "string", "minLength": 1 },
+        "authorizingHumanActorId": { "type": "string", "minLength": 1 },
+        "principalId": { "type": "string", "minLength": 1 },
+        "operation": { "const": "delete" },
+        "purpose": { "type": "string", "minLength": 1 },
+        "targets": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/exactTarget" } },
+        "previewDigest": { "type": "string", "minLength": 1 },
+        "humanReadablePreview": { "type": "string", "minLength": 1 },
+        "issuedAt": { "type": "string", "format": "date-time" },
+        "expiresAt": { "type": "string", "format": "date-time" },
+        "singleUse": { "const": true },
+        "immutableTargetList": { "const": true },
+        "policyDecisionId": { "type": "string", "minLength": 1 },
+        "verificationRequired": { "const": true },
+        "receiptRequired": { "const": true },
+        "consumedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "actionReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "receiptId",
+        "actionId",
+        "principalId",
+        "purpose",
+        "operation",
+        "materialEffect",
+        "authorityKind",
+        "targets",
+        "authorityReference",
+        "attemptedAt",
+        "result",
+        "verification",
+        "humanReadableSummary"
+      ],
+      "properties": {
+        "kind": { "const": "ActionReceipt" },
+        "receiptId": { "type": "string", "minLength": 1 },
+        "actionId": { "type": "string", "minLength": 1 },
+        "principalId": { "type": "string", "minLength": 1 },
+        "purpose": { "type": "string", "minLength": 1 },
+        "operation": { "oneOf": [{ "$ref": "#/$defs/nonDeleteOperation" }, { "const": "delete" }] },
+        "materialEffect": {
+          "enum": ["non-destructive", "deletion"],
+          "description": "Policy-normalized material effect. Destruction, purge, erasure, destructive clearing, unlinking, or equivalent irreversible removal is deletion even when a source API uses another verb."
+        },
+        "authorityKind": { "enum": ["WriteGrant", "DeletionAuthorization"] },
+        "targets": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/exactTarget" } },
+        "authorityReference": { "type": "string", "minLength": 1 },
+        "attemptedAt": { "type": "string", "format": "date-time" },
+        "result": { "enum": ["succeeded", "partial", "failed", "cancelled", "uncertain", "compensated", "reversed"] },
+        "verification": { "type": "string", "minLength": 1 },
+        "humanReadableSummary": { "type": "string", "minLength": 1 },
+        "cost": { "type": "number", "minimum": 0 },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "outcomeIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "materialEffect": { "const": "deletion" } },
+            "required": ["materialEffect"]
+          },
+          "then": {
+            "properties": {
+              "operation": { "const": "delete" },
+              "authorityKind": { "const": "DeletionAuthorization" }
+            }
+          },
+          "else": {
+            "properties": {
+              "operation": { "$ref": "#/$defs/nonDeleteOperation" },
+              "authorityKind": { "const": "WriteGrant" }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

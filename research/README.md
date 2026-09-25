@@ -13,3 +13,7 @@ This directory is for source material that informs the thesis, model, and experi
 Research should inform decisions and experiments; it should not be treated as a substitute for testing the NeoCRM model.
 
 Maintain a claim ledger for any article or product assertion: claim, source/evidence, date, scope, limitations, and permitted wording. Architecture hypotheses and synthetic CAP-001 results must not be presented as proven productivity, customer, revenue, market, or production-capability claims.
+
+## Dated research proposals
+
+- [`competitive-intelligence/ai-crm-feature-gap/2026-09-24-v1/`](competitive-intelligence/ai-crm-feature-gap/2026-09-24-v1/) — versioned AI CRM competitor research, normalized feature inventory, NeoCRM coverage assessment, ranked top-20 proposal, value-add packaging analysis, first-party source register, article brief, and [decision outcome](competitive-intelligence/ai-crm-feature-gap/2026-09-24-v1/decision-outcome.md). **Status: research remains dated evidence; its forty-eight product decisions are now Accepted and traceable in the specification, while implementation/evidence remain Planned.**

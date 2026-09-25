@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0.0",
+  "categories": [
+    { "id": "source-category.crm", "label": "Customer relationship system", "meaning": "Operational party, relationship, commercial and activity evidence." },
+    { "id": "source-category.knowledge", "label": "Knowledge source", "meaning": "User- or organization-owned contextual evidence and documents." },
+    { "id": "source-category.local-files", "label": "Local user-owned files", "meaning": "Permissioned files used for bounded fallback or contextual evidence." },
+    { "id": "source-category.communication", "label": "Communication system", "meaning": "Permissioned messages, conversations and interaction evidence." },
+    { "id": "source-category.engagement", "label": "Engagement system", "meaning": "Campaign, treatment, journey, contact and response evidence." },
+    { "id": "source-category.service", "label": "Service system", "meaning": "Case, entitlement, SLA, resolution, usage and health evidence." },
+    { "id": "source-category.analytics", "label": "Analytics source", "meaning": "Defined metric, assignment, exposure, outcome and time-series evidence." },
+    { "id": "source-category.time", "label": "Time and calendar source", "meaning": "Event, interval, availability, commitment and scheduling evidence." },
+    { "id": "source-category.synthetic", "label": "Synthetic fixture", "meaning": "Non-production data for deterministic tests and demonstrations." }
+  ]
+}

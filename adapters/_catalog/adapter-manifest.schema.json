@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neocrm.example/adapters/adapter-manifest.schema.json",
+  "title": "NeoCRM adapter capability manifest",
+  "description": "A discoverable declaration of an adapter boundary. Registration or connection never grants data or action authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "adapterId", "displayName", "implementationStatus", "sourceCategories", "capabilityIntents", "scopeVerification", "dataSemantics", "operationalControls", "connection", "authority", "semanticBoundary", "actionSafety"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "adapterId": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "displayName": { "type": "string", "minLength": 3 },
+    "implementationStatus": { "enum": ["NotStarted", "Partial", "Implemented", "Verified"] },
+    "sourceCategories": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^source-category\\.[a-z0-9]+(?:-[a-z0-9]+)*$" }
+    },
+    "capabilityIntents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["intentId", "availability", "operations", "conditions"],
+        "properties": {
+          "intentId": { "type": "string", "pattern": "^source\\.[a-z0-9]+(?:[.-][a-z0-9]+)*$" },
+          "availability": { "enum": ["not-implemented", "partial", "implemented"] },
+          "operations": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "const": "read" }
+          },
+          "conditions": { "type": "string", "minLength": 3 }
+        }
+      }
+    },
+    "scopeVerification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tenantRequired", "principalRequired", "verificationMode", "boundary", "ambiguityBehavior"],
+      "properties": {
+        "tenantRequired": { "const": true },
+        "principalRequired": { "const": true },
+        "verificationMode": { "enum": ["fixture-bound", "caller-bound", "runtime-verified", "partial"] },
+        "boundary": { "type": "string", "minLength": 12 },
+        "ambiguityBehavior": { "const": "stop" }
+      }
+    },
+    "dataSemantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["freshness", "missingness", "pagination"],
+      "properties": {
+        "freshness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["timestampBasis", "maximumAgeEnforcedByAdapter", "staleBehavior"],
+          "properties": {
+            "timestampBasis": { "enum": ["fixture-clock", "source-modified-and-retrieved-at", "filesystem-and-retrieved-at"] },
+            "maximumAgeEnforcedByAdapter": { "type": "boolean" },
+            "staleBehavior": { "enum": ["caller-must-decide", "adapter-discloses", "adapter-stops"] }
+          }
+        },
+        "missingness": {
+          "const": "Missing, denied, failed, filtered, truncated and unsupported are distinct; none may be interpreted as zero or absence."
+        },
+        "pagination": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "bounded", "cursorBehavior", "truncationDisclosed"],
+          "properties": {
+            "mode": { "enum": ["none", "page-token", "bounded-directory-walk", "fixture-collection"] },
+            "bounded": { "const": true },
+            "cursorBehavior": { "type": "string", "minLength": 8 },
+            "truncationDisclosed": { "const": true }
+          }
+        }
+      }
+    },
+    "operationalControls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["costSignal", "budgetControl", "fallback"],
+      "properties": {
+        "costSignal": { "enum": ["none", "estimated", "provider-metadata"] },
+        "budgetControl": { "enum": ["caller-required", "adapter-enforced", "not-implemented"] },
+        "fallback": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["supported", "modes", "degradationDisclosureRequired"],
+          "properties": {
+            "supported": { "type": "boolean" },
+            "modes": { "type": "array", "uniqueItems": true, "items": { "enum": ["synthetic-fixture", "pasted-text", "uploaded-document", "csv", "user-owned-local-source", "none"] } },
+            "degradationDisclosureRequired": { "const": true }
+          }
+        }
+      }
+    },
+    "connection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["registrationRuntime", "registrationGrantsAuthority", "credentialBoundary"],
+      "properties": {
+        "registrationRuntime": { "const": "not-implemented" },
+        "registrationGrantsAuthority": { "const": false },
+        "credentialBoundary": { "type": "string", "minLength": 12 }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["principalAuthorityRequired", "manifestGrantsAuthority", "writeExecutionEnabled", "deletionExecutionEnabled"],
+      "properties": {
+        "principalAuthorityRequired": { "const": true },
+        "manifestGrantsAuthority": { "const": false },
+        "writeExecutionEnabled": { "const": false },
+        "deletionExecutionEnabled": { "const": false }
+      }
+    },
+    "semanticBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["canonicalMeaningOwnedByNeoCRM", "sourceProvidesEvidence", "missingIsNotZero"],
+      "properties": {
+        "canonicalMeaningOwnedByNeoCRM": { "const": true },
+        "sourceProvidesEvidence": { "const": true },
+        "missingIsNotZero": { "const": true }
+      }
+    },
+    "actionSafety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maximumMaterialEffect", "effectClassificationRequired", "idempotencyRequiredForExternalEffects", "verificationRequiredForExternalEffects", "uncertainOutcomeBehavior"],
+      "properties": {
+        "maximumMaterialEffect": { "const": "read-only" },
+        "effectClassificationRequired": { "const": true },
+        "idempotencyRequiredForExternalEffects": { "const": true },
+        "verificationRequiredForExternalEffects": { "const": true },
+        "uncertainOutcomeBehavior": { "const": "Stop and require verification plus human resolution before retry." }
+      }
+    }
+  }
+}

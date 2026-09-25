@@ -12,14 +12,17 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "generate:contracts": "node scripts/generate-contracts.mjs",
+    "generate:workflows": "node scripts/generate-workflows.mjs",
     "check:contracts": "node scripts/generate-contracts.mjs --check",
+    "check:workflows": "node scripts/generate-workflows.mjs --check",
+    "validate:workflows": "node scripts/validate-workflow-conformance.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "validate:spec": "node scripts/validate-spec.mjs",
     "check:links": "node scripts/check-links.mjs",
     "check:article": "node scripts/check-article-claims.mjs",
     "test": "node --test",
     "eval": "node evals/run-eval.mjs",
-    "check": "pnpm validate:spec && pnpm check:links && pnpm check:article && pnpm check:contracts && pnpm typecheck && pnpm test && pnpm eval",
+    "check": "pnpm validate:spec && pnpm check:links && pnpm check:article && pnpm check:contracts && pnpm check:workflows && pnpm validate:workflows && pnpm typecheck && pnpm test && pnpm eval",
     "demo": "node apps/assistant/src/cli.mjs",
     "exp:001": "node apps/experiment-cli/src/cli.mjs",
     "exp:001:preflight": "node apps/experiment-cli/src/cli.mjs --preflight"

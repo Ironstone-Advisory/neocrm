@@ -23,5 +23,7 @@ Source authority, freshness, confidence, completeness, and epistemic category ar
 - Represent denial as unavailable under policy without revealing whether a protected record exists.
 - Keep failed, denied, stale, incomplete, and conflicting sources visible without inferring absence.
 - Bind each proposed external Action to a target, payload, versioned preview, rationale, PolicyDecision, and approval requirement.
+- Bind repeated experimental non-delete Actions to an effective, unrevoked, scoped WriteGrant; route every deletion to a fresh exact human DeletionAuthorization instead of a general grant.
 - Route execution through an isolated gateway and record Actor, authority, result, verification, source reference, and compensation.
+- Link machine events to a HumanReadableReceipt and expose cost, failure, reversal, correction, and Outcome without revealing credentials or hidden reasoning.
 - Prevent Outcome or LearningSignal capture from directly changing facts, policy, authority, AgentDefinitions, prompts, models, or mappings.

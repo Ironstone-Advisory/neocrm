@@ -1,0 +1,782 @@
+{
+  "kind": "WorkflowDefinition",
+  "schemaVersion": "1.0.0",
+  "workflowId": "WF-SRV-015",
+  "version": "0.1.0",
+  "slug": "customer-education-and-enablement",
+  "title": "Customer Education and Enablement",
+  "workflowClass": "business",
+  "definitionBoundary": {
+    "isRuntimePlan": false,
+    "isPlaybookDefinition": false,
+    "statement": "This definition describes a reusable job and its governance envelope. A Plan is instantiated for one Goal and run; a PlaybookDefinition supplies reusable guidance."
+  },
+  "classification": {
+    "primaryDomain": "service",
+    "canonicalPerspective": "service",
+    "secondaryDomains": [
+      "cross-functional",
+      "engagement"
+    ],
+    "routable": true,
+    "repositoryPath": "workflows/service/WF-SRV-015-customer-education-and-enablement/workflow.json"
+  },
+  "intent": {
+    "intentId": "intent.service.customer.education.and.enablement",
+    "name": "Customer Education and Enablement",
+    "description": "Help an authorized service or customer-success teammate complete customer education and enablement from relationship evidence while keeping source gaps, uncertainty and authority visible.",
+    "aliases": [
+      "customer education and enablement",
+      "help with customer education and enablement",
+      "run customer education and enablement"
+    ],
+    "classification": "draft"
+  },
+  "goal": {
+    "goalType": "goal.service.customer.education.and.enablement",
+    "objectiveTemplate": "Produce a useful, evidence-linked customer education and enablement result for the declared subjects, decision and permitted use.",
+    "successSignals": [
+      "The user can see the result, evidence, uncertainty, source gaps and next decision.",
+      "No context, recommendation or proposed effect exceeds the declared purpose and authority."
+    ],
+    "constraints": [
+      "Resolve identity before private context retrieval and retrieve only minimum-necessary fields.",
+      "Treat missing, denied, stale and conflicting evidence explicitly rather than as zero or absence.",
+      "Enforce consent, suppression, frequency, quiet-hours and service-conflict checks before contact can be proposed."
+    ]
+  },
+  "job": {
+    "jobToBeDone": "Help an authorized service or customer-success teammate complete customer education and enablement from relationship evidence while keeping source gaps, uncertainty and authority visible.",
+    "useWhen": [
+      "An authorized service or customer-success teammate asks for customer education and enablement.",
+      "A relevant event or signal suggests that customer education and enablement may be useful, subject to human review."
+    ],
+    "produces": [
+      "Customer Education and Enablement result",
+      "Evidence, uncertainty and source-gap summary",
+      "Draft or governed action proposal; never silent execution"
+    ],
+    "nonGoals": [
+      "Replacing canonical NeoCRM objects with a vendor schema.",
+      "Granting read, write, send, schedule, connection or deletion authority.",
+      "Claiming production runtime behavior or validated business outcomes."
+    ]
+  },
+  "inputs": [
+    {
+      "inputId": "IN-01",
+      "name": "Authenticated principal and purpose",
+      "semanticType": "principal",
+      "required": true,
+      "sourceCapabilityIntent": null,
+      "purpose": "Bind the workflow to the requesting principal, tenant, purpose and read authority.",
+      "fieldScope": [
+        "principal identifier",
+        "tenant identifier",
+        "purpose",
+        "authority references"
+      ],
+      "freshness": {
+        "mode": "point-in-time",
+        "maximumAge": null,
+        "staleBehavior": "stop"
+      },
+      "classification": "restricted",
+      "missingness": "stop"
+    },
+    {
+      "inputId": "IN-02",
+      "name": "Intent and Goal",
+      "semanticType": "goal",
+      "required": true,
+      "sourceCapabilityIntent": null,
+      "purpose": "State the user outcome, decision, constraints and permitted use before context retrieval.",
+      "fieldScope": [
+        "intent",
+        "objective",
+        "success signals",
+        "constraints",
+        "permitted use"
+      ],
+      "freshness": {
+        "mode": "point-in-time",
+        "maximumAge": null,
+        "staleBehavior": "stop"
+      },
+      "classification": "confidential",
+      "missingness": "stop"
+    },
+    {
+      "inputId": "IN-03",
+      "name": "source.activity.read evidence",
+      "semanticType": "activity",
+      "required": false,
+      "sourceCapabilityIntent": "source.activity.read",
+      "purpose": "Supply the minimum evidence necessary for customer education and enablement without importing vendor semantics.",
+      "fieldScope": [
+        "party identity",
+        "service state",
+        "entitlement",
+        "commitments and outcomes",
+        "provenance"
+      ],
+      "freshness": {
+        "mode": "bounded-window",
+        "maximumAge": "P30D",
+        "staleBehavior": "degrade-and-disclose"
+      },
+      "classification": "confidential",
+      "missingness": "degrade-and-disclose"
+    },
+    {
+      "inputId": "IN-04",
+      "name": "source.content.read evidence",
+      "semanticType": "content",
+      "required": false,
+      "sourceCapabilityIntent": "source.content.read",
+      "purpose": "Supply the minimum evidence necessary for customer education and enablement without importing vendor semantics.",
+      "fieldScope": [
+        "party identity",
+        "service state",
+        "entitlement",
+        "commitments and outcomes",
+        "provenance"
+      ],
+      "freshness": {
+        "mode": "bounded-window",
+        "maximumAge": "P30D",
+        "staleBehavior": "degrade-and-disclose"
+      },
+      "classification": "confidential",
+      "missingness": "degrade-and-disclose"
+    },
+    {
+      "inputId": "IN-05",
+      "name": "source.entitlement.read evidence",
+      "semanticType": "entitlement",
+      "required": false,
+      "sourceCapabilityIntent": "source.entitlement.read",
+      "purpose": "Supply the minimum evidence necessary for customer education and enablement without importing vendor semantics.",
+      "fieldScope": [
+        "party identity",
+        "service state",
+        "entitlement",
+        "commitments and outcomes",
+        "provenance"
+      ],
+      "freshness": {
+        "mode": "bounded-window",
+        "maximumAge": "P30D",
+        "staleBehavior": "degrade-and-disclose"
+      },
+      "classification": "confidential",
+      "missingness": "degrade-and-disclose"
+    },
+    {
+      "inputId": "IN-06",
+      "name": "source.identity.read evidence",
+      "semanticType": "party",
+      "required": true,
+      "sourceCapabilityIntent": "source.identity.read",
+      "purpose": "Supply the minimum evidence necessary for customer education and enablement without importing vendor semantics.",
+      "fieldScope": [
+        "party identity",
+        "service state",
+        "entitlement",
+        "commitments and outcomes",
+        "provenance"
+      ],
+      "freshness": {
+        "mode": "bounded-window",
+        "maximumAge": "P30D",
+        "staleBehavior": "degrade-and-disclose"
+      },
+      "classification": "confidential",
+      "missingness": "stop"
+    },
+    {
+      "inputId": "IN-07",
+      "name": "source.knowledge.read evidence",
+      "semanticType": "knowledge",
+      "required": false,
+      "sourceCapabilityIntent": "source.knowledge.read",
+      "purpose": "Supply the minimum evidence necessary for customer education and enablement without importing vendor semantics.",
+      "fieldScope": [
+        "party identity",
+        "service state",
+        "entitlement",
+        "commitments and outcomes",
+        "provenance"
+      ],
+      "freshness": {
+        "mode": "bounded-window",
+        "maximumAge": "P30D",
+        "staleBehavior": "degrade-and-disclose"
+      },
+      "classification": "confidential",
+      "missingness": "degrade-and-disclose"
+    },
+    {
+      "inputId": "IN-08",
+      "name": "source.relationship.read evidence",
+      "semanticType": "relationship",
+      "required": false,
+      "sourceCapabilityIntent": "source.relationship.read",
+      "purpose": "Supply the minimum evidence necessary for customer education and enablement without importing vendor semantics.",
+      "fieldScope": [
+        "party identity",
+        "service state",
+        "entitlement",
+        "commitments and outcomes",
+        "provenance"
+      ],
+      "freshness": {
+        "mode": "bounded-window",
+        "maximumAge": "P30D",
+        "staleBehavior": "degrade-and-disclose"
+      },
+      "classification": "confidential",
+      "missingness": "degrade-and-disclose"
+    },
+    {
+      "inputId": "IN-09",
+      "name": "source.service.read evidence",
+      "semanticType": "service",
+      "required": false,
+      "sourceCapabilityIntent": "source.service.read",
+      "purpose": "Supply the minimum evidence necessary for customer education and enablement without importing vendor semantics.",
+      "fieldScope": [
+        "party identity",
+        "service state",
+        "entitlement",
+        "commitments and outcomes",
+        "provenance"
+      ],
+      "freshness": {
+        "mode": "bounded-window",
+        "maximumAge": "P30D",
+        "staleBehavior": "degrade-and-disclose"
+      },
+      "classification": "confidential",
+      "missingness": "degrade-and-disclose"
+    }
+  ],
+  "outputs": [
+    {
+      "outputId": "OUT-01",
+      "name": "Customer Education and Enablement result",
+      "semanticType": "draft",
+      "epistemicCategory": "not-applicable",
+      "proposalState": "draft",
+      "evidenceRequired": true,
+      "humanReviewRequired": true
+    },
+    {
+      "outputId": "OUT-02",
+      "name": "Evidence, counterevidence, unknowns and source gaps",
+      "semanticType": "evidence-gap",
+      "epistemicCategory": "not-applicable",
+      "proposalState": "none",
+      "evidenceRequired": true,
+      "humanReviewRequired": false
+    },
+    {
+      "outputId": "OUT-03",
+      "name": "Recommended next decision",
+      "semanticType": "recommendation",
+      "epistemicCategory": "not-applicable",
+      "proposalState": "none",
+      "evidenceRequired": true,
+      "humanReviewRequired": true
+    }
+  ],
+  "flow": {
+    "triggerModes": [
+      "human",
+      "conversational"
+    ],
+    "steps": [
+      {
+        "stepId": "STEP-01",
+        "name": "Bind principal, purpose, Intent and Goal",
+        "kind": "scope",
+        "dependsOn": [],
+        "inputIds": [
+          "IN-01",
+          "IN-02"
+        ],
+        "outputIds": [],
+        "policyIds": [
+          "POL-01"
+        ],
+        "completionCriteria": [
+          "Bind principal, purpose, Intent and Goal has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "stop",
+        "escalationId": null
+      },
+      {
+        "stepId": "STEP-02",
+        "name": "Resolve identity and tenant scope",
+        "kind": "identity",
+        "dependsOn": [
+          "STEP-01"
+        ],
+        "inputIds": [
+          "IN-01",
+          "IN-03"
+        ],
+        "outputIds": [],
+        "policyIds": [
+          "POL-01"
+        ],
+        "completionCriteria": [
+          "Resolve identity and tenant scope has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "escalate",
+        "escalationId": "ESC-01"
+      },
+      {
+        "stepId": "STEP-03",
+        "name": "Retrieve minimum-necessary evidence",
+        "kind": "context",
+        "dependsOn": [
+          "STEP-02"
+        ],
+        "inputIds": [
+          "IN-03",
+          "IN-04",
+          "IN-05",
+          "IN-06",
+          "IN-07",
+          "IN-08",
+          "IN-09"
+        ],
+        "outputIds": [
+          "OUT-02"
+        ],
+        "policyIds": [
+          "POL-01"
+        ],
+        "completionCriteria": [
+          "Retrieve minimum-necessary evidence has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "degrade",
+        "escalationId": null
+      },
+      {
+        "stepId": "STEP-04",
+        "name": "Assess evidence sufficiency and conflicts",
+        "kind": "analysis",
+        "dependsOn": [
+          "STEP-03"
+        ],
+        "inputIds": [
+          "IN-03",
+          "IN-04",
+          "IN-05",
+          "IN-06",
+          "IN-07",
+          "IN-08",
+          "IN-09"
+        ],
+        "outputIds": [
+          "OUT-02"
+        ],
+        "policyIds": [
+          "POL-01"
+        ],
+        "completionCriteria": [
+          "Assess evidence sufficiency and conflicts has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "escalate",
+        "escalationId": "ESC-01"
+      },
+      {
+        "stepId": "STEP-05",
+        "name": "Synthesize customer education and enablement",
+        "kind": "synthesis",
+        "dependsOn": [
+          "STEP-04"
+        ],
+        "inputIds": [
+          "IN-03",
+          "IN-04",
+          "IN-05",
+          "IN-06",
+          "IN-07",
+          "IN-08",
+          "IN-09"
+        ],
+        "outputIds": [
+          "OUT-01",
+          "OUT-02"
+        ],
+        "policyIds": [
+          "POL-02"
+        ],
+        "completionCriteria": [
+          "Synthesize customer education and enablement has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "degrade",
+        "escalationId": null
+      },
+      {
+        "stepId": "STEP-06",
+        "name": "Escalate insufficient or conflicting evidence",
+        "kind": "human-review",
+        "dependsOn": [
+          "STEP-04"
+        ],
+        "inputIds": [
+          "IN-01",
+          "IN-02"
+        ],
+        "outputIds": [
+          "OUT-02"
+        ],
+        "policyIds": [
+          "POL-02"
+        ],
+        "completionCriteria": [
+          "Escalate insufficient or conflicting evidence has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "escalate",
+        "escalationId": "ESC-01"
+      },
+      {
+        "stepId": "STEP-07",
+        "name": "Review result and next decision",
+        "kind": "human-review",
+        "dependsOn": [
+          "STEP-05"
+        ],
+        "inputIds": [
+          "IN-01",
+          "IN-02"
+        ],
+        "outputIds": [
+          "OUT-01",
+          "OUT-03"
+        ],
+        "policyIds": [
+          "POL-02"
+        ],
+        "completionCriteria": [
+          "Review result and next decision has a typed result with its evidence and gaps recorded."
+        ],
+        "failureBehavior": "stop",
+        "escalationId": null
+      }
+    ],
+    "branches": [
+      {
+        "branchId": "BR-01",
+        "afterStepId": "STEP-04",
+        "condition": "Evidence is sufficient for the declared purpose and permitted use.",
+        "onTrueStepId": "STEP-05",
+        "onFalseStepId": "STEP-06"
+      }
+    ],
+    "completionCriteria": [
+      "The evidence-linked result and next human decision are readable and scoped to the Goal.",
+      "Material gaps, conflicts, uncertainty, permitted use and stops remain visible."
+    ],
+    "failureModes": [
+      {
+        "failureId": "FAIL-01",
+        "condition": "Identity or tenant scope is unresolved.",
+        "response": "stop",
+        "disclosureRequired": true
+      },
+      {
+        "failureId": "FAIL-02",
+        "condition": "A source is denied, failed, stale or incomplete.",
+        "response": "degrade",
+        "disclosureRequired": true
+      },
+      {
+        "failureId": "FAIL-03",
+        "condition": "Policy, consent, authority or material-effect classification is unavailable.",
+        "response": "escalate",
+        "disclosureRequired": true
+      }
+    ],
+    "escalations": [
+      {
+        "escalationId": "ESC-01",
+        "targetRole": "Authorized human owner",
+        "reason": "Resolve identity, evidence, policy, consent, authority or uncertain-outcome conditions that automation cannot safely decide.",
+        "requiredPayload": [
+          "purpose",
+          "subjects",
+          "evidence and gaps",
+          "decision needed",
+          "authority state"
+        ]
+      }
+    ],
+    "stopConditions": [
+      "Identity or tenant scope is ambiguous or conflicts with the request.",
+      "A required source is denied or failed and the disclosed fallback is insufficient.",
+      "Evidence is too incomplete, stale or conflicting for a safe recommendation.",
+      "The requested material effect is outside authority, or any deletion lacks fresh exact human authorization.",
+      "Consent, suppression, frequency-cap, quiet-hours or contact-purpose checks fail or are unavailable.",
+      "A current service issue, complaint, vulnerable-customer signal or other service conflict makes contact unsafe."
+    ],
+    "scheduleRegistration": "not-implemented"
+  },
+  "handoffs": [
+    {
+      "handoffId": "HO-01",
+      "direction": "outbound",
+      "targetRole": "Authorized human owner",
+      "payloadTypes": [
+        "result",
+        "evidence references",
+        "uncertainties",
+        "source gaps",
+        "policy and authority state",
+        "next decision"
+      ],
+      "acceptanceCriteria": [
+        "Recipient can identify the subject, purpose, evidence, gaps, authority and requested decision."
+      ],
+      "failureBehavior": "escalate"
+    }
+  ],
+  "policies": [
+    {
+      "policyId": "POL-01",
+      "name": "Purpose, identity and minimum-necessary context gate",
+      "requirementRefs": [
+        "FR-EDU-001",
+        "SAFE-SURVEIL-001"
+      ],
+      "gate": "before-read",
+      "decisionRequired": true,
+      "failureBehavior": "stop"
+    },
+    {
+      "policyId": "POL-02",
+      "name": "Evidence, consent, effect and authority gate",
+      "requirementRefs": [
+        "FR-EDU-001",
+        "SAFE-SURVEIL-001"
+      ],
+      "gate": "before-synthesis",
+      "decisionRequired": true,
+      "failureBehavior": "stop"
+    }
+  ],
+  "sources": {
+    "capabilityIntents": [
+      "source.activity.read",
+      "source.content.read",
+      "source.entitlement.read",
+      "source.identity.read",
+      "source.knowledge.read",
+      "source.relationship.read",
+      "source.service.read"
+    ],
+    "meaningRule": "Sources are selected by adapter capability intent and provide evidence; vendor products and schemas do not define NeoCRM canonical meaning.",
+    "readScope": {
+      "principalBound": true,
+      "purposeBound": true,
+      "minimumNecessary": true,
+      "subjectScope": "Only resolved parties, relationships and work items necessary for the declared Goal.",
+      "fieldScope": [
+        "party identity",
+        "service state",
+        "entitlement",
+        "commitments and outcomes",
+        "provenance"
+      ],
+      "timeScope": "Current state plus the bounded historical window declared by the requesting Goal.",
+      "deniedOrFailedSourceTreatment": "Disclose the gap; never infer absence, zero, or permission from an unavailable source."
+    },
+    "zeroConnectorFallback": {
+      "supported": true,
+      "modes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "degradationDisclosure": "Fallback inputs reduce freshness, completeness, verification and automation; show those limits beside the result."
+    }
+  },
+  "authority": {
+    "mode": "read-and-propose",
+    "writeIntent": "draft-only",
+    "maximumMaterialEffect": "draft",
+    "riskClass": "high",
+    "approvalMode": "human-review-before-reliance",
+    "effectClassifierRequired": true,
+    "requiresWriteGrantForExecution": false,
+    "writeGrantRule": "A WriteGrant authorizes only registered, scoped, time-bounded non-destructive actions; it never authorizes deletion.",
+    "deletionRule": "Every deletion effect requires fresh exact human DeletionAuthorization bound to an immutable target list.",
+    "effectClassificationRule": "Authority follows the material effect, not the source-system verb; destructive clearing, unlinking, erasure, purge, or equivalent removal is deletion.",
+    "connectionRegistrationGrantsAuthority": false,
+    "liveExecutionEnabled": false,
+    "verificationAndReceiptRequired": true,
+    "humanReviewPoints": [
+      "Confirm ambiguous identity, intent, consent, evidence conflicts and material recommendations.",
+      "Review the exact action preview and applicable authority before any external execution."
+    ]
+  },
+  "operationalControls": {
+    "budgets": {
+      "maxContextRecords": 500,
+      "maxActions": 0,
+      "maxRuntimeSeconds": 300,
+      "maxCost": 0,
+      "currency": null
+    },
+    "idempotency": {
+      "requiredForExternalEffects": true,
+      "keyStrategy": "Bind any future external effect to workflow version, Goal, exact target, preview digest and grant."
+    },
+    "retry": {
+      "mode": "safe-read-only",
+      "maxAttempts": 2,
+      "uncertainOutcome": "Stop, verify target state, and require human resolution before any potentially duplicative or destructive retry."
+    },
+    "cursorCheckpoint": {
+      "mode": "not-required",
+      "resumeRule": "Resume only from a durable, principal-bound checkpoint after revalidating purpose, freshness and authority."
+    },
+    "time": {
+      "timezoneSource": "resolved-party-with-user-confirmation",
+      "quietHoursRequiredForContact": true,
+      "scheduleTruthRule": "Never claim a future run exists until a scheduler returns a durable schedule identifier and human-readable receipt."
+    },
+    "decisionSupport": {
+      "evidenceRequired": true,
+      "counterevidenceRequired": true,
+      "unknownsRequired": true,
+      "modelVersionRequired": true,
+      "expiryRequired": true,
+      "permittedUseRequired": true
+    },
+    "verification": {
+      "requiredForExternalEffects": true,
+      "method": "Read back or independently confirm exact target state before reporting success."
+    },
+    "compensation": {
+      "requiredForExternalEffects": true,
+      "rule": "Compensation is a new governed action; it is not an unaudited rollback shortcut."
+    },
+    "receipt": {
+      "requiredForExternalEffects": true,
+      "humanReadable": true,
+      "contents": [
+        "authority",
+        "targets",
+        "result",
+        "verification",
+        "cost",
+        "correction",
+        "compensation",
+        "timestamp"
+      ]
+    }
+  },
+  "experience": {
+    "menuLabel": "Customer Education and Enablement",
+    "oneLineSummary": "Help an authorized service or customer-success teammate complete customer education and enablement from relationship evidence while keeping source gaps, uncertainty and authority visible.",
+    "personas": [
+      {
+        "personaId": "PERSONA-SERVICE",
+        "label": "Service or customer-success teammate",
+        "aliases": [
+          "service agent",
+          "support lead",
+          "customer success manager"
+        ]
+      }
+    ],
+    "aliases": [
+      "customer education and enablement",
+      "service customer education and enablement",
+      "help with customer education and enablement"
+    ],
+    "searchTerms": [
+      "service",
+      "customer",
+      "education",
+      "and",
+      "enablement"
+    ],
+    "invocationExamples": [
+      "Help me with customer education and enablement and show the evidence, gaps and decisions I need to make."
+    ],
+    "outputPresentation": [
+      "Lead with the outcome and the next human decision.",
+      "Separate evidence, interpretation, hypothesis, uncertainty and missing context.",
+      "Expose source degradation, authority stops and any proposed action."
+    ],
+    "emptyState": "Explain which evidence is missing, why it matters, what fallback inputs are safe, and what can still be done without inventing a result."
+  },
+  "traceability": {
+    "capabilityIds": [],
+    "objectIds": [
+      "OBJ-125",
+      "OBJ-126",
+      "OBJ-127",
+      "OBJ-128",
+      "OBJ-129"
+    ],
+    "viewIds": [
+      "VIEW-026"
+    ],
+    "requirementIds": [
+      "FR-EDU-001",
+      "SAFE-SURVEIL-001"
+    ],
+    "decisionRegisterIds": [],
+    "experimentIds": [
+      "EXP-023"
+    ],
+    "evaluationIds": []
+  },
+  "status": {
+    "specificationStatus": "Proposed",
+    "implementationStatus": "NotStarted",
+    "evidenceMaturity": "Unassessed",
+    "deliveryHorizon": "P2",
+    "runtimeClaim": "Definition scaffolding only; no workflow router, live write, send, schedule, or connection-registration runtime is claimed.",
+    "evidenceBoundary": "The definition is mapped to planned experiments and evaluation plans; no workflow-specific runtime or outcome evidence is claimed."
+  },
+  "evaluation": {
+    "status": "NotStarted",
+    "plannedFixtureIds": [
+      "PLANNED-FIXTURE-WF-SRV-015"
+    ],
+    "evidenceGap": "A workflow-specific fixture, adversarial cases, human review and outcome evidence must be created and run before any demonstration claim.",
+    "acceptanceCriteria": [
+      "Routes only when the declared job, principal and source capability intents match.",
+      "Discloses missing, denied, stale and conflicting evidence without treating missing as zero.",
+      "Stops action execution without the required policy decision, authority, verification and receipt path.",
+      "Returns a readable result that exposes evidence, counterevidence, unknowns, uncertainty, degradation and the next human decision.",
+      "Blocks contact when consent, suppression, frequency, quiet-hours or service-conflict controls are not satisfied."
+    ],
+    "knownGaps": [
+      "The workflow definition, router, adapters, runtime path and outcome evidence have not been implemented and evaluated as a unit."
+    ]
+  },
+  "changeControl": {
+    "owner": "NeoCRM product architecture",
+    "lastReviewed": "2026-09-24",
+    "definitionChangesRequire": [
+      "schema-validation",
+      "traceability-review",
+      "evaluation-review",
+      "safety-review",
+      "human-approval"
+    ],
+    "authorityExpansionRequires": "A separately reviewed contract, policy, experiment, and human approval; editing this definition cannot grant authority.",
+    "historyPolicy": "Version definitions and preserve superseded evidence; do not silently rewrite observed outcomes or receipts."
+  }
+}
