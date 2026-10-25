@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0.0",
   "status": "Specification scaffolding; no live routing or execution runtime is claimed.",
-  "definitionCount": 57,
+  "definitionCount": 58,
   "groups": {
-    "sales": 14,
+    "sales": 15,
     "marketing": 14,
     "service": 16,
     "meta": 4,
@@ -415,6 +415,37 @@
         "manual-entry"
       ],
       "path": "workflows/sales/WF-SAL-014-dormant-relationship-reactivation/workflow.json"
+    },
+    {
+      "workflowId": "WF-SAL-015",
+      "title": "Pre-Proposal Services Scoping Handoff",
+      "slug": "pre-proposal-services-scoping-handoff",
+      "primaryDomain": "sales",
+      "canonicalPerspective": "sales",
+      "routable": true,
+      "specificationStatus": "Proposed",
+      "implementationStatus": "NotStarted",
+      "evidenceMaturity": "Unassessed",
+      "deliveryHorizon": "P1",
+      "authorityMode": "read-and-propose",
+      "writeIntent": "draft-only",
+      "requiredSourceCapabilityIntents": [
+        "source.activity.read",
+        "source.commercial.read",
+        "source.conversation.read",
+        "source.identity.read",
+        "source.knowledge.read",
+        "source.relationship.read",
+        "source.service.read"
+      ],
+      "zeroConnectorFallbackModes": [
+        "pasted-text",
+        "uploaded-document",
+        "csv",
+        "user-owned-local-source",
+        "manual-entry"
+      ],
+      "path": "workflows/sales/WF-SAL-015-pre-proposal-services-scoping-handoff/workflow.json"
     },
     {
       "workflowId": "WF-MKT-001",

@@ -21,3 +21,7 @@ Measure explanation/citation validity, reproducibility, calibration, error, over
 ## Results record
 
 Version definitions, inputs, observations, overrides, outcomes, analyses, limitations, and reviewer decisions.
+
+## Proposed addition (2026-10-25): methodology pack fixtures
+
+Use the [MEDDPICC pack](../../spec/domain/methodology/meddpicc.md) (QD-001) as the first QualificationDefinition fixture and compare it with a no-pack baseline on the same opportunities. Under FR-METHOD-001 the workflow steps, authority and stops must be identical in both conditions; only attributes, dimensions and labels may differ. Fail the run if a pack changes a step, if a dimension is Confirmed on seller notes alone, if Missing and Not assessable are merged, or if any assessment is used to rank sellers.

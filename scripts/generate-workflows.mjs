@@ -39,16 +39,17 @@ const sales = [
   row("SAL", "002", "account-research-and-buying-group", { exp: "008/019", obj: "001..008/070..071/075..076", view: "004/005/021", req: "FR-BUYINGGROUP-001" }, { writeIntent: "none" }),
   row("SAL", "003", "lead-triage-and-call-plan", { exp: "018/019/024", obj: "021..023/033/070..071/093..099", view: "007/008/021", req: "FR-QUALIFY-001/FR-METRIC-001/FR-SUPERVISOR-001" }, { writeIntent: "draft-only" }),
   row("SAL", "004", "speed-to-lead-and-booking", { exp: "020", obj: "028..036/064..071", view: "007/008/017/023", req: "FR-INBOUND-001/SAFE-CONTACT-001" }, { writeIntent: "governed-action-proposal" }),
-  row("SAL", "005", "opportunity-qualification-and-next-step", { exp: "018/019", obj: "012/030..033/062/070/093..100", view: "014/015/021", req: "FR-QUALIFY-001" }, { writeIntent: "governed-action-proposal" }),
+  row("SAL", "005", "opportunity-qualification-and-next-step", { exp: "018/019", obj: "012/030..033/062/070/093..100", view: "014/015/021", req: "FR-QUALIFY-001/FR-METHOD-001" }, { writeIntent: "governed-action-proposal" }),
   row("SAL", "006", "pipeline-review-and-hygiene", { exp: "015/017/018", obj: "012..015/020/033/070/083..099", view: "008/015/019/021/022", req: "FR-DATAQUALITY-001" }, { writeIntent: "governed-action-proposal" }),
   row("SAL", "007", "conversation-capture-and-commitment-review", { exp: "009/013", obj: "015..017/020/089..092", view: "006/020", req: "FR-CONVINT-001" }, { writeIntent: "draft-only" }),
   row("SAL", "008", "consent-aware-follow-up", { exp: "014", obj: "016/020/062/064..065/104..105", view: "006/009", req: "FR-FOLLOWUP-001/SAFE-CONTACT-001" }, { writeIntent: "governed-action-proposal" }),
   row("SAL", "009", "outreach-sequence-and-enrollment", { exp: "019", obj: "030..033/064..065/100..105", view: "014/017/021", req: "FR-SEQUENCE-001" }, { writeIntent: "governed-action-proposal" }),
-  row("SAL", "010", "account-and-mutual-action-plan", { exp: "019", obj: "003/020/030..033/100", view: "014/021/028", req: "FR-ACCOUNTPLAN-001" }, { writeIntent: "draft-only" }),
+  row("SAL", "010", "account-and-mutual-action-plan", { exp: "019", obj: "003/020/030..033/100", view: "014/021/028", req: "FR-ACCOUNTPLAN-001/FR-METHOD-001" }, { writeIntent: "draft-only" }),
   row("SAL", "011", "proposal-and-rfp-response", { exp: "022", obj: "009..014/020/075..076/121..124", view: "015/025", req: "FR-CONTENT-001", dec: "D06/D45" }, { writeIntent: "draft-only", note: "Draft only; pricing, terms, commitments and commercial decisions remain external human decisions." }),
   row("SAL", "012", "governed-crm-activity-and-opportunity-update", { exp: "015", obj: "012/015/020/041..050/082/087", view: "009/011/013/015", req: "FR-ACT-001/FR-GRANT-001/FR-DELETE-001" }, { writeIntent: "governed-action-proposal" }),
   row("SAL", "013", "forecast-and-scenario-review", { exp: "018", obj: "097..110", view: "022", req: "FR-FORECAST-001/FR-METRIC-001" }, { writeIntent: "none" }),
-  row("SAL", "014", "dormant-relationship-reactivation", { exp: "014/019/020", obj: "003/016/064..071/100..105", view: "017/021/023", req: "FR-FOLLOWUP-001/FR-SEQUENCE-001/SAFE-CONTACT-001" }, { writeIntent: "governed-action-proposal" })
+  row("SAL", "014", "dormant-relationship-reactivation", { exp: "014/019/020", obj: "003/016/064..071/100..105", view: "017/021/023", req: "FR-FOLLOWUP-001/FR-SEQUENCE-001/SAFE-CONTACT-001" }, { writeIntent: "governed-action-proposal" }),
+  row("SAL", "015", "pre-proposal-services-scoping-handoff", { exp: "013/019/021", obj: "011..012/015..017/020..022/030..033/036/070/072..073/089..092", view: "003/015/020/021", req: "FR-SVCSCOPE-001/FR-HANDOFF-001/FR-ACCOUNTPLAN-001/FR-METHOD-001", dec: "D06" }, { writeIntent: "draft-only", sourceIntentOverride: ["source.activity.read", "source.commercial.read", "source.conversation.read", "source.identity.read", "source.knowledge.read", "source.relationship.read", "source.service.read"], note: "Draft only; scope and effort ranges are hypotheses for services review. Pricing, SOW terms, staffing and delivery dates remain external human decisions." })
 ];
 
 const marketing = [
@@ -123,7 +124,8 @@ const title = (slug) => slug
     if (["and", "to", "of"].includes(word) && index > 0) return word;
     return `${word[0].toUpperCase()}${word.slice(1)}`;
   })
-  .join(" ");
+  .join(" ")
+  .replace(/^Pre /, "Pre-");
 
 const phrase = (slug) => slug.replaceAll("-", " ");
 
@@ -844,7 +846,7 @@ const guide = (definition, traceNodes) => {
 const outcomeSections = {
   sales: [
     ["Prepare and qualify", ["WF-SAL-001", "WF-SAL-002", "WF-SAL-003", "WF-SAL-005"]],
-    ["Coordinate and follow through", ["WF-SAL-004", "WF-SAL-007", "WF-SAL-008", "WF-SAL-009", "WF-SAL-010", "WF-SAL-011", "WF-SAL-012", "WF-SAL-014"]],
+    ["Coordinate and follow through", ["WF-SAL-004", "WF-SAL-007", "WF-SAL-008", "WF-SAL-009", "WF-SAL-010", "WF-SAL-011", "WF-SAL-012", "WF-SAL-014", "WF-SAL-015"]],
     ["Manage pipeline and forecast", ["WF-SAL-006", "WF-SAL-013"]]
   ],
   marketing: [
@@ -931,9 +933,9 @@ const guideLink = (workflowId) => {
 
 const rootReadme = (groups) => `# NeoCRM workflow catalogue
 
-This is the human entry point to NeoCRM's 57 workflow definitions. It organizes customer-relationship jobs without turning prompts, vendor schemas or connections into the product architecture. Every workflow folder contains a strict [WorkflowDefinition](../spec/contracts/workflow-definition.schema.json) and a generated guide.
+This is the human entry point to NeoCRM's 58 workflow definitions. It organizes customer-relationship jobs without turning prompts, vendor schemas or connections into the product architecture. Every workflow folder contains a strict [WorkflowDefinition](../spec/contracts/workflow-definition.schema.json) and a generated guide.
 
-> The [specification directory](../spec/README.md) is the sole product authority. This catalogue is generated navigation and governance scaffolding—not 57 running automations.
+> The [specification directory](../spec/README.md) is the sole product authority. This catalogue is generated navigation and governance scaffolding—not 58 running automations.
 
 ## Start here
 
@@ -949,7 +951,7 @@ This is the human entry point to NeoCRM's 57 workflow definitions. It organizes 
 | Meta | ${groups.meta.length} | Onboarding, conversational routing, operations pulse and safe workflow simulation | [Browse Meta](_meta/README.md) |
 | Shared controls | ${groups.shared.length} | Identity, evidence, consent, time, handoff, action verification and learning controls | [Browse Shared controls](_shared/README.md) |
 
-The count is **57 total = 14 Sales + 14 Marketing + 16 Service + 4 Meta + 9 Shared controls**. The 44 business definitions and four Meta definitions are **48 routable definitions**. The nine Shared controls are **internal and non-routable**; registered parent workflows call them within the parent's principal, purpose and authority.
+The count is **58 total = 15 Sales + 14 Marketing + 16 Service + 4 Meta + 9 Shared controls**. The 45 business definitions and four Meta definitions are **49 routable definitions**. The nine Shared controls are **internal and non-routable**; registered parent workflows call them within the parent's principal, purpose and authority.
 
 ## Find by outcome
 
@@ -1028,7 +1030,7 @@ const firstExperimentGuide = () => [
   "",
   "Use this path to rehearse the first bounded NeoCRM experience: prepare a relationship brief from Zoho operational evidence and explicitly approved Obsidian context. It is read-only and designed to keep provenance, missing evidence, uncertainty and human judgment visible.",
   "",
-  "> This is a practical path through the current repository, not evidence that 57 automations exist. The runnable implementation is the narrower CAP-001 / EXP-001 slice. Live and human experiment evidence is still pending.",
+  "> This is a practical path through the current repository, not evidence that 58 automations exist. The runnable implementation is the narrower CAP-001 / EXP-001 slice. Live and human experiment evidence is still pending.",
   "",
   "## Understand the path",
   "",
@@ -1144,6 +1146,15 @@ const routingFixtures = (definitions) => ({
         kind: "clarification",
         candidateWorkflowIds: ["WF-SAL-012", "WF-SRV-007", "WF-SRV-008"],
         question: "Do you want a CRM correction proposal, service resolution verification, or complaint redress—and does any requested effect delete data?"
+      }
+    },
+    {
+      fixtureId: "ROUTE-AMB-004",
+      utterance: "Hand this deal over to services.",
+      expected: {
+        kind: "clarification",
+        candidateWorkflowIds: ["WF-SAL-015", "WF-SRV-006"],
+        question: "Is this a pre-proposal scoping handoff for an open deal, or a post-sale service handoff or escalation?"
       }
     }
   ]

@@ -4,7 +4,7 @@
 
 Use this path to rehearse the first bounded NeoCRM experience: prepare a relationship brief from Zoho operational evidence and explicitly approved Obsidian context. It is read-only and designed to keep provenance, missing evidence, uncertainty and human judgment visible.
 
-> This is a practical path through the current repository, not evidence that 57 automations exist. The runnable implementation is the narrower CAP-001 / EXP-001 slice. Live and human experiment evidence is still pending.
+> This is a practical path through the current repository, not evidence that 58 automations exist. The runnable implementation is the narrower CAP-001 / EXP-001 slice. Live and human experiment evidence is still pending.
 
 ## Understand the path
 

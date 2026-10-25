@@ -262,6 +262,8 @@
     { "id": "FR-EDU-001", "kind": "requirement", "specificationStatus": "Accepted", "implementationStatus": "Planned", "evidenceMaturity": "Planned", "deliveryHorizon": "P2", "file": "spec/requirements/approved-portfolio.md" },
     { "id": "FR-TERRITORY-001", "kind": "requirement", "specificationStatus": "Accepted", "implementationStatus": "NotStarted", "evidenceMaturity": "Unassessed", "deliveryHorizon": "Future", "file": "spec/requirements/approved-portfolio.md" },
     { "id": "FR-SUPERVISOR-001", "kind": "requirement", "specificationStatus": "Accepted", "implementationStatus": "Planned", "evidenceMaturity": "Planned", "deliveryHorizon": "P2", "file": "spec/requirements/approved-portfolio.md" },
+    { "id": "FR-METHOD-001", "kind": "requirement", "specificationStatus": "Proposed", "implementationStatus": "Planned", "evidenceMaturity": "Planned", "deliveryHorizon": "P1", "file": "spec/requirements/proposed-2026-10-25.md" },
+    { "id": "FR-SVCSCOPE-001", "kind": "requirement", "specificationStatus": "Proposed", "implementationStatus": "Planned", "evidenceMaturity": "Planned", "deliveryHorizon": "P1", "file": "spec/requirements/proposed-2026-10-25.md" },
 
     { "id": "NFR-USE-001", "kind": "quality", "specificationStatus": "Proposed", "implementationStatus": "Planned", "evidenceMaturity": "Planned", "deliveryHorizon": "P1", "file": "spec/requirements/quality.md" },
     { "id": "NFR-TIME-001", "kind": "quality", "specificationStatus": "Proposed", "implementationStatus": "Planned", "evidenceMaturity": "Planned", "deliveryHorizon": "P1", "file": "spec/requirements/quality.md" },
@@ -735,6 +737,8 @@
     { "from": "FR-EDU-001", "to": "ADR-0018", "relation": "governed-by" },
     { "from": "FR-TERRITORY-001", "to": "ADR-0018", "relation": "governed-by" },
     { "from": "FR-SUPERVISOR-001", "to": "ADR-0018", "relation": "governed-by" },
+    { "from": "FR-METHOD-001", "to": "ADR-0018", "relation": "governed-by" },
+    { "from": "FR-SVCSCOPE-001", "to": "ADR-0018", "relation": "governed-by" },
 
     { "from": "NFR-USE-001", "to": "ADR-0001", "relation": "governed-by" },
     { "from": "NFR-TIME-001", "to": "ADR-0004", "relation": "governed-by" },

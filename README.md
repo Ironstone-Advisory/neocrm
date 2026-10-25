@@ -26,7 +26,7 @@ The repository now includes configurable read-only Zoho and Obsidian adapters an
 
 CAP-001 and EXP-001 remain read-only. The product owner has accepted a broader [forty-eight-decision product direction](spec/product/decision-register.md), including time-bounded experimental write authority, a multi-workflow Zoho experiment, and a binding rule that every deletion requires fresh exact human authorization. Those additions are specifications and Planned experiments—not deployed write capability or validated product evidence.
 
-The additive [workflow catalogue](workflows/README.md) now organizes 57 host-neutral definitions across Sales, Marketing, Service, product-level Meta workflows, and non-routable Shared controls. These definitions make jobs, source intents, governance, fallbacks, typed flow, evaluation gaps, and discoverability explicit. They are specification scaffolding: no workflow router, live send/write, schedule registration, connection-registration runtime, or action gateway is claimed.
+The additive [workflow catalogue](workflows/README.md) now organizes 58 host-neutral definitions across Sales, Marketing, Service, product-level Meta workflows, and non-routable Shared controls. These definitions make jobs, source intents, governance, fallbacks, typed flow, evaluation gaps, and discoverability explicit. They are specification scaffolding: no workflow router, live send/write, schedule registration, connection-registration runtime, or action gateway is claimed.
 
 For a guided route through the current runnable slice, start with the [Zoho + Obsidian first-experiment path](workflows/FIRST-EXPERIMENT.md). It distinguishes the intended workflow sequence from the narrower CAP-001 / EXP-001 implementation that exists today.
 
@@ -37,7 +37,8 @@ The first product experiment, [EXP-001](experiments/EXP-001-zoho-obsidian-relati
 | Path | Responsibility |
 | --- | --- |
 | [`spec/`](spec/README.md) | Product authority: origin, canonical design, domain, architecture, experience, requirements, decisions, and capability scopes |
-| [`workflows/`](workflows/README.md) | 57 strict WorkflowDefinitions: Sales, Marketing/Engagement, Service, Meta coordination, and Shared controls |
+| [`workflows/`](workflows/README.md) | 58 strict WorkflowDefinitions: Sales, Marketing/Engagement, Service, Meta coordination, and Shared controls |
+| [`skills/`](skills/README.md) | Zero-connector agent skills that front NeoCRM workflows from pasted or uploaded material; Proposed, no evaluation yet |
 | [`experiments/`](experiments/README.md) | Unique EXP-001 through EXP-025 hypotheses, protocols, and evidence records |
 | [`evals/`](evals/README.md) | Bounded repeatable evaluations; EVAL-001 covers only CAP-001 |
 | [`apps/assistant/`](apps/assistant/README.md) | Deterministic conversational reference shell for CAP-001 |
