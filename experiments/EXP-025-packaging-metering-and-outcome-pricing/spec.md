@@ -21,3 +21,7 @@ Measure comprehension, predictability, willingness/value evidence, dispute resol
 ## Results record
 
 Version packaging/pricing stimuli, assumptions, segments, responses, calculations, disputes, negative findings, limitations, and resulting product decision.
+
+## Proposed addition (2026-10-25): external billing and spend adapters
+
+D06 keeps billing and payment outside NeoCRM, so metering providers are adapters, not product features. Candidates noted in a March 2026 working session, to be re-verified before design: Stripe's AI usage and token billing (then in private preview), which meters model calls and applies a markup, and Ramp Agent Cards, which give agents scoped, tokenized card credentials with spend limits. NeoCRM's job is the pre-action estimate, the post-action reconciliation and the readable receipt; the provider does the charging. Test whether customers can reconcile one NeoCRM receipt to one provider line item without help.

@@ -116,6 +116,14 @@
     },
     {
       "fixtureId": "ROUTE-015",
+      "utterance": "Help me with pre proposal services scoping handoff and show the evidence, gaps and decisions I need to make.",
+      "expected": {
+        "kind": "workflow",
+        "workflowId": "WF-SAL-015"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-016",
       "utterance": "Help me with audience and contact eligibility and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -123,7 +131,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-016",
+      "fixtureId": "ROUTE-017",
       "utterance": "Help me with campaign brief and goal plan and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -131,7 +139,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-017",
+      "fixtureId": "ROUTE-018",
       "utterance": "Help me with content strategy and key messages and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -139,7 +147,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-018",
+      "fixtureId": "ROUTE-019",
       "utterance": "Help me with content and asset variant drafting and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -147,7 +155,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-019",
+      "fixtureId": "ROUTE-020",
       "utterance": "Help me with brand rights and claims review and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -155,7 +163,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-020",
+      "fixtureId": "ROUTE-021",
       "utterance": "Help me with treatment experiment design and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -163,7 +171,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-021",
+      "fixtureId": "ROUTE-022",
       "utterance": "Help me with assignment exposure and holdout audit and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -171,7 +179,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-022",
+      "fixtureId": "ROUTE-023",
       "utterance": "Help me with adaptive journey recommendation and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -179,7 +187,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-023",
+      "fixtureId": "ROUTE-024",
       "utterance": "Help me with intent signal and account activation and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -187,7 +195,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-024",
+      "fixtureId": "ROUTE-025",
       "utterance": "Help me with inbound qualification booking and handoff and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -195,7 +203,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-025",
+      "fixtureId": "ROUTE-026",
       "utterance": "Help me with intelligent marketing follow and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -203,7 +211,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-026",
+      "fixtureId": "ROUTE-027",
       "utterance": "Help me with campaign performance and attribution and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -211,7 +219,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-027",
+      "fixtureId": "ROUTE-028",
       "utterance": "Help me with weekly growth and channel brief and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -219,7 +227,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-028",
+      "fixtureId": "ROUTE-029",
       "utterance": "Help me with reputation and voice of customer and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -227,7 +235,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-029",
+      "fixtureId": "ROUTE-030",
       "utterance": "Help me with customer and service brief and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -235,7 +243,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-030",
+      "fixtureId": "ROUTE-031",
       "utterance": "Help me with case intake identity and entitlement and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -243,7 +251,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-031",
+      "fixtureId": "ROUTE-032",
       "utterance": "Help me with case triage and priority and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -251,7 +259,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-032",
+      "fixtureId": "ROUTE-033",
       "utterance": "Help me with response draft and deflection and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -259,7 +267,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-033",
+      "fixtureId": "ROUTE-034",
       "utterance": "Help me with sla and commitment monitor and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -267,7 +275,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-034",
+      "fixtureId": "ROUTE-035",
       "utterance": "Help me with service handoff and escalation and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -275,7 +283,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-035",
+      "fixtureId": "ROUTE-036",
       "utterance": "Help me with resolution verification and closure and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -283,7 +291,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-036",
+      "fixtureId": "ROUTE-037",
       "utterance": "Help me with complaint correction and redress and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -291,7 +299,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-037",
+      "fixtureId": "ROUTE-038",
       "utterance": "Help me with customer health review and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -299,7 +307,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-038",
+      "fixtureId": "ROUTE-039",
       "utterance": "Help me with success plan and outcome review and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -307,7 +315,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-039",
+      "fixtureId": "ROUTE-040",
       "utterance": "Help me with customer onboarding and adoption and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -315,7 +323,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-040",
+      "fixtureId": "ROUTE-041",
       "utterance": "Help me with usage and entitlement anomaly and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -323,7 +331,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-041",
+      "fixtureId": "ROUTE-042",
       "utterance": "Help me with renewal readiness and churn risk and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -331,7 +339,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-042",
+      "fixtureId": "ROUTE-043",
       "utterance": "Help me with expansion with service guard and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -339,7 +347,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-043",
+      "fixtureId": "ROUTE-044",
       "utterance": "Help me with customer education and enablement and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -347,7 +355,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-044",
+      "fixtureId": "ROUTE-045",
       "utterance": "Help me with service knowledge capture and update and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -355,7 +363,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-045",
+      "fixtureId": "ROUTE-046",
       "utterance": "Help me with guided onboarding and source readiness and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -363,7 +371,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-046",
+      "fixtureId": "ROUTE-047",
       "utterance": "Help me with conversational intent router and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -371,7 +379,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-047",
+      "fixtureId": "ROUTE-048",
       "utterance": "Help me with relationship operations pulse and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -379,7 +387,7 @@
       }
     },
     {
-      "fixtureId": "ROUTE-048",
+      "fixtureId": "ROUTE-049",
       "utterance": "Help me with workflow authoring and simulation and show the evidence, gaps and decisions I need to make.",
       "expected": {
         "kind": "workflow",
@@ -422,6 +430,18 @@
           "WF-SRV-008"
         ],
         "question": "Do you want a CRM correction proposal, service resolution verification, or complaint redress—and does any requested effect delete data?"
+      }
+    },
+    {
+      "fixtureId": "ROUTE-AMB-004",
+      "utterance": "Hand this deal over to services.",
+      "expected": {
+        "kind": "clarification",
+        "candidateWorkflowIds": [
+          "WF-SAL-015",
+          "WF-SRV-006"
+        ],
+        "question": "Is this a pre-proposal scoping handoff for an open deal, or a post-sale service handoff or escalation?"
       }
     }
   ]

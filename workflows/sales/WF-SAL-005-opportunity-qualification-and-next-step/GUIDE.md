@@ -85,7 +85,7 @@ Planned evaluation checks:
 - Returns a readable result that exposes evidence, counterevidence, unknowns, uncertainty, degradation and the next human decision.
 - Shows model or rule version, expiry and permitted use beside every score, forecast or risk recommendation.
 
-Traceability: `FR-QUALIFY-001`, `EXP-018`, `EXP-019`.
+Traceability: `FR-QUALIFY-001`, `FR-METHOD-001`, `EXP-018`, `EXP-019`.
 
 ## Related artifacts
 
@@ -93,6 +93,7 @@ Traceability: `FR-QUALIFY-001`, `EXP-018`, `EXP-019`.
 - [WorkflowDefinition schema](../../../spec/contracts/workflow-definition.schema.json)
 - [Adapter capability catalogue](../../../adapters/_catalog/README.md)
 - [FR-QUALIFY-001](../../../spec/requirements/approved-portfolio.md)
+- [FR-METHOD-001](../../../spec/requirements/proposed-2026-10-25.md)
 - [EXP-018](../../../experiments/EXP-018-qualification-metrics-and-forecast/spec.md)
 - [EXP-019](../../../experiments/EXP-019-sales-playbooks-buying-groups-and-account-plans/spec.md)
 

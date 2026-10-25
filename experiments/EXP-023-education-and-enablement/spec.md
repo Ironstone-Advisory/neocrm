@@ -21,3 +21,7 @@ Measure skill improvement, feedback usefulness, assessment reliability/fairness,
 ## Results record
 
 Record versions, consent/notice, rubric evidence, learner feedback, appeals/corrections, aggregate outcomes, and limitations; do not commit identifiable employee content.
+
+## Proposed addition (2026-10-25): benchmark-practitioner exemplars
+
+One tempting design is to mine a top seller's calls, email and proposals and coach everyone else toward that pattern. It is in scope only as **exemplars, not a scoring model**: the benchmark person gives informed consent, is credited, can withdraw, and sees what is extracted; others are shown examples, not ranked against a person. Relationship-skill proxies (talk ratio, validation before pivoting, stakeholder coverage) are observations about a conversation, never inferences about anyone's emotional intelligence or character. Any drift from exemplar to ranking is the hidden-scoring hard stop above.

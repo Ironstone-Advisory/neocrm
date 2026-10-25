@@ -75,7 +75,7 @@ Planned evaluation checks:
 - Stops action execution without the required policy decision, authority, verification and receipt path.
 - Returns a readable result that exposes evidence, counterevidence, unknowns, uncertainty, degradation and the next human decision.
 
-Traceability: `FR-ACCOUNTPLAN-001`, `EXP-019`.
+Traceability: `FR-ACCOUNTPLAN-001`, `FR-METHOD-001`, `EXP-019`.
 
 ## Related artifacts
 
@@ -83,5 +83,6 @@ Traceability: `FR-ACCOUNTPLAN-001`, `EXP-019`.
 - [WorkflowDefinition schema](../../../spec/contracts/workflow-definition.schema.json)
 - [Adapter capability catalogue](../../../adapters/_catalog/README.md)
 - [FR-ACCOUNTPLAN-001](../../../spec/requirements/approved-portfolio.md)
+- [FR-METHOD-001](../../../spec/requirements/proposed-2026-10-25.md)
 - [EXP-019](../../../experiments/EXP-019-sales-playbooks-buying-groups-and-account-plans/spec.md)
 

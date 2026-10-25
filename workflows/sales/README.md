@@ -4,7 +4,7 @@
 
 Use these definitions for seller and revenue-leader jobs. They use the sales canonical perspective while preserving cross-functional relationship context.
 
-**Catalogue boundary:** 14 definitions in the **sales** canonical perspective. These are specification and governance scaffolding, not running automations.
+**Catalogue boundary:** 15 definitions in the **sales** canonical perspective. These are specification and governance scaffolding, not running automations.
 
 Each line shows `authority mode · write intent`; then `specification / implementation / evidence`; then delivery horizon. [Read the plain-language result-mode legend](../README.md#how-to-read-result-mode), or open a guide for source intents, fallbacks, stops, typed flow and traceability.
 
@@ -27,6 +27,7 @@ Each line shows `authority mode · write intent`; then `specification / implemen
 - [WF-SAL-011 — Proposal and RFP Response](WF-SAL-011-proposal-and-rfp-response/GUIDE.md) — **read-and-propose · draft-only**; Proposed / NotStarted / Unassessed; P1.
 - [WF-SAL-012 — Governed CRM Activity and Opportunity Update](WF-SAL-012-governed-crm-activity-and-opportunity-update/GUIDE.md) — **read-and-propose · governed-action-proposal**; Proposed / NotStarted / Unassessed; P1.
 - [WF-SAL-014 — Dormant Relationship Reactivation](WF-SAL-014-dormant-relationship-reactivation/GUIDE.md) — **read-and-propose · governed-action-proposal**; Proposed / NotStarted / Unassessed; P1.
+- [WF-SAL-015 — Pre-Proposal Services Scoping Handoff](WF-SAL-015-pre-proposal-services-scoping-handoff/GUIDE.md) — **read-and-propose · draft-only**; Proposed / NotStarted / Unassessed; P1.
 
 ### Manage pipeline and forecast
 

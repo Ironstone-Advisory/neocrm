@@ -1,8 +1,8 @@
 # NeoCRM workflow catalogue
 
-This is the human entry point to NeoCRM's 57 workflow definitions. It organizes customer-relationship jobs without turning prompts, vendor schemas or connections into the product architecture. Every workflow folder contains a strict [WorkflowDefinition](../spec/contracts/workflow-definition.schema.json) and a generated guide.
+This is the human entry point to NeoCRM's 58 workflow definitions. It organizes customer-relationship jobs without turning prompts, vendor schemas or connections into the product architecture. Every workflow folder contains a strict [WorkflowDefinition](../spec/contracts/workflow-definition.schema.json) and a generated guide.
 
-> The [specification directory](../spec/README.md) is the sole product authority. This catalogue is generated navigation and governance scaffolding—not 57 running automations.
+> The [specification directory](../spec/README.md) is the sole product authority. This catalogue is generated navigation and governance scaffolding—not 58 running automations.
 
 ## Start here
 
@@ -12,13 +12,13 @@ This is the human entry point to NeoCRM's 57 workflow definitions. It organizes 
 
 | Entry point | Count | Use it for | Open |
 | --- | ---: | --- | --- |
-| Sales | 14 | Preparing, qualifying, coordinating, updating, pipeline and forecasting work | [Browse Sales](sales/README.md) |
+| Sales | 15 | Preparing, qualifying, coordinating, updating, pipeline and forecasting work | [Browse Sales](sales/README.md) |
 | Marketing | 14 | Audience, campaign, content, journey, inbound, follow and measurement work | [Browse Marketing](marketing/README.md) |
 | Service | 16 | Intake, response, commitments, resolution, success, renewal and education work | [Browse Service](service/README.md) |
 | Meta | 4 | Onboarding, conversational routing, operations pulse and safe workflow simulation | [Browse Meta](_meta/README.md) |
 | Shared controls | 9 | Identity, evidence, consent, time, handoff, action verification and learning controls | [Browse Shared controls](_shared/README.md) |
 
-The count is **57 total = 14 Sales + 14 Marketing + 16 Service + 4 Meta + 9 Shared controls**. The 44 business definitions and four Meta definitions are **48 routable definitions**. The nine Shared controls are **internal and non-routable**; registered parent workflows call them within the parent's principal, purpose and authority.
+The count is **58 total = 15 Sales + 14 Marketing + 16 Service + 4 Meta + 9 Shared controls**. The 45 business definitions and four Meta definitions are **49 routable definitions**. The nine Shared controls are **internal and non-routable**; registered parent workflows call them within the parent's principal, purpose and authority.
 
 ## Find by outcome
 

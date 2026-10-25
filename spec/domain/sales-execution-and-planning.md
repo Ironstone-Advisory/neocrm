@@ -19,3 +19,5 @@
 - **OBJ-110 ForecastOutcome** — observed actual compared with one or more submissions/snapshots, attribution limits, error measures, explanations, and LearningSignals.
 
 Buying groups remain a versioned view over Party, Role, and Relationship. Account plans remain relationship-scoped Plans; externally shared mutual plans use Commitments and access-controlled views.
+
+QualificationDefinitions, ScoreDefinitions and PlaybookDefinitions are where sales methodologies plug in. Methodologies extend attributes, never workflow steps; see [sales methodology packs](methodology/README.md) (Proposed, FR-METHOD-001).

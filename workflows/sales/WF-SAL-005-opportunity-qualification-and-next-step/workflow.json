@@ -640,7 +640,8 @@
       "policyId": "POL-01",
       "name": "Purpose, identity and minimum-necessary context gate",
       "requirementRefs": [
-        "FR-QUALIFY-001"
+        "FR-QUALIFY-001",
+        "FR-METHOD-001"
       ],
       "gate": "before-read",
       "decisionRequired": true,
@@ -650,7 +651,8 @@
       "policyId": "POL-02",
       "name": "Evidence, consent, effect and authority gate",
       "requirementRefs": [
-        "FR-QUALIFY-001"
+        "FR-QUALIFY-001",
+        "FR-METHOD-001"
       ],
       "gate": "before-execution",
       "decisionRequired": true,
@@ -830,7 +832,8 @@
       "VIEW-021"
     ],
     "requirementIds": [
-      "FR-QUALIFY-001"
+      "FR-QUALIFY-001",
+      "FR-METHOD-001"
     ],
     "decisionRegisterIds": [],
     "experimentIds": [

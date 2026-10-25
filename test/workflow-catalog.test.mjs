@@ -28,7 +28,8 @@ const expectedByFolder = {
     "WF-SAL-011-proposal-and-rfp-response",
     "WF-SAL-012-governed-crm-activity-and-opportunity-update",
     "WF-SAL-013-forecast-and-scenario-review",
-    "WF-SAL-014-dormant-relationship-reactivation"
+    "WF-SAL-014-dormant-relationship-reactivation",
+    "WF-SAL-015-pre-proposal-services-scoping-handoff"
   ],
   marketing: [
     "WF-MKT-001-audience-and-contact-eligibility",
@@ -88,10 +89,10 @@ async function loadDefinitions() {
   return Promise.all(registry.workflows.map(async (entry) => ({ entry, definition: await json(entry.path) })));
 }
 
-test("catalog contains exactly the approved 57 workflows in their canonical folders", async () => {
+test("catalog contains exactly the 58 registered workflows in their canonical folders", async () => {
   const registry = await json("workflows/registry.json");
-  assert.equal(registry.definitionCount, 57);
-  assert.deepEqual(registry.groups, { sales: 14, marketing: 14, service: 16, meta: 4, shared: 9 });
+  assert.equal(registry.definitionCount, 58);
+  assert.deepEqual(registry.groups, { sales: 15, marketing: 14, service: 16, meta: 4, shared: 9 });
   const actual = Object.fromEntries(Object.keys(expectedByFolder).map((folder) => [
     folder,
     registry.workflows
@@ -99,9 +100,9 @@ test("catalog contains exactly the approved 57 workflows in their canonical fold
       .map((entry) => entry.path.split("/").at(-2))
   ]));
   assert.deepEqual(actual, expectedByFolder);
-  assert.equal(new Set(registry.workflows.map((entry) => entry.workflowId)).size, 57);
-  assert.equal(new Set(registry.workflows.map((entry) => entry.path)).size, 57);
-  assert.equal(new Set(registry.workflows.map((entry) => entry.slug)).size, 57);
+  assert.equal(new Set(registry.workflows.map((entry) => entry.workflowId)).size, 58);
+  assert.equal(new Set(registry.workflows.map((entry) => entry.path)).size, 58);
+  assert.equal(new Set(registry.workflows.map((entry) => entry.slug)).size, 58);
 });
 
 test("planned routing fixtures cover every routable workflow and clarify ambiguity", async () => {
@@ -286,8 +287,8 @@ test("adapter manifests are strict, read-only and operationally explicit", async
 test("guides and indexes expose progressive discovery, fallback and planned evidence", async () => {
   const rootReadme = await read("workflows/README.md");
   assert.ok(rootReadme.indexOf("Browse Sales") < rootReadme.indexOf("Browse Meta"));
-  assert.match(rootReadme, /57 total = 14 Sales \+ 14 Marketing \+ 16 Service \+ 4 Meta \+ 9 Shared controls/);
-  assert.match(rootReadme, /48 routable definitions/);
+  assert.match(rootReadme, /58 total = 15 Sales \+ 14 Marketing \+ 16 Service \+ 4 Meta \+ 9 Shared controls/);
+  assert.match(rootReadme, /49 routable definitions/);
   assert.match(rootReadme, /nine Shared controls are \*\*internal and non-routable\*\*/);
   assert.match(rootReadme, /META-001 → META-002 → SAL-001 → SH-001 \/ SH-002 \/ SH-004/);
   for (const heading of ["Find by outcome", "First usable path", "How to read status", "Connections, local-only behavior and fallback"]) {
@@ -295,7 +296,7 @@ test("guides and indexes expose progressive discovery, fallback and planned evid
   }
 
   const firstExperiment = await read("workflows/FIRST-EXPERIMENT.md");
-  assert.match(firstExperiment, /not evidence that 57 automations exist/i);
+  assert.match(firstExperiment, /not evidence that 58 automations exist/i);
   assert.match(firstExperiment, /META-001 → META-002 → SAL-001 → SH-001 \/ SH-002 \/ SH-004/);
   assert.match(firstExperiment, /Zoho CRM[\s\S]*Obsidian[\s\S]*NeoCRM/);
   assert.match(firstExperiment, /operator-guided/);

@@ -471,7 +471,8 @@
       "policyId": "POL-01",
       "name": "Purpose, identity and minimum-necessary context gate",
       "requirementRefs": [
-        "FR-ACCOUNTPLAN-001"
+        "FR-ACCOUNTPLAN-001",
+        "FR-METHOD-001"
       ],
       "gate": "before-read",
       "decisionRequired": true,
@@ -481,7 +482,8 @@
       "policyId": "POL-02",
       "name": "Evidence, consent, effect and authority gate",
       "requirementRefs": [
-        "FR-ACCOUNTPLAN-001"
+        "FR-ACCOUNTPLAN-001",
+        "FR-METHOD-001"
       ],
       "gate": "before-synthesis",
       "decisionRequired": true,
@@ -653,7 +655,8 @@
       "VIEW-028"
     ],
     "requirementIds": [
-      "FR-ACCOUNTPLAN-001"
+      "FR-ACCOUNTPLAN-001",
+      "FR-METHOD-001"
     ],
     "decisionRegisterIds": [],
     "experimentIds": [
