@@ -65,3 +65,12 @@ pnpm exp:001 -- --mode fixture --condition C --query "What do I need to know bef
 ```
 
 `pnpm check` validates specification traceability, repository-relative links, article claims, generated CAP-001 contracts, TypeScript, implementation tests, safety tests, and the deterministic CAP-001 evaluation. Passing it is implementation evidence for this slice, not proof of the broader product hypothesis.
+
+## Licence and citation
+
+- **Code** (source, scripts, schemas and other machine-readable files) is licensed under the [MIT License](LICENSE).
+- **Documentation** (Markdown prose, specifications, the article and figures) is licensed under [Creative Commons Attribution 4.0 International](LICENSE-docs).
+- **Third-party material keeps its own terms.** Quoted and cited sources remain their owners'. The upstream structural inspiration for the workflows is recorded in the [Anthropic source note](workflows/_shared/ANTHROPIC-SOURCE-NOTE.md).
+- **Cite NeoCRM** using [CITATION.cff](CITATION.cff). AI readers can start from [llms.txt](llms.txt).
+
+Rob Tyrie, Ironstone Advisory · rob+neocrm@ironstoneadvisory.com · [ironstoneadvisory.com](https://ironstoneadvisory.com)
