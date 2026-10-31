@@ -1,0 +1,43 @@
+# NeoCRM
+
+> NeoCRM is an open experiment in agent-native customer relationship management by Rob Tyrie, Ironstone Advisory. People and governed specialist agents manage unified relationships across sales, service and marketing, with provenance, consent and policy built in. NeoCRM owns the semantic model, not the storage model.
+
+Status: specification-led. The runnable slice is CAP-001 (relationship brief) plus a read-only EXP-001 reference path; external writes are disabled. Code is MIT licensed; documentation is CC BY 4.0. Contact: rob+neocrm@ironstoneadvisory.com.
+
+## Start here
+
+- [README](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/README.md): what NeoCRM is, its evidence boundary and how to run the current slice
+- [Canonical specification v0.1](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/spec/canonical/NeoCRM-v0.1-Canonical-Specification.md): the full design in one document
+- [Thesis](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/spec/vision/thesis.md): why agent-native relationship management
+- [Principles](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/spec/vision/principles.md): the seventeen rules the design follows
+- [Glossary](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/spec/vision/glossary.md): canonical terms
+
+## Architecture
+
+- [Seven-layer architecture](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/spec/architecture/seven-layer-architecture.md): layers and cross-cutting planes
+- [Adapter model](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/spec/architecture/adapter-model.md): how external systems map to canonical contracts
+- [Provenance and policy](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/spec/architecture/provenance-and-policy.md): epistemic categories and governed action
+- [Security and governance](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/spec/architecture/security-and-governance.md): autonomy levels, delegation and audit
+- [Agent runtime and collaboration](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/spec/architecture/agent-runtime-and-collaboration.md): agents, plans, handoffs and grants
+
+## Decisions
+
+- [Decision register](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/spec/product/decision-register.md): the product decisions accepted so far
+- [Architecture decision records](https://github.com/Ironstone-Advisory/neocrm/tree/main/spec/decisions): ADR-0001 onward
+
+## Workflows and experiments
+
+- [Workflow catalogue](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/workflows/README.md): host-neutral definitions across sales, marketing, service and shared controls
+- [First experiment path](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/workflows/FIRST-EXPERIMENT.md): the Zoho and Obsidian relationship-brief route
+- [Experiments](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/experiments/README.md): hypotheses, protocols and evidence records
+
+## Related
+
+- [Ironstone Advisory](https://ironstoneadvisory.com): the author's practice
+- [NeoLibrary](https://github.com/Ironstone-Advisory/neolibrary): a sibling Ironstone project
+- [Citation](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/CITATION.cff): how to cite NeoCRM
+
+## Optional
+
+- [Article draft](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/article/draft.md): the long-form explanation for general readers
+- [Research notes](https://raw.githubusercontent.com/Ironstone-Advisory/neocrm/main/research/README.md): source material and how it is recorded
